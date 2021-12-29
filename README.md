@@ -81,10 +81,25 @@ cargo run --bin <day>
 
 To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr --bin <day>`.
 
-### Run all solutions
+### Run solutions for all days
 
 ```sh
 cargo run
+
+# output:
+#     Running `target/release/aoc`
+# ----------
+# | Day 01 |
+# ----------
+# 🎄 Part 1 🎄
+#
+# 0 (elapsed: 170.00µs)
+#
+# 🎄 Part 2 🎄
+#
+# 0 (elapsed: 30.00µs)
+# <...other days...>
+# Total: 0.20ms
 ```
 
 To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr`.

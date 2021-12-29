@@ -19,8 +19,6 @@ module_path="src/bin/$filename.rs";
 touch $module_path;
 
 cat > $module_path <<EOF
-use aoc::{solve_day, read_file};
-
 pub fn part_one(input: &str) -> u32 {
     0
 }
@@ -30,7 +28,7 @@ pub fn part_two(input: &str) -> u32 {
 }
 
 fn main() {
-    solve_day!(&read_file("inputs", DAYNUM), part_one, part_two)
+    aoc::solve!(&aoc::read_file("inputs", DAYNUM), part_one, part_two)
 }
 
 #[cfg(test)]

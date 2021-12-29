@@ -1,26 +1,35 @@
-use aoc::{ANSI_BOLD, ANSI_RESET};
+use aoc::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
 use std::process::Command;
 
 fn main() {
-    (1..=25).for_each(|day| {
-        let day = format!("{:02}", day);
+    let total: f64 = (1..=25)
+        .map(|day| {
+            let day = format!("{:02}", day);
 
-        let cmd = Command::new("cargo")
-            .args(&["run", "--release", "--bin", &day])
-            .output()
-            .unwrap();
+            let cmd = Command::new("cargo")
+                .args(&["run", "--release", "--bin", &day])
+                .output()
+                .unwrap();
 
-        let output = String::from_utf8(cmd.stdout).unwrap();
-        println!("----------");
-        println!("{}| Day {} |{}", ANSI_BOLD, day, ANSI_RESET);
-        println!("----------");
-        println!(
-            "{}",
-            if !output.is_empty() {
-                output
+            println!("----------");
+            println!("{}| Day {} |{}", ANSI_BOLD, day, ANSI_RESET);
+            println!("----------");
+
+            let output = String::from_utf8(cmd.stdout).unwrap();
+            let is_empty = output.is_empty();
+
+            println!("{}", if is_empty { "Not solved." } else { &output });
+
+            if is_empty {
+                0_f64
             } else {
-                "Not solved.".to_string()
+                aoc::parse_exec_time(&output)
             }
-        );
-    });
+        })
+        .sum();
+
+    println!(
+        "{}Total:{} {}{:.2}ms{}",
+        ANSI_BOLD, ANSI_RESET, ANSI_ITALIC, total, ANSI_RESET
+    );
 }
