@@ -1,0 +1,13 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+authors = ["Felix Spöttel <1682504+fspoettel@users.noreply.github.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.release]
+lto = "thin"
+
+[dependencies]
+itertools = "0.10.1"
