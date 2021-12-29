@@ -16,7 +16,7 @@ fi
 day=$(echo $1 | sed 's/^0*//');
 day_padded=`printf %02d $day`;
 
-filename="day$day_padded";
+filename="$day_padded";
 input_path="src/inputs/$filename.txt";
 
 tmp_dir=$(mktemp -d);
@@ -24,15 +24,9 @@ tmp_file_path="$tmp_dir/input";
 
 aoc download --day $day --file $tmp_file_path;
 cat $tmp_file_path > $input_path;
-echo "Wrote input to \"$input_path\"...";
-
-cat <<EOF
-   _==_ _
- _,(",)|_|
-  \/. \-|
-__( :  )|_  Done!
-EOF
+echo "---"
+echo "🎄 Successfully wrote input to \"$input_path\"!"
 
 # Make sure it gets removed even if the script exits abnormally.
-trap "exit 1"           HUP INT PIPE QUIT TERM
+trap "exit 1"            HUP INT PIPE QUIT TERM
 trap 'rm -rf "$tmp_dir"' EXIT

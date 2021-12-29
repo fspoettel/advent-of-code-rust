@@ -33,15 +33,14 @@ Generated with the [advent-of-code-rust](https://github.com/fspoettel/advent-of-
 ./scripts/scaffold.sh <day>
 
 # output:
-# Created module `src/solutions/day01.rs`
-# Created input file `src/inputs/day01.txt`
-# Created example file `src/examples/day01.txt`
-# Linked new module in `src/main.rs`
-# Linked new module in `src/solutions/mod.rs`
-# Done! 🎄
+# Created module "src/bin/01.rs"
+# Created empty input file "src/inputs/01.txt"
+# Created empty example file "src/examples/01.txt"
+# ---
+# 🎄 Type `cargo run --bin 01` to run your solution.
 ```
 
-Every solution file has _unit tests_ referencing the example input file. You can use these tests to develop and debug your solution. When editing a solution file, `rust-analyzer` will display buttons for these actions above the unit tests.
+Every solution has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
 ### Download inputs for a day
 
@@ -50,27 +49,26 @@ Every solution file has _unit tests_ referencing the example input file. You can
 ./scripts/download.sh <day>
 
 # output:
-# Invoking `aoc` cli...
-# Loaded session cookie from "/home/foo/.adventofcode.session".
+# Loaded session cookie from "/home/felix/.adventofcode.session".
 # Downloading input for day 1, 2021...
-# Saving puzzle input to "/tmp/..."...
+# Saving puzzle input to "/tmp/tmp.MBdcAdL9Iw/input"...
 # Done!
-# Wrote input to `src/inputs/day01.txt`...
-# Done! 🎄
+# ---
+# 🎄 Successfully wrote input to "src/inputs/01.txt"!
 ```
 
 Puzzle inputs are not checked into git. [See here](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3) why.
 
+> This script does not support downloading inputs for previous years. If you want to use this template for a previous aoc, [use the underlying `aoc-cli` binary directly](https://github.com/scarvalhojr/aoc-cli/#download-puzzle-input) or download your inputs manually.
+
 ### Run solutions for a day
 
 ```sh
-# example: `cargo run 1`
-cargo run <day>
+# example: `cargo run --bin 01`
+cargo run --bin <day>
 
 # output:
-#     Running `target/debug/aoc 1`
-# ----
-#
+#     Running `target/debug/01`
 # 🎄 Part 1 🎄
 #
 # 6 (elapsed: 37.03µs)
@@ -78,11 +76,17 @@ cargo run <day>
 # 🎄 Part 2 🎄
 #
 # 9 (elapsed: 33.18µs)
-#
-# ----
 ```
 
-To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr <day>`.
+To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr --bin <day>`.
+
+### Run all solutions
+
+```sh
+cargo run
+```
+
+To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr`.
 
 ### Run all solutions against example input
 

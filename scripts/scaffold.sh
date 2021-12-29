@@ -10,21 +10,27 @@ fi
 day=$(echo $1 | sed 's/^0*//');
 day_padded=`printf %02d $day`;
 
-filename="day$day_padded";
+filename="$day_padded";
 
 input_path="src/inputs/$filename.txt";
 example_path="src/examples/$filename.txt";
-module_path="src/solutions/$filename.rs";
+module_path="src/bin/$filename.rs";
 
 touch $module_path;
 
 cat > $module_path <<EOF
+use aoc::{solve_day, read_file};
+
 pub fn part_one(input: &str) -> u32 {
     0
 }
 
 pub fn part_two(input: &str) -> u32 {
     0
+}
+
+fn main() {
+    solve_day!(&read_file("inputs", DAYNUM), part_one, part_two)
 }
 
 #[cfg(test)]
@@ -34,43 +40,27 @@ mod tests {
     #[test]
     fn test_part_one() {
         use aoc::read_file;
-        let input = read_file("examples", day);
+        let input = read_file("examples", DAYNUM);
         assert_eq!(part_one(&input), 0);
     }
 
     #[test]
     fn test_part_two() {
         use aoc::read_file;
-        let input = read_file("examples", day);
+        let input = read_file("examples", DAYNUM);
         assert_eq!(part_two(&input), 0);
     }
 }
 EOF
 
-perl -pi -e "s,day,$day,g" $module_path;
+perl -pi -e "s,DAYNUM,$day,g" $module_path;
 
 echo "Created module \"$module_path\"";
 
 touch $input_path;
-echo "Created input file \"$input_path\"";
+echo "Created empty input file \"$input_path\"";
 
 touch $example_path;
-echo "Created example file \"$example_path\"";
-
-line="        $day => solve_day!($filename, &input),"
-perl -pi -le "print '$line' if(/^*.day not solved/);" "src/main.rs";
-
-echo "Linked new module in \"src/main.rs\"";
-
-LINE="pub mod $filename;";
-FILE="src/solutions/mod.rs";
-grep -qF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE";
-echo "Linked new module in \"$FILE\"";
-
-
-cat <<EOF
-   _==_ _
- _,(",)|_|
-  \/. \-|
-__( :  )|_  Done!
-EOF
+echo "Created empty example file \"$example_path\"";
+echo "---"
+echo "🎄 Type \`cargo run --bin $day_padded\` to run your solution."
