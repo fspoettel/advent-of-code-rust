@@ -41,7 +41,7 @@ Generated with the [advent-of-code-rust](https://github.com/fspoettel/advent-of-
 # 🎄 Type `cargo run --bin 01` to run your solution.
 ```
 
-Every solution has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
+Every [solution](https://git.io/JyXa8) has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
 ### Download inputs for a day
 
