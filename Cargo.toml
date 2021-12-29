@@ -10,4 +10,3 @@ default-run = "aoc"
 lto = "thin"
 
 [dependencies]
-itertools = "0.10.1"
