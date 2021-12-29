@@ -3,6 +3,7 @@
 # 🎄 [Advent of Code](https://adventofcode.com/)
 
 ![Language](https://badgen.net/badge/Language/Rust/orange)
+[![CI](https://github.com/fspoettel/advent-of-code-rust/actions/workflows/ci.yml/badge.svg)](https://github.com/fspoettel/advent-of-code-rust/actions/workflows/ci.yml)
 
 <!--- advent_readme_stars table --->
 
