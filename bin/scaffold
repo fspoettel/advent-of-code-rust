@@ -2,13 +2,13 @@
 
 set -e;
 
-if [ ! -n "$1" ]; then
+if [ -z "$1" ]; then
     >&2 echo "Argument is required for day."
     exit 1
 fi
 
-day=$(echo $1 | sed 's/^0*//');
-day_padded=`printf %02d $day`;
+day=$(echo "$1" | sed 's/^0*//');
+day_padded=$(printf %02d "$day");
 
 filename="$day_padded";
 
@@ -16,9 +16,9 @@ input_path="src/inputs/$filename.txt";
 example_path="src/examples/$filename.txt";
 module_path="src/bin/$filename.rs";
 
-touch $module_path;
+touch "$module_path";
 
-cat > $module_path <<EOF
+cat > "$module_path" <<EOF
 pub fn part_one(input: &str) -> u32 {
     0
 }
@@ -51,14 +51,14 @@ mod tests {
 }
 EOF
 
-perl -pi -e "s,DAYNUM,$day,g" $module_path;
+perl -pi -e "s,DAYNUM,$day,g" "$module_path";
 
 echo "Created module \"$module_path\"";
 
-touch $input_path;
+touch "$input_path";
 echo "Created empty input file \"$input_path\"";
 
-touch $example_path;
+touch "$example_path";
 echo "Created empty example file \"$example_path\"";
 echo "---"
 echo "🎄 Type \`cargo run --bin $day_padded\` to run your solution."

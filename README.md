@@ -30,8 +30,8 @@ Generated with the [advent-of-code-rust](https://github.com/fspoettel/advent-of-
 ### Setup new day
 
 ```sh
-# example: `./scripts/scaffold.sh 1`
-./scripts/scaffold.sh <day>
+# example: `./bin/scaffold 1`
+./bin/scaffold <day>
 
 # output:
 # Created module "src/bin/01.rs"
@@ -46,8 +46,8 @@ Every [solution](https://git.io/JyXa8) has _unit tests_ referencing the _example
 ### Download inputs for a day
 
 ```sh
-# example: `./scripts/download.sh 1`
-./scripts/download.sh <day>
+# example: `./bin/download 1`
+./bin/download <day>
 
 # output:
 # Loaded session cookie from "/home/felix/.adventofcode.session".
@@ -58,9 +58,9 @@ Every [solution](https://git.io/JyXa8) has _unit tests_ referencing the _example
 # 🎄 Successfully wrote input to "src/inputs/01.txt"!
 ```
 
-Puzzle inputs are not checked into git. [See here](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3) why.
+To download inputs for previous years, append the `--year` flag. _(example: `./bin/download 1 --year 2020`)_
 
-> This script does not support downloading inputs for previous years. If you want to use this template for a previous aoc, [use the underlying `aoc-cli` binary directly](https://github.com/scarvalhojr/aoc-cli/#download-puzzle-input) or download your inputs manually.
+Puzzle inputs are not checked into git. [See here](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3) why.
 
 ### Run solutions for a day
 
