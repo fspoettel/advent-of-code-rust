@@ -9,11 +9,11 @@
 
 ---
 
-Generated with the [advent-of-code-rust](https://github.com/fspoettel/advent-of-code-rust) template.
+Generated from [fspoettel/advent-of-code-rust](https://github.com/fspoettel/advent-of-code-rust).
 
 ## Create your own
 
- 1. Open the [advent-of-code-rust](https://github.com/fspoettel/advent-of-code-rust) template on Github.
+ 1. Open ☝️ template on Github.
  2. Click `Use this template` and create your repository.
  3. Clone the repository to your machine.
 
@@ -40,6 +40,8 @@ Generated with the [advent-of-code-rust](https://github.com/fspoettel/advent-of-
 # ---
 # 🎄 Type `cargo run --bin 01` to run your solution.
 ```
+
+Individual solutions live in the `./src/bin` directory as separate binaries.
 
 Every [solution](https://git.io/JyXa8) has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
@@ -81,6 +83,8 @@ cargo run --bin <day>
 
 To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr --bin <day>`.
 
+Displayed _timings_ show the raw execution time of your solution w/o overhead (e.g. file reads).
+
 ### Run solutions for all days
 
 ```sh
@@ -103,6 +107,8 @@ cargo run
 ```
 
 To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr`.
+
+_Total timing_ is computed from individual solution _timings_ and excludes overhead.
 
 ### Run all solutions against example input
 

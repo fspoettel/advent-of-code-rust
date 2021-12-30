@@ -15,10 +15,10 @@ macro_rules! solve {
         fn print_result<T: Display>(func: impl FnOnce(&str) -> T, input: &str) {
             let timer = Instant::now();
             let result = func(input);
-            let time = timer.elapsed();
+            let elapsed = timer.elapsed();
             println!(
                 "{} {}(elapsed: {:.2?}){}",
-                result, ANSI_ITALIC, time, ANSI_RESET
+                result, ANSI_ITALIC, elapsed, ANSI_RESET
             );
         }
 
