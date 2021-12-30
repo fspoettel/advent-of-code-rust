@@ -1,4 +1,4 @@
-<img src="./assets/christmas_ferris.png" width="164" align="center">
+<img src="./.assets/christmas_ferris.png" width="164" align="center">
 
 # 🎄 [Advent of Code](https://adventofcode.com/)
 
