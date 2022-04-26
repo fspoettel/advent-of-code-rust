@@ -43,7 +43,7 @@ Generated from [fspoettel/advent-of-code-rust](https://github.com/fspoettel/adve
 
 Individual solutions live in the `./src/bin` directory as separate binaries.
 
-Every [solution](https://git.io/JyXa8) has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/bin/scaffold#L21-L52) has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
 ### Download inputs for a day
 

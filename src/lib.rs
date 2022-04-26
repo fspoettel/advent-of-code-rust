@@ -52,7 +52,7 @@ pub fn parse_exec_time(output: &str) -> f64 {
         } else {
             let timing = l.split("(elapsed: ").last().unwrap();
             // use `contains` istd. of `ends_with`: string may contain ANSI escape sequences.
-            // possible time formats: see [rust/library/core/src/time.rs](https://git.io/Jy1rI).
+            // possible time formats: see [rust/library/core/src/time.rs](https://github.com/rust-lang/rust/blob/1.57.0/library/core/src/time.rs#L1225-L1249).
             if timing.contains("ns)") {
                 acc // range below rounding precision.
             } else if timing.contains("µs)") {
@@ -72,7 +72,7 @@ pub fn parse_exec_time(output: &str) -> f64 {
 mod tests {
     use super::*;
 
-    /// copied from: [rust/library/std/src/macros.rs](https://git.io/Jy1r7)
+    /// copied from: [rust/library/std/src/macros.rs](https://github.com/rust-lang/rust/blob/1.57.0/library/std/src/macros.rs#L311-L316)
     macro_rules! assert_approx_eq {
         ($a:expr, $b:expr) => {{
             let (a, b) = (&$a, &$b);
