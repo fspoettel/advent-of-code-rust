@@ -1,5 +1,9 @@
+// This file contains template helpers.
+// Prefer `./helpers.rs` if you want to extract code from your solutions.
 use std::env;
 use std::fs;
+
+pub mod helpers;
 
 pub const ANSI_ITALIC: &str = "\x1b[3m";
 pub const ANSI_BOLD: &str = "\x1b[1m";
@@ -52,7 +56,7 @@ pub fn parse_exec_time(output: &str) -> f64 {
         } else {
             let timing = l.split("(elapsed: ").last().unwrap();
             // use `contains` istd. of `ends_with`: string may contain ANSI escape sequences.
-            // possible time formats: see [rust/library/core/src/time.rs](https://github.com/rust-lang/rust/blob/1.57.0/library/core/src/time.rs#L1225-L1249).
+            // for possible time formats, see: https://github.com/rust-lang/rust/blob/1.64.0/library/core/src/time.rs#L1176-L1200
             if timing.contains("ns)") {
                 acc // range below rounding precision.
             } else if timing.contains("µs)") {
@@ -68,22 +72,23 @@ pub fn parse_exec_time(output: &str) -> f64 {
     })
 }
 
+/// copied from: https://github.com/rust-lang/rust/blob/1.64.0/library/std/src/macros.rs#L328-L333
+#[cfg(test)]
+macro_rules! assert_approx_eq {
+    ($a:expr, $b:expr) => {{
+        let (a, b) = (&$a, &$b);
+        assert!(
+            (*a - *b).abs() < 1.0e-6,
+            "{} is not approximately equal to {}",
+            *a,
+            *b
+        );
+    }};
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    /// copied from: [rust/library/std/src/macros.rs](https://github.com/rust-lang/rust/blob/1.57.0/library/std/src/macros.rs#L311-L316)
-    macro_rules! assert_approx_eq {
-        ($a:expr, $b:expr) => {{
-            let (a, b) = (&$a, &$b);
-            assert!(
-                (*a - *b).abs() < 1.0e-6,
-                "{} is not approximately equal to {}",
-                *a,
-                *b
-            );
-        }};
-    }
 
     #[test]
     fn test_parse_exec_time() {
