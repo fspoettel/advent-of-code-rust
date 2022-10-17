@@ -1,2 +1,4 @@
 [alias]
 rr = "run --release"
+scaffold = "run --bin scaffold -- "
+download = "run --bin download -- "

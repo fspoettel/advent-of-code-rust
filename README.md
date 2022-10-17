@@ -9,7 +9,7 @@
 
 ## Setup
 
-### Create your _advent of code_ repository
+### Create your repository
 
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click `Use this template` and create your repository.
@@ -30,8 +30,8 @@
 ### Setup new day
 
 ```sh
-# example: `./bin/scaffold 1`
-./bin/scaffold <day>
+# example: `cargo scaffold 1`
+cargo scaffold <day>
 
 # output:
 # Created module "src/bin/01.rs"
@@ -51,10 +51,11 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/bi
 > This command requires configuring the optional [automatic input downloads](#automatic-input-downloads) feature.
 
 ```sh
-# example: `./bin/download 1`
-./bin/download <day>
+# example: `cargo download 1`
+cargo download <day>
 
 # output:
+# Downloading input with aoc-cli...
 # Loaded session cookie from "/home/felix/.adventofcode.session".
 # Downloading input for day 1, 2021...
 # Saving puzzle input to "/tmp/tmp.MBdcAdL9Iw/input"...
@@ -63,7 +64,7 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/bi
 # 🎄 Successfully wrote input to "src/inputs/01.txt"!
 ```
 
-To download inputs for previous years, append the `--year` flag. _(example: `./bin/download 1 --year 2020`)_
+To download inputs for previous years, append the `--year` flag. _(example: `cargo download 1 --year 2020`)_
 
 Puzzle inputs are not checked into git. [See here](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3) why.
 
