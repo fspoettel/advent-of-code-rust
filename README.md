@@ -7,25 +7,25 @@
 
 <!--- advent_readme_stars table --->
 
+## Setup
+
+### Create your _advent of code_ repository
+
+1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
+2.  Click `Use this template` and create your repository.
+3.  Clone your repository to your computer.
+
+### Setup rust
+
+1.  Install the [Rust toolchain](https://www.rust-lang.org/tools/install).
+2.  (recommended) Install the [rust-analyzer](https://rust-analyzer.github.io/manual.html) extension for your code editor.
+3.  (optional) Install a native debugger. If you are using VS Code, [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) is a good option.
+
 ---
 
-Generated from [fspoettel/advent-of-code-rust](https://github.com/fspoettel/advent-of-code-rust).
+✨ You can start solving puzzles now! Head to the [Usage section](#usage) to see how to use this template. If you like, you can configure [some optional features](#optional-template-features).
 
-## Create your own
-
- 1. Open ☝️ template on Github.
- 2. Click `Use this template` and create your repository.
- 3. Clone the repository to your machine.
-
-## Install
-
-* Install the [Rust toolchain](https://www.rust-lang.org/tools/install).
-* (optional) Install [rust-analyzer](https://rust-analyzer.github.io/manual.html) for your editor.
-* (optional) Install a native debugger, e.g. [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) for VS Code.
-* (optional) Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) and follow their setup guide to use the `download` script for puzzle inputs. (see below)
-* (optional) Setup the README stars github action. (see below)
-
-## Commands
+## Usage
 
 ### Setup new day
 
@@ -41,11 +41,14 @@ Generated from [fspoettel/advent-of-code-rust](https://github.com/fspoettel/adve
 # 🎄 Type `cargo run --bin 01` to run your solution.
 ```
 
-Individual solutions live in the `./src/bin` directory as separate binaries.
+Individual solutions live in the `./src/bin/` directory as separate binaries.
 
-Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/bin/scaffold#L21-L52) has _unit tests_ referencing the _example_ file. Use these tests to develop and debug your solution. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/bin/scaffold#L21-L52) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against example inputs. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
 ### Download inputs for a day
+
+> **Note**  
+> This command requires configuring the optional [automatic input downloads](#automatic-input-downloads) feature.
 
 ```sh
 # example: `./bin/download 1`
@@ -108,7 +111,7 @@ cargo run
 
 To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr`.
 
-_Total timing_ is computed from individual solution _timings_ and excludes overhead.
+_Total timing_ is computed from individual solution _timings_ and excludes as much overhead as possible.
 
 ### Run all solutions against example input
 
@@ -128,23 +131,30 @@ cargo fmt
 cargo clippy
 ```
 
-## Setup readme stars
+## Optional template features
+
+### Automatic input downloads
+
+Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) and follow their setup instructions. Once installed, you can use the [download command](#download-inputs-for-a-day).
+
+### Readme progress tracker
 
 This template includes [a Github action](https://github.com/k2bd/advent-readme-stars) that automatically updates the readme with your advent of code progress.
 
-To enable it, you need to do two things:
+To enable it, complete the following steps:
 
- 1. set repository secrets.
- 2. create a private leaderboard.
+#### 1. Create private leaderboard
 
-### Repository secrets
+Go to the leaderboard page of the year you want to track and click _Private Leaderboard_. If you have not created a leaderboard yet, create one by clicking _Create It_. Your leaderboard should be accessible under `https://adventofcode.com/{year}/leaderboard/private/view/{aoc_user_id}`.
+
+#### 2. Set repository secrets
 
 Go to the _Secrets_ tab in your repository settings and create the following secrets:
 
-* `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`
-* `AOC_YEAR`: the year you want to track. Example: `2021`
-* `AOC_SESSION`: an active session for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
+-   `AOC_ENABLED`: This variable controls whether the workflow is enabled. Set it to `true` to enable the progress tracker.
+-   `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`
+-   `AOC_YEAR`: the year you want to track. Example: `2021`
+-   `AOC_SESSION`: an active session for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
 
-### Private Leaderboard
-
-Go to the leaderboard page of the year you want to track and click _Private Leaderboard_. If you have not created a leaderboard yet, create one by clicking _Create It_. Your leaderboard should be accessible under `https://adventofcode.com/{year}/leaderboard/private/view/{aoc_user_id}`.
+> **Note**  
+> The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the `AOC_SESSION` secret.
