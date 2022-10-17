@@ -43,6 +43,10 @@ fn safe_create_file(path: &str) -> Result<File, std::io::Error> {
     OpenOptions::new().write(true).create_new(true).open(path)
 }
 
+fn create_file(path: &str) -> Result<File, std::io::Error> {
+    OpenOptions::new().write(true).create(true).open(path)
+}
+
 fn main() {
     let day = match parse_args() {
         Ok(day) => day,
@@ -54,9 +58,9 @@ fn main() {
 
     let day_padded = format!("{:02}", day);
 
-    let input_path = format!("src/inputs/{}.txt", day);
-    let example_path = format!("src/examples/{}.txt", day);
-    let module_path = format!("src/bin/{}.rs", day);
+    let input_path = format!("src/inputs/{}.txt", day_padded);
+    let example_path = format!("src/examples/{}.txt", day_padded);
+    let module_path = format!("src/bin/{}.rs", day_padded);
 
     let mut file = match safe_create_file(&module_path) {
         Ok(file) => file,
@@ -66,7 +70,7 @@ fn main() {
         }
     };
 
-    match file.write_all(MODULE_TEMPLATE.replace("DAY", &day_padded).as_bytes()) {
+    match file.write_all(MODULE_TEMPLATE.replace("DAY", &day.to_string()).as_bytes()) {
         Ok(_) => {
             println!("Created module file \"{}\"", &module_path);
         }
@@ -76,7 +80,7 @@ fn main() {
         }
     }
 
-    match safe_create_file(&input_path) {
+    match create_file(&input_path) {
         Ok(_) => {
             println!("Created empty input file \"{}\"", &input_path);
         }
@@ -86,7 +90,7 @@ fn main() {
         }
     }
 
-    match safe_create_file(&example_path) {
+    match create_file(&example_path) {
         Ok(_) => {
             println!("Created empty example file \"{}\"", &example_path);
         }
@@ -97,5 +101,5 @@ fn main() {
     }
 
     println!("---");
-    println!("🎄 Type `cargo run --bin {}` to run your solution.", &day);
+    println!("🎄 Type `cargo run --bin {}` to run your solution.", &day_padded);
 }
