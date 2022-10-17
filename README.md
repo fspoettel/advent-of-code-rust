@@ -159,6 +159,10 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 > **Note**  
 > The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the `AOC_SESSION` secret.
 
+### CI: enable clippy lints
+
+Uncomment the `clippy` job in the `ci.yml` workflow to enable clippy checks in CI.
+
 ## Useful crates
 
 -   [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.

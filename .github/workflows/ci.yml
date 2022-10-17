@@ -1,22 +1,30 @@
-name: CI
+name: Continuous Integration
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: push
 
 env:
-  CARGO_TERM_COLOR: always
+    CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+    check:
+        runs-on: ubuntu-latest
+        name: Check
+        steps:
+            - uses: actions/checkout@v2
+            - name: cargo check
+              run: cargo check
+    test:
+        runs-on: ubuntu-latest
+        name: Test
+        steps:
+            - uses: actions/checkout@v2
+            - name: cargo test
+              run: cargo test
+    # uncomment to enable clippy lints
+    # clippy:
+    #     runs-on: ubuntu-latest
+    #     name: Lint (clippy)
+    #     steps:
+    #         - uses: actions/checkout@v2
+    #         - name: cargo clippy
+    #           run: cargo clippy -- -D warnings
