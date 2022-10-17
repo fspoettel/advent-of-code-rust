@@ -2,8 +2,7 @@
 
 # 🎄 [Advent of Code](https://adventofcode.com/)
 
-![Language](https://badgen.net/badge/Language/Rust/orange)
-[![CI](https://github.com/fspoettel/advent-of-code-rust/actions/workflows/ci.yml/badge.svg)](https://github.com/fspoettel/advent-of-code-rust/actions/workflows/ci.yml)
+Cross-platform template for solving Advent of Code in Rust.
 
 <!--- advent_readme_stars table --->
 
@@ -43,12 +42,14 @@ cargo scaffold <day>
 
 Individual solutions live in the `./src/bin/` directory as separate binaries.
 
-Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/bin/scaffold#L21-L52) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against example inputs. When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/src/bin/scaffold.rs#L7-L35) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against example inputs. For some puzzles, it might be easier to forgo the example file and hardcode inputs into the tests.
+
+When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
 ### Download inputs for a day
 
 > **Note**  
-> This command requires configuring the optional [automatic input downloads](#automatic-input-downloads) feature.
+> This command requires [installing the aoc-cli crate](#download-inputs-via-aoc-cli).
 
 ```sh
 # example: `cargo download 1`
@@ -66,7 +67,7 @@ cargo download <day>
 
 To download inputs for previous years, append the `--year` flag. _(example: `cargo download 1 --year 2020`)_
 
-Puzzle inputs are not checked into git. [See here](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3) why.
+Puzzle inputs are not checked into git. [Reasoning](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3).
 
 ### Run solutions for a day
 
@@ -87,7 +88,7 @@ cargo run --bin <day>
 
 To run an optimized version for benchmarking, use the `--release` flag or the alias `cargo rr --bin <day>`.
 
-Displayed _timings_ show the raw execution time of your solution w/o overhead (e.g. file reads).
+Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
 
 ### Run solutions for all days
 
@@ -134,9 +135,19 @@ cargo clippy
 
 ## Optional template features
 
-### Automatic input downloads
+### Download inputs via aoc-cli
 
-Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) and follow their setup instructions. Once installed, you can use the [download command](#download-inputs-for-a-day).
+1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli`.
+2. Create an `.adventofcode.session` file in your home directory and paste your session cookie into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
+
+Once installed, you can use the [download command](#download-inputs-for-a-day).
+
+> **Note**  
+> The session cookie might expire after a while (~1 month) which causes the downloads to fail. To fix this issue, refresh the `.adventofcode.session` file.
+
+### CI: enable clippy lints
+
+Uncomment the `clippy` job in the `ci.yml` workflow to enable clippy checks in CI.
 
 ### Readme progress tracker
 
@@ -159,10 +170,6 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 
 > **Note**  
 > The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the `AOC_SESSION` secret.
-
-### CI: enable clippy lints
-
-Uncomment the `clippy` job in the `ci.yml` workflow to enable clippy checks in CI.
 
 ## Useful crates
 
