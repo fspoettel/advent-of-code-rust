@@ -71,10 +71,10 @@ fn main() {
         Ok(cmd_output) => {
             io::stdout()
                 .write_all(&cmd_output.stdout)
-                .expect("could not cmd stdout to pipe.");
+                .expect("could not write cmd stdout to pipe.");
             io::stderr()
                 .write_all(&cmd_output.stderr)
-                .expect("could not cmd stderr to pipe.");
+                .expect("could not write cmd stderr to pipe.");
             if !cmd_output.status.success() {
                 exit_with_status(1, &tmp_file_path);
             }
@@ -92,7 +92,7 @@ fn main() {
             exit_with_status(0, &tmp_file_path);
         }
         Err(e) => {
-            eprintln!("could not copy to input file: {}", e);
+            eprintln!("could not copy downloaded input to input file: {}", e);
             exit_with_status(1, &tmp_file_path);
         }
     }
