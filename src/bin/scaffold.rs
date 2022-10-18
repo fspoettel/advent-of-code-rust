@@ -101,5 +101,5 @@ fn main() {
     }
 
     println!("---");
-    println!("🎄 Type `cargo run --bin {}` to run your solution.", &day_padded);
+    println!("🎄 Type `cargo day {}` to run your solution.", &day_padded);
 }
