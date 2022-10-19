@@ -1,12 +1,16 @@
-<img src="./.assets/christmas_ferris.png" width="164" align="center">
+<img src="./.assets/christmas_ferris.png" width="164">
 
-# 🎄 [Advent of Code](https://adventofcode.com/)
+# 🎄 Advent of Code {year}
 
-Cross-platform template for solving Advent of Code in Rust.
+Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.rust-lang.org/).
 
 <!--- advent_readme_stars table --->
 
-## Setup
+---
+
+## Template setup
+
+This template supports all major OS (macOS, Linux, Windows).
 
 ### Create your repository
 
@@ -26,7 +30,7 @@ Cross-platform template for solving Advent of Code in Rust.
 
 ## Usage
 
-### Setup new day
+### Scaffold a day
 
 ```sh
 # example: `cargo scaffold 1`
@@ -46,7 +50,7 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/sr
 
 When editing a solution, `rust-analyzer` will display buttons for these actions above the unit tests.
 
-### Download inputs for a day
+### Download input for a day
 
 > **Note**  
 > This command requires [installing the aoc-cli crate](#download-inputs-via-aoc-cli).
@@ -90,7 +94,7 @@ cargo day <day>
 
 Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
 
-### Run solutions for all days
+### Run all solutions
 
 ```sh
 cargo all
@@ -135,7 +139,7 @@ cargo clippy
 
 ## Optional template features
 
-### Download inputs via aoc-cli
+### Download puzzle inputs via aoc-cli
 
 1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli`.
 2. Create an `.adventofcode.session` file in your home directory and paste your session cookie into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
@@ -145,17 +149,17 @@ Once installed, you can use the [download command](#download-inputs-for-a-day).
 > **Note**  
 > The session cookie might expire after a while (~1 month) which causes the downloads to fail. To fix this issue, refresh the `.adventofcode.session` file.
 
-### CI: enable clippy lints
+### Enable clippy lints in CI
 
 Uncomment the `clippy` job in the `ci.yml` workflow to enable clippy checks in CI.
 
-### Readme progress tracker
+### Automatically track ⭐️ progress in readme
 
 This template includes [a Github action](https://github.com/k2bd/advent-readme-stars) that automatically updates the readme with your advent of code progress.
 
 To enable it, complete the following steps:
 
-#### 1. Create private leaderboard
+#### 1. Create a private leaderboard
 
 Go to the leaderboard page of the year you want to track and click _Private Leaderboard_. If you have not created a leaderboard yet, create one by clicking _Create It_. Your leaderboard should be accessible under `https://adventofcode.com/{year}/leaderboard/private/view/{aoc_user_id}`.
 
