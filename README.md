@@ -179,5 +179,6 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 
 -   [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.
 -   [hashbrown](https://crates.io/crates/hashbrown): Faster hashing functions for `HashMap` and `HashSet`.
+-   [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
 
 Do you have aoc-specific crate recommendations? [Share them!](https://github.com/fspoettel/advent-of-code-rust/edit/master/README.md)
