@@ -1,5 +1,6 @@
 /*
- * This file contains template helpers.
+ * This file contains template code.
+ * There is no need to edit this file unless you want to change template functionality.
  * Prefer `./helpers.rs` if you want to extract code from your solutions.
  */
 use std::env;

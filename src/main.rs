@@ -1,6 +1,6 @@
 /*
  * This file contains template code.
- * Unless you want to change how solutions are invoked, this file does not need to be edited.
+ * There is no need to edit this file unless you want to change template functionality.
  */
 use aoc::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
 use std::process::Command;
