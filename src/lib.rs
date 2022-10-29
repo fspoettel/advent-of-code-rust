@@ -1,5 +1,7 @@
-// This file contains template helpers.
-// Prefer `./helpers.rs` if you want to extract code from your solutions.
+/*
+ * This file contains template helpers.
+ * Prefer `./helpers.rs` if you want to extract code from your solutions.
+ */
 use std::env;
 use std::fs;
 
@@ -26,7 +28,7 @@ macro_rules! solve {
                         "{} {}(elapsed: {:.2?}){}",
                         result, ANSI_ITALIC, elapsed, ANSI_RESET
                     );
-                },
+                }
                 None => {
                     println!("not solved.")
                 }

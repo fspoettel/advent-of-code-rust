@@ -1,3 +1,7 @@
+/*
+ * This file contains template code.
+ * Unless you want to change how solutions are invoked, this file does not need to be edited.
+ */
 use aoc::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
 use std::process::Command;
 
@@ -18,7 +22,14 @@ fn main() {
             let output = String::from_utf8(cmd.stdout).unwrap();
             let is_empty = output.is_empty();
 
-            println!("{}", if is_empty { "Not solved." } else { &output.trim() });
+            println!(
+                "{}",
+                if is_empty {
+                    "Not solved."
+                } else {
+                    output.trim()
+                }
+            );
 
             if is_empty {
                 0_f64
