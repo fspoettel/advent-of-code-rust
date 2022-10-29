@@ -5,7 +5,7 @@ use std::{fs, process};
 
 struct Args {
     day: u8,
-    year: Option<u32>,
+    year: Option<i16>,
 }
 
 fn parse_args() -> Result<Args, pico_args::Error> {
