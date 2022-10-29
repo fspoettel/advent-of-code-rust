@@ -90,7 +90,7 @@ cargo day <day>
 # 9 (elapsed: 33.18µs)
 ```
 
-`day` is a shorthand for `cargo run --bin `. To run an optimized version for benchmarking, append the `--release` flag.
+`day` is an alias for `cargo run --bin`. To run an optimized version for benchmarking, append the `--release` flag.
 
 Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
 
