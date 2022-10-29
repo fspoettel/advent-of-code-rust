@@ -175,7 +175,7 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 > **Note**  
 > The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the `AOC_SESSION` secret.
 
-### Using VS Code to debug your code
+### Use VS Code to debug your code
 
  1. Install [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) and [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb).
  2. Set breakpoints in your code. [^1]
