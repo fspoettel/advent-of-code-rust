@@ -11,28 +11,30 @@ pub const ANSI_RESET: &str = "\x1b[0m";
 
 #[macro_export]
 macro_rules! solve {
-    ($input:expr, $part_one:ident, $part_two:ident) => {{
+    ($part:expr, $solver:ident, $input:expr) => {{
         use aoc::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
         use std::fmt::Display;
         use std::time::Instant;
 
-        fn print_result<T: Display>(func: impl FnOnce(&str) -> T, input: &str) {
+        fn print_result<T: Display>(func: impl FnOnce(&str) -> Option<T>, input: &str) {
             let timer = Instant::now();
             let result = func(input);
             let elapsed = timer.elapsed();
-            println!(
-                "{} {}(elapsed: {:.2?}){}",
-                result, ANSI_ITALIC, elapsed, ANSI_RESET
-            );
+            match result {
+                Some(result) => {
+                    println!(
+                        "{} {}(elapsed: {:.2?}){}",
+                        result, ANSI_ITALIC, elapsed, ANSI_RESET
+                    );
+                },
+                None => {
+                    println!("not solved.")
+                }
+            }
         }
 
-        println!("🎄 {}Part 1{} 🎄", ANSI_BOLD, ANSI_RESET);
-        println!("");
-        print_result($part_one, $input);
-        println!("");
-        println!("🎄 {}Part 2{} 🎄", ANSI_BOLD, ANSI_RESET);
-        println!("");
-        print_result($part_two, $input);
+        println!("🎄 {}Part {}{} 🎄", ANSI_BOLD, $part, ANSI_RESET);
+        print_result($solver, $input);
     }};
 }
 

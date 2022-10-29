@@ -4,16 +4,18 @@ use std::{
     process,
 };
 
-const MODULE_TEMPLATE: &str = r###"pub fn part_one(input: &str) -> u32 {
-    0
+const MODULE_TEMPLATE: &str = r###"pub fn part_one(input: &str) -> Option<u32> {
+    None
 }
 
-pub fn part_two(input: &str) -> u32 {
-    0
+pub fn part_two(input: &str) -> Option<u32> {
+    None
 }
 
 fn main() {
-    aoc::solve!(&aoc::read_file("inputs", DAY), part_one, part_two)
+    let input = &aoc::read_file("inputs", DAY);
+    aoc::solve!(1, part_one, input);
+    aoc::solve!(2, part_two, input);
 }
 
 #[cfg(test)]
@@ -24,14 +26,14 @@ mod tests {
     fn test_part_one() {
         use aoc::read_file;
         let input = read_file("examples", DAY);
-        assert_eq!(part_one(&input), 0);
+        assert_eq!(part_one(&input), None);
     }
 
     #[test]
     fn test_part_two() {
         use aoc::read_file;
         let input = read_file("examples", DAY);
-        assert_eq!(part_two(&input), 0);
+        assert_eq!(part_two(&input), None);
     }
 }
 "###;

@@ -18,7 +18,7 @@ fn main() {
             let output = String::from_utf8(cmd.stdout).unwrap();
             let is_empty = output.is_empty();
 
-            println!("{}", if is_empty { "Not solved." } else { &output });
+            println!("{}", if is_empty { "Not solved." } else { &output.trim() });
 
             if is_empty {
                 0_f64
