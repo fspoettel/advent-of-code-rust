@@ -69,7 +69,7 @@ cargo download <day>
 # 🎄 Successfully wrote input to "src/inputs/01.txt"!
 ```
 
-To download inputs for previous years, append the `--year` flag. _(example: `cargo download 1 --year 2020`)_
+To download inputs for previous years, append the `--year/-y` flag. _(example: `cargo download 1 --year 2020`)_
 
 Puzzle inputs are not checked into git. [Reasoning](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3).
 
