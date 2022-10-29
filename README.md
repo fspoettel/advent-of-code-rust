@@ -175,6 +175,15 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 > **Note**  
 > The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the `AOC_SESSION` secret.
 
+### Using VS Code to debug your code
+
+ 1. Install [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) and [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb).
+ 2. Set breakpoints in your code. [^1]
+ 3. Click _Debug_ next to the unit test or the _main_ function. [^2]
+ 4. The debugger will halt your program at the specific line and allow you to inspect the local stack. [^3]
+
+---
+
 ## Useful crates
 
 -   [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.
@@ -186,3 +195,9 @@ Do you have aoc-specific crate recommendations? [Share them!](https://github.com
 ## Common pitfalls
 
 * **Integer overflows:** This template uses 32-bit integers by default because it is generally faster - for example when packed in large arrays or structs - than using 64-bit integers everywhere. For some problems, solutions for real input might exceed 32-bit integer space. While this is checked and panics in `debug` mode, integers [wrap](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-overflow) in `release` mode, leading to wrong output when running your solution.
+
+## Footnotes
+
+[^1]: <img src="https://user-images.githubusercontent.com/1682504/198838369-453dc22c-c645-4803-afe0-fc50d5a3f00c.png" alt="Set a breakpoint" width="400" />  
+[^2]: <img alt="Run debugger" src="https://user-images.githubusercontent.com/1682504/198838372-c89369f6-0d05-462e-a4c7-8cd97b0912e6.png" width="400" />
+[^3]: <img alt="Inspect debugger state" src="https://user-images.githubusercontent.com/1682504/198838373-36df6996-23bf-4757-9335-0bc4c1db0276.png" width="600" />
