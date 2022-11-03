@@ -76,8 +76,8 @@ Puzzle inputs are not checked into git. [Reasoning](https://old.reddit.com/r/adv
 ### Run solutions for a day
 
 ```sh
-# example: `cargo day 01`
-cargo day <day>
+# example: `cargo solve 01`
+cargo solve <day>
 
 # output:
 #     Running `target/debug/01`
@@ -90,7 +90,7 @@ cargo day <day>
 # 9 (elapsed: 33.18µs)
 ```
 
-`day` is an alias for `cargo run --bin`. To run an optimized version for benchmarking, append the `--release` flag.
+`solve` is an alias for `cargo run --bin`. To run an optimized version for benchmarking, append the `--release` flag.
 
 Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
 
