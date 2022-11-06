@@ -56,16 +56,6 @@ fn main() {
         exit_with_status(1, &tmp_file_path);
     }
 
-
-    let mut tmp_cmd_args = vec![
-        "--file".into(),
-        tmp_file_path.to_string_lossy().to_string(),
-        "--day".into(),
-        args.day.to_string(),
-        "download".into(),
-    ];
-
-    
     let mut cmd_args = vec![];
 
     if let Some(year) = args.year {
@@ -73,7 +63,13 @@ fn main() {
         cmd_args.push(year.to_string());
     }
 
-    cmd_args.append(&mut tmp_cmd_args);
+    cmd_args.append(&mut vec![
+        "--file".into(),
+        tmp_file_path.to_string_lossy().to_string(),
+        "--day".into(),
+        args.day.to_string(),
+        "download".into(),
+    ]);
 
     println!("Downloading input with >aoc {}", cmd_args.join(" "));
 
