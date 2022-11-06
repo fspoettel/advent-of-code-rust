@@ -53,7 +53,7 @@ When editing a solution, `rust-analyzer` will display buttons for running / debu
 ### Download input for a day
 
 > **Note**  
-> This command requires [installing the aoc-cli crate](#download-inputs-via-aoc-cli).
+> This command requires [installing the aoc-cli crate](#download-puzzle-inputs-via-aoc-cli).
 
 ```sh
 # example: `cargo download 1`
