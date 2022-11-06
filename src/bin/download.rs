@@ -56,20 +56,26 @@ fn main() {
         exit_with_status(1, &tmp_file_path);
     }
 
-    println!("Downloading input via aoc-cli...");
 
-    let mut cmd_args = vec![
-        "download".into(),
+    let mut tmp_cmd_args = vec![
         "--file".into(),
         tmp_file_path.to_string_lossy().to_string(),
         "--day".into(),
         args.day.to_string(),
+        "download".into(),
     ];
+
+    
+    let mut cmd_args = vec![];
 
     if let Some(year) = args.year {
         cmd_args.push("--year".into());
         cmd_args.push(year.to_string());
     }
+
+    cmd_args.append(&mut tmp_cmd_args);
+
+    println!("Downloading input with >aoc {}", cmd_args.join(" "));
 
     match Command::new("aoc").args(cmd_args).output() {
         Ok(cmd_output) => {
