@@ -41,7 +41,7 @@ cargo scaffold <day>
 # Created empty input file "src/inputs/01.txt"
 # Created empty example file "src/examples/01.txt"
 # ---
-# 🎄 Type `cargo day 01` to run your solution.
+# 🎄 Type `cargo solve 01` to run your solution.
 ```
 
 Individual solutions live in the `./src/bin/` directory as separate binaries.
