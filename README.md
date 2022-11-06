@@ -142,12 +142,9 @@ cargo clippy
 ### Download puzzle inputs via aoc-cli
 
 1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli`.
-2. Create an `.adventofcode.session` file in your home directory and paste your session cookie into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
+2. Create an `.adventofcode.session` file in your home directory and paste your session cookie[^1] into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
 
 Once installed, you can use the [download command](#download-inputs-for-a-day).
-
-> **Note**  
-> The session cookie might expire after a while (~1 month) which causes the downloads to fail. To fix this issue, refresh the `.adventofcode.session` file.
 
 ### Enable clippy lints in CI
 
@@ -170,19 +167,14 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 -   `AOC_ENABLED`: This variable controls whether the workflow is enabled. Set it to `true` to enable the progress tracker.
 -   `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`
 -   `AOC_YEAR`: the year you want to track. Example: `2021`
--   `AOC_SESSION`: an active session for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
-
-> **Note**  
-> The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the `AOC_SESSION` secret.
+-   `AOC_SESSION`: an active session[^2] for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
 
 ### Use VS Code to debug your code
 
  1. Install [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) and [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb).
- 2. Set breakpoints in your code. [^1]
- 3. Click _Debug_ next to the unit test or the _main_ function. [^2]
- 4. The debugger will halt your program at the specific line and allow you to inspect the local stack. [^3]
-
----
+ 2. Set breakpoints in your code. [^3]
+ 3. Click _Debug_ next to the unit test or the _main_ function. [^4]
+ 4. The debugger will halt your program at the specific line and allow you to inspect the local stack. [^5]
 
 ## Useful crates
 
@@ -198,6 +190,8 @@ Do you have aoc-specific crate recommendations? [Share them!](https://github.com
 
 ## Footnotes
 
-[^1]: <img src="https://user-images.githubusercontent.com/1682504/198838369-453dc22c-c645-4803-afe0-fc50d5a3f00c.png" alt="Set a breakpoint" width="400" />  
-[^2]: <img alt="Run debugger" src="https://user-images.githubusercontent.com/1682504/198838372-c89369f6-0d05-462e-a4c7-8cd97b0912e6.png" width="400" />
-[^3]: <img alt="Inspect debugger state" src="https://user-images.githubusercontent.com/1682504/198838373-36df6996-23bf-4757-9335-0bc4c1db0276.png" width="600" />
+[^1]:The session cookie might expire after a while (~1 month) which causes the downloads to fail. To fix this issue, refresh the `.adventofcode.session` file.
+[^2]: The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the AOC_SESSION secret.
+[^3]: <img src="https://user-images.githubusercontent.com/1682504/198838369-453dc22c-c645-4803-afe0-fc50d5a3f00c.png" alt="Set a breakpoint" width="450" /> 
+[^4]: <img alt="Run debugger" src="https://user-images.githubusercontent.com/1682504/198838372-c89369f6-0d05-462e-a4c7-8cd97b0912e6.png" width="450" />
+[^5]: <img alt="Inspect debugger state" src="https://user-images.githubusercontent.com/1682504/198838373-36df6996-23bf-4757-9335-0bc4c1db0276.png" width="450" />
