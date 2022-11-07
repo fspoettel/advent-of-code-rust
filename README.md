@@ -46,7 +46,7 @@ cargo scaffold <day>
 
 Individual solutions live in the `./src/bin/` directory as separate binaries.
 
-Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/master/src/bin/scaffold.rs#L7-L35) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against example inputs. For some puzzles, it might be easier to forgo the example file and hardcode inputs into the tests.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/bin/scaffold.rs#L11-L41) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against example inputs. For some puzzles, it might be easier to forgo the example file and hardcode inputs into the tests.
 
 When editing a solution, `rust-analyzer` will display buttons for running / debugging unit tests above the unit test blocks.
 
@@ -182,7 +182,7 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 -   [hashbrown](https://crates.io/crates/hashbrown): Faster hashing functions for `HashMap` and `HashSet`.
 -   [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
 
-Do you have aoc-specific crate recommendations? [Share them!](https://github.com/fspoettel/advent-of-code-rust/edit/master/README.md)
+Do you have aoc-specific crate recommendations? [Share them!](https://github.com/fspoettel/advent-of-code-rust/edit/main/README.md)
 
 ## Common pitfalls
 
