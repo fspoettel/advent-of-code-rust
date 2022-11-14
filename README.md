@@ -182,6 +182,8 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 -   [hashbrown](https://crates.io/crates/hashbrown): Faster hashing functions for `HashMap` and `HashSet`.
 -   [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
 
+A curated list of popular crates can be found on [blessred.rs](https://blessed.rs/crates).
+
 Do you have aoc-specific crate recommendations? [Share them!](https://github.com/fspoettel/advent-of-code-rust/edit/main/README.md)
 
 ## Common pitfalls
