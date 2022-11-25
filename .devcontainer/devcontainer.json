@@ -1,0 +1,6 @@
+{
+    "name": "rust-devcontainer",
+    "image": "mcr.microsoft.com/devcontainers/rust:latest",
+    "postCreateCommand": "rustc --version",
+    "remoteUser": "vscode"
+}
