@@ -11,7 +11,7 @@ fn main() {
             let day = format!("{:02}", day);
 
             let cmd = Command::new("cargo")
-                .args(&["run", "--release", "--bin", &day])
+                .args(["run", "--release", "--bin", &day])
                 .output()
                 .unwrap();
 
