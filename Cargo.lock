@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "aoc"
-version = "0.6.3"
+version = "0.7.0"
 dependencies = [
  "pico-args",
 ]
