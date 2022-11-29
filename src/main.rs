@@ -2,7 +2,7 @@
  * This file contains template code.
  * There is no need to edit this file unless you want to change template functionality.
  */
-use aoc::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
+use advent_of_code::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
 use std::process::Command;
 
 fn main() {
@@ -34,7 +34,7 @@ fn main() {
             if is_empty {
                 0_f64
             } else {
-                aoc::parse_exec_time(&output)
+                advent_of_code::parse_exec_time(&output)
             }
         })
         .sum();
