@@ -179,7 +179,6 @@ Go to the _Secrets_ tab in your repository settings and create the following sec
 ## Useful crates
 
 -   [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.
--   [hashbrown](https://crates.io/crates/hashbrown): Faster hashing functions for `HashMap` and `HashSet`.
 -   [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
 
 A curated list of popular crates can be found on [blessred.rs](https://blessed.rs/crates).
