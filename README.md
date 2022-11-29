@@ -100,7 +100,7 @@ Displayed _timings_ show the raw execution time of your solution without overhea
 cargo all
 
 # output:
-#     Running `target/release/aoc`
+#     Running `target/release/advent_of_code`
 # ----------
 # | Day 01 |
 # ----------
