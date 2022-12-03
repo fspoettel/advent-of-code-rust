@@ -125,6 +125,8 @@ _Total timing_ is computed from individual solution _timings_ and excludes as mu
 cargo test
 ```
 
+To run tests for a specific day, append `--bin <day>`, e.g. `cargo test --bin 01`. You can further scope it down to a specific part, e.g. `cargo test --bin 01 part_one`.
+
 ### Format code
 
 ```sh
