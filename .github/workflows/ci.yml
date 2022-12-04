@@ -28,3 +28,11 @@ jobs:
     #         - uses: actions/checkout@v2
     #         - name: cargo clippy
     #           run: cargo clippy -- -D warnings
+    # uncoment to enable format checking
+    # fmt:
+    #     runs-on: ubuntu-latest
+    #     name: Format
+    #     steps:
+    #         - uses: actions/checkout@v3
+    #         - name: cargo fmt
+    #           run: cargo fmt --check
