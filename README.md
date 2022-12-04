@@ -148,7 +148,7 @@ cargo clippy
 
 Once installed, you can use the [download command](#download-input-for-a-day).
 
-### Enable Format code in CI
+### Check code formatting in CI
 
 Uncomment the `format` job in the `ci.yml` workflow to enable fmt checks in CI.
 
