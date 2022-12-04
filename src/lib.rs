@@ -7,6 +7,8 @@ use std::env;
 use std::fs;
 
 // modules for the different days are automatically uncomented by the scaffold command
+pub mod day01;
+// pub mod day02;
 // pub mod day01;
 // pub mod day02;
 // pub mod day03;
