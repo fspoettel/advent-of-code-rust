@@ -123,3 +123,104 @@ mod tests {
         );
     }
 }
+
+pub mod aoc_cli {
+    use std::{
+        fmt::Display,
+        fs::create_dir_all,
+        process::{Command, Output, Stdio},
+    };
+
+    pub enum AocCliError {
+        CommandNotFound,
+        CommandFailed,
+        IoError,
+    }
+
+    impl Display for AocCliError {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                AocCliError::CommandNotFound => write!(f, "CommandNotFound"),
+                AocCliError::CommandFailed => write!(f, "CommandFailed"),
+                AocCliError::IoError => write!(f, "IoError"),
+            }
+        }
+    }
+
+    pub fn check() -> Result<(), AocCliError> {
+        Command::new("aoc")
+            .arg("-V")
+            .output()
+            .map_err(|_| AocCliError::CommandNotFound)?;
+        Ok(())
+    }
+
+    pub fn read(day: u8, year: Option<u16>) -> Result<Output, AocCliError> {
+        // TODO: output local puzzle if present.
+        let args = build_args("read", &[], day, year);
+        call_aoc_cli(&args)
+    }
+
+    pub fn download(day: u8, year: Option<u16>) -> Result<Output, AocCliError> {
+        let input_path = get_input_path(day);
+
+        let puzzle_path = get_puzzle_path(day);
+        create_dir_all("src/puzzles").map_err(|_| AocCliError::IoError)?;
+
+        let args = build_args(
+            "download",
+            &[
+                "--overwrite".into(),
+                "--input-file".into(),
+                input_path.to_string(),
+                "--puzzle-file".into(),
+                puzzle_path.to_string(),
+            ],
+            day,
+            year,
+        );
+
+        let output = call_aoc_cli(&args)?;
+        println!("---");
+        println!("🎄 Successfully wrote input to \"{}\".", &input_path);
+        println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
+
+        Ok(output)
+    }
+
+    fn get_input_path(day: u8) -> String {
+        let day_padded = format!("{:02}", day);
+        format!("src/inputs/{}.txt", day_padded)
+    }
+
+    fn get_puzzle_path(day: u8) -> String {
+        let day_padded = format!("{:02}", day);
+        format!("src/puzzles/{}.md", day_padded)
+    }
+
+    fn build_args(command: &str, args: &[String], day: u8, year: Option<u16>) -> Vec<String> {
+        let mut cmd_args = args.to_vec();
+
+        if let Some(year) = year {
+            cmd_args.push("--year".into());
+            cmd_args.push(year.to_string());
+        }
+
+        cmd_args.append(&mut vec!["--day".into(), day.to_string(), command.into()]);
+
+        cmd_args
+    }
+
+    fn call_aoc_cli(args: &[String]) -> Result<Output, AocCliError> {
+        if cfg!(debug_assertions) {
+            println!("Calling >aoc with: {}", args.join(" "));
+        }
+
+        Command::new("aoc")
+            .args(args)
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .output()
+            .map_err(|_| AocCliError::CommandFailed)
+    }
+}

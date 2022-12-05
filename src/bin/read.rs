@@ -32,7 +32,7 @@ fn main() {
         process::exit(1);
     }
 
-    match aoc_cli::download(args.day, args.year) {
+    match aoc_cli::read(args.day, args.year) {
         Ok(cmd_output) => {
             if !cmd_output.status.success() {
                 process::exit(1);
