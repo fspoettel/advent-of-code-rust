@@ -143,7 +143,9 @@ pub mod aoc_cli {
             match self {
                 AocCliError::CommandNotFound => write!(f, "aoc-cli is not present in environment."),
                 AocCliError::CommandNotCallable => write!(f, "aoc-cli could not be called."),
-                AocCliError::BadExitStatus(_) => write!(f, "aoc-cli exited with a non-zero status."),
+                AocCliError::BadExitStatus(_) => {
+                    write!(f, "aoc-cli exited with a non-zero status.")
+                }
                 AocCliError::IoError => write!(f, "could not write output files to file system."),
             }
         }
@@ -192,7 +194,6 @@ pub mod aoc_cli {
         } else {
             Err(AocCliError::BadExitStatus(output))
         }
-
     }
 
     fn get_input_path(day: u8) -> String {
