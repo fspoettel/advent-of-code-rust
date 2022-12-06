@@ -133,16 +133,18 @@ pub mod aoc_cli {
 
     pub enum AocCliError {
         CommandNotFound,
-        CommandFailed,
+        CommandNotCallable,
+        BadExitStatus(Output),
         IoError,
     }
 
     impl Display for AocCliError {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                AocCliError::CommandNotFound => write!(f, "CommandNotFound"),
-                AocCliError::CommandFailed => write!(f, "CommandFailed"),
-                AocCliError::IoError => write!(f, "IoError"),
+                AocCliError::CommandNotFound => write!(f, "aoc-cli is not present in environment."),
+                AocCliError::CommandNotCallable => write!(f, "aoc-cli could not be called."),
+                AocCliError::BadExitStatus(_) => write!(f, "aoc-cli exited with a non-zero status."),
+                AocCliError::IoError => write!(f, "could not write output files to file system."),
             }
         }
     }
@@ -181,11 +183,16 @@ pub mod aoc_cli {
         );
 
         let output = call_aoc_cli(&args)?;
-        println!("---");
-        println!("🎄 Successfully wrote input to \"{}\".", &input_path);
-        println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
 
-        Ok(output)
+        if output.status.success() {
+            println!("---");
+            println!("🎄 Successfully wrote input to \"{}\".", &input_path);
+            println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
+            Ok(output)
+        } else {
+            Err(AocCliError::BadExitStatus(output))
+        }
+
     }
 
     fn get_input_path(day: u8) -> String {
@@ -221,6 +228,6 @@ pub mod aoc_cli {
             .stdout(Stdio::inherit())
             .stderr(Stdio::inherit())
             .output()
-            .map_err(|_| AocCliError::CommandFailed)
+            .map_err(|_| AocCliError::CommandNotCallable)
     }
 }
