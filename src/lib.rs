@@ -193,6 +193,7 @@ pub mod aoc_cli {
     }
 
     pub fn read(day: u8) -> Result<Output, AocCliError> {
+        // TODO: output local puzzle if present.
         let puzzle_path = get_puzzle_path(day);
 
         let args = build_args(
@@ -275,7 +276,10 @@ pub mod aoc_cli {
     }
 
     fn call_aoc_cli(args: &[String]) -> Result<Output, AocCliError> {
-        println!("Calling >aoc with: {}", args.join(" "));
+        if cfg!(debug_assertions) {
+            println!("Calling >aoc with: {}", args.join(" "));
+        }
+
         Command::new("aoc")
             .args(args)
             .stdout(Stdio::inherit())
