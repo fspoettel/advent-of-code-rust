@@ -62,16 +62,16 @@ fn main() {
         }
     };
 
-    let day_padded = format!("{:02}", day);
+    let day_padded = format!("{day:02}");
 
-    let input_path = format!("src/inputs/{}.txt", day_padded);
-    let example_path = format!("src/examples/{}.txt", day_padded);
-    let module_path = format!("src/bin/{}.rs", day_padded);
+    let input_path = format!("src/inputs/{day_padded}.txt");
+    let example_path = format!("src/examples/{day_padded}.txt");
+    let module_path = format!("src/bin/{day_padded}.rs");
 
     let mut file = match safe_create_file(&module_path) {
         Ok(file) => file,
         Err(e) => {
-            eprintln!("Failed to create module file: {}", e);
+            eprintln!("Failed to create module file: {e}");
             process::exit(1);
         }
     };
@@ -81,7 +81,7 @@ fn main() {
             println!("Created module file \"{}\"", &module_path);
         }
         Err(e) => {
-            eprintln!("Failed to write module contents: {}", e);
+            eprintln!("Failed to write module contents: {e}");
             process::exit(1);
         }
     }
@@ -91,7 +91,7 @@ fn main() {
             println!("Created empty input file \"{}\"", &input_path);
         }
         Err(e) => {
-            eprintln!("Failed to create input file: {}", e);
+            eprintln!("Failed to create input file: {e}");
             process::exit(1);
         }
     }
@@ -101,7 +101,7 @@ fn main() {
             println!("Created empty example file \"{}\"", &example_path);
         }
         Err(e) => {
-            eprintln!("Failed to create example file: {}", e);
+            eprintln!("Failed to create example file: {e}");
             process::exit(1);
         }
     }

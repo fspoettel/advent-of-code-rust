@@ -44,7 +44,7 @@ macro_rules! solve {
 pub fn read_file(folder: &str, day: u8) -> String {
     let cwd = env::current_dir().unwrap();
 
-    let filepath = cwd.join("src").join(folder).join(format!("{:02}.txt", day));
+    let filepath = cwd.join("src").join(folder).join(format!("{day:02}.txt"));
 
     let f = fs::read_to_string(filepath);
     f.expect("could not open input file")
@@ -197,13 +197,13 @@ pub mod aoc_cli {
     }
 
     fn get_input_path(day: u8) -> String {
-        let day_padded = format!("{:02}", day);
-        format!("src/inputs/{}.txt", day_padded)
+        let day_padded = format!("{day:02}");
+        format!("src/inputs/{day_padded}.txt")
     }
 
     fn get_puzzle_path(day: u8) -> String {
-        let day_padded = format!("{:02}", day);
-        format!("src/puzzles/{}.md", day_padded)
+        let day_padded = format!("{day:02}");
+        format!("src/puzzles/{day_padded}.md")
     }
 
     fn build_args(command: &str, args: &[String], day: u8, year: Option<u16>) -> Vec<String> {
