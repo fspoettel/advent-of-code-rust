@@ -54,12 +54,9 @@ fn create_file(path: &str) -> Result<File, std::io::Error> {
 }
 
 fn main() {
-    let day = match parse_args() {
-        Ok(day) => day,
-        Err(_) => {
-            eprintln!("Need to specify a day (as integer). example: `cargo scaffold 7`");
-            process::exit(1);
-        }
+    let Ok(day) = parse_args() else {
+        eprintln!("Need to specify a day (as integer). example: `cargo scaffold 7`");
+        process::exit(1);
     };
 
     let day_padded = format!("{day:02}");
