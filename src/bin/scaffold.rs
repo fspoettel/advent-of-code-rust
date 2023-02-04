@@ -8,10 +8,12 @@ use std::{
     process,
 };
 
-const MODULE_TEMPLATE: &str = r###"pub fn part_one(input: &str) -> Option<u32> {
+const MODULE_TEMPLATE: &str = r###"#[must_use]
+pub fn part_one(input: &str) -> Option<u32> {
     None
 }
 
+#[must_use]
 pub fn part_two(input: &str) -> Option<u32> {
     None
 }

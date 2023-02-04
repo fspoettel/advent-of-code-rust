@@ -41,6 +41,7 @@ macro_rules! solve {
     }};
 }
 
+#[must_use]
 pub fn read_file(folder: &str, day: u8) -> String {
     let cwd = env::current_dir().unwrap();
 
@@ -54,6 +55,7 @@ fn parse_time(val: &str, postfix: &str) -> f64 {
     val.split(postfix).next().unwrap().parse().unwrap()
 }
 
+#[must_use]
 pub fn parse_exec_time(output: &str) -> f64 {
     output.lines().fold(0_f64, |acc, l| {
         if l.contains("elapsed:") {
