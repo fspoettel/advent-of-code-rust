@@ -133,45 +133,45 @@ pub mod aoc_cli {
         process::{Command, Output, Stdio},
     };
 
-    pub enum AocCliError {
+    pub enum CliError {
         CommandNotFound,
         CommandNotCallable,
         BadExitStatus(Output),
         IoError,
     }
 
-    impl Display for AocCliError {
+    impl Display for CliError {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                AocCliError::CommandNotFound => write!(f, "aoc-cli is not present in environment."),
-                AocCliError::CommandNotCallable => write!(f, "aoc-cli could not be called."),
-                AocCliError::BadExitStatus(_) => {
+                CliError::CommandNotFound => write!(f, "aoc-cli is not present in environment."),
+                CliError::CommandNotCallable => write!(f, "aoc-cli could not be called."),
+                CliError::BadExitStatus(_) => {
                     write!(f, "aoc-cli exited with a non-zero status.")
                 }
-                AocCliError::IoError => write!(f, "could not write output files to file system."),
+                CliError::IoError => write!(f, "could not write output files to file system."),
             }
         }
     }
 
-    pub fn check() -> Result<(), AocCliError> {
+    pub fn check() -> Result<(), CliError> {
         Command::new("aoc")
             .arg("-V")
             .output()
-            .map_err(|_| AocCliError::CommandNotFound)?;
+            .map_err(|_| CliError::CommandNotFound)?;
         Ok(())
     }
 
-    pub fn read(day: u8, year: Option<u16>) -> Result<Output, AocCliError> {
+    pub fn read(day: u8, year: Option<u16>) -> Result<Output, CliError> {
         // TODO: output local puzzle if present.
         let args = build_args("read", &[], day, year);
         call_aoc_cli(&args)
     }
 
-    pub fn download(day: u8, year: Option<u16>) -> Result<Output, AocCliError> {
+    pub fn download(day: u8, year: Option<u16>) -> Result<Output, CliError> {
         let input_path = get_input_path(day);
 
         let puzzle_path = get_puzzle_path(day);
-        create_dir_all("src/puzzles").map_err(|_| AocCliError::IoError)?;
+        create_dir_all("src/puzzles").map_err(|_| CliError::IoError)?;
 
         let args = build_args(
             "download",
@@ -194,7 +194,7 @@ pub mod aoc_cli {
             println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
             Ok(output)
         } else {
-            Err(AocCliError::BadExitStatus(output))
+            Err(CliError::BadExitStatus(output))
         }
     }
 
@@ -221,7 +221,7 @@ pub mod aoc_cli {
         cmd_args
     }
 
-    fn call_aoc_cli(args: &[String]) -> Result<Output, AocCliError> {
+    fn call_aoc_cli(args: &[String]) -> Result<Output, CliError> {
         if cfg!(debug_assertions) {
             println!("Calling >aoc with: {}", args.join(" "));
         }
@@ -231,6 +231,6 @@ pub mod aoc_cli {
             .stdout(Stdio::inherit())
             .stderr(Stdio::inherit())
             .output()
-            .map_err(|_| AocCliError::CommandNotCallable)
+            .map_err(|_| CliError::CommandNotCallable)
     }
 }
