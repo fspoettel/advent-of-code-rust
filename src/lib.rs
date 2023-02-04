@@ -56,9 +56,7 @@ fn parse_time(val: &str, postfix: &str) -> f64 {
 
 pub fn parse_exec_time(output: &str) -> f64 {
     output.lines().fold(0_f64, |acc, l| {
-        if !l.contains("elapsed:") {
-            acc
-        } else {
+        if l.contains("elapsed:") {
             let timing = l.split("(elapsed: ").last().unwrap();
             // use `contains` istd. of `ends_with`: string may contain ANSI escape sequences.
             // for possible time formats, see: https://github.com/rust-lang/rust/blob/1.64.0/library/core/src/time.rs#L1176-L1200
@@ -73,6 +71,8 @@ pub fn parse_exec_time(output: &str) -> f64 {
             } else {
                 acc
             }
+        } else {
+            acc
         }
     })
 }
