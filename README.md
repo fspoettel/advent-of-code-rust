@@ -6,6 +6,8 @@ Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.
 
 <!--- advent_readme_stars table --->
 
+<!--- benchmarking table --->
+
 ---
 
 ## Template setup
@@ -17,7 +19,7 @@ This template supports all major OS (macOS, Linux, Windows).
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
 3.  Clone your repository to your computer.
-4.  If you are solving a previous year's aoc and want to use the `aoc-cli` integration, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect that.
+4.  If you are solving a previous year's advent of code, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect the year you are solving.
 
 ### Setup rust 💻
 
@@ -38,18 +40,18 @@ This template supports all major OS (macOS, Linux, Windows).
 cargo scaffold <day>
 
 # output:
-# Created module "src/bin/01.rs"
-# Created empty input file "src/inputs/01.txt"
-# Created empty example file "src/examples/01.txt"
+# Created module file "src/bin/01.rs"
+# Created empty input file "data/inputs/01.txt"
+# Created empty example file "data/examples/01.txt"
 # ---
 # 🎄 Type `cargo solve 01` to run your solution.
 ```
 
-Individual solutions live in the `./src/bin/` directory as separate binaries.
+Individual solutions live in the `./src/bin/` directory as separate binaries. _Inputs_ and _examples_ live in the the `./data` directory.
 
-Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/bin/scaffold.rs#L11-L41) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against the example input. For some puzzles, it might be easier to forgo the example file and hardcode inputs into the tests.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/bin/scaffold.rs#L11-L41) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solutions against the example input.
 
-When editing a solution, `rust-analyzer` will display buttons for running / debugging unit tests above the unit test blocks.
+Tip: when editing a solution, `rust-analyzer` will display buttons for running / debugging unit tests above the unit test blocks.
 
 ### Download input & description for a day
 
@@ -61,18 +63,13 @@ When editing a solution, `rust-analyzer` will display buttons for running / debu
 cargo download <day>
 
 # output:
-# Loaded session cookie from "/Users/<snip>/.adventofcode.session".
-# Fetching puzzle for day 1, 2022...
-# Saving puzzle description to "src/puzzles/01.md"...
-# Downloading input for day 1, 2022...
-# Saving puzzle input to "src/inputs/01.txt"...
-# Done!
+# [INFO  aoc] 🎄 aoc-cli - Advent of Code command-line tool
+# [INFO  aoc_client] 🎅 Saved puzzle to 'data/puzzles/01.md'
+# [INFO  aoc_client] 🎅 Saved input to 'data/inputs/01.txt'
 # ---
-# 🎄 Successfully wrote input to "src/inputs/01.txt".
-# 🎄 Successfully wrote puzzle to "src/puzzles/01.md".
+# 🎄 Successfully wrote input to "data/inputs/01.txt".
+# 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
 ```
-
-Puzzle descriptions are stored in `src/puzzles` as markdown files. Puzzle inputs are not checked into git. [Reasoning](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3).
 
 ### Run solutions for a day
 
@@ -81,19 +78,17 @@ Puzzle descriptions are stored in `src/puzzles` as markdown files. Puzzle inputs
 cargo solve <day>
 
 # output:
+#     Finished dev [unoptimized + debuginfo] target(s) in 0.13s
 #     Running `target/debug/01`
-# 🎄 Part 1 🎄
-#
-# 6 (elapsed: 37.03µs)
-#
-# 🎄 Part 2 🎄
-#
-# 9 (elapsed: 33.18µs)
+# Part 1: 42 (166.0ns)
+# Part 2: 42 (41.0ns)
 ```
 
-`solve` is an alias for `cargo run --bin`. To run an optimized version for benchmarking, append the `--release` flag.
+The `solve` command runs your solution. If you set the `--release` flag, real puzzle _inputs_ will be passed to your solution, otherwise the _example_ inputs will be used.
 
-Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
+If you append the `--time` flag to the command, the runner will run your code between `10` and `10.000` times - depending on execution time of first execution - and print the average execution time.
+
+For example, a benchmarked execution against real inputs of day 1 would look like `cargo solve 1 --release --time`. Displayed _timings_ show the raw execution time of your solution without overhead like file reads.
 
 #### Submitting solutions
 
@@ -112,22 +107,21 @@ cargo all
 # ----------
 # | Day 01 |
 # ----------
-# 🎄 Part 1 🎄
-#
-# 0 (elapsed: 170.00µs)
-#
-# 🎄 Part 2 🎄
-#
-# 0 (elapsed: 30.00µs)
+# Part 1: 42 (19.0ns)
+# Part 2: 42 (19.0ns)
 # <...other days...>
 # Total: 0.20ms
 ```
 
-`all` is an alias for `cargo run`. To run an optimized version for benchmarking, use the `--release` flag.
+This runs all solutions sequentially and prints output to the command-line. Same as for the `solve` command, `--release` controls whether real inputs will be used.
 
-_Total timing_ is computed from individual solution _timings_ and excludes as much overhead as possible.
+#### Update readme benchmarks
 
-### Run all solutions against the example input
+The template can output a table with solution times to your readme. Please note that these are not "scientific" benchmarks, understand them as a fun approximation. 😉
+
+In order to generate a benchmarking table, run `cargo all --release --time`. If everything goes well, the command will output "_Successfully updated README with benchmarks._" after the execution finishes.
+
+### Run all tests
 
 ```sh
 cargo test
@@ -148,6 +142,13 @@ cargo clippy
 ```
 ## Optional template features
 
+### Download puzzle inputs via aoc-cli
+
+1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
+2. Create an `.adventofcode.session` file in your home directory and paste your session cookie. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in _Cookies_ under the _Application_ or _Storage_ tab, and copy out the `session` cookie value. [^1] 
+
+Once installed, you can use the [download command](#download-input--description-for-a-day).
+
 ### Read puzzle description in terminal
 
 > **Note**  
@@ -162,13 +163,6 @@ cargo read <day>
 # Fetching puzzle for day 1, 2022...
 # ...the input...
 ```
-
-### Download puzzle inputs via aoc-cli
-
-1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
-2. Create an `.adventofcode.session` file in your home directory and paste your session cookie[^1] into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
-
-Once installed, you can use the [download command](#download-input--description-for-a-day).
 
 ### Check code formatting in CI
 

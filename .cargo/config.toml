@@ -1,10 +1,11 @@
 [alias]
-scaffold = "run --bin scaffold --quiet --release -- "
-download = "run --bin download --quiet --release -- "
-read = "run --bin read --quiet --release -- "
+scaffold = "run --quiet --release -- scaffold"
+download = "run --quiet --release -- download"
+read = "run --quiet --release -- read"
 
-solve = "run --bin solve --quiet --release -- "
-all = "run"
+solve = "run --quiet --release -- solve"
+all = "run --quiet --release -- all"
+time = "run --quiet --release -- all --release --time"
 
 [env]
 AOC_YEAR = "2022"
