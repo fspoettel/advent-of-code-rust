@@ -49,9 +49,9 @@ cargo scaffold <day>
 
 Individual solutions live in the `./src/bin/` directory as separate binaries. _Inputs_ and _examples_ live in the the `./data` directory.
 
-Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/bin/scaffold.rs#L11-L41) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solution against the example input.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/bin/scaffold.rs#L11-L41) has _unit tests_ referencing its _example_ file. Use these unit tests to develop and debug your solutions against the example input.
 
-When editing a solution, `rust-analyzer` will display buttons for running / debugging unit tests above the unit test blocks.
+Tip: when editing a solution, `rust-analyzer` will display buttons for running / debugging unit tests above the unit test blocks.
 
 ### Download input & description for a day
 
@@ -119,7 +119,7 @@ This runs all solutions sequentially and prints output to the command-line. Same
 
 The template can output a table with solution times to your readme. Please note that these are not "scientific" benchmarks, understand them as a fun approximation. 😉
 
-In order to generate a benchmarking table, run `cargo all --release --time`. If everything goes well, the command will output _Successfully updated README with benchmarks._ after the execution finishes.
+In order to generate a benchmarking table, run `cargo all --release --time`. If everything goes well, the command will output "_Successfully updated README with benchmarks._" after the execution finishes.
 
 ### Run all tests
 
@@ -142,6 +142,13 @@ cargo clippy
 ```
 ## Optional template features
 
+### Download puzzle inputs via aoc-cli
+
+1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
+2. Create an `.adventofcode.session` file in your home directory and paste your session cookie. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in _Cookies_ under the _Application_ or _Storage_ tab, and copy out the `session` cookie value. [^1] 
+
+Once installed, you can use the [download command](#download-input--description-for-a-day).
+
 ### Read puzzle description in terminal
 
 > **Note**  
@@ -156,13 +163,6 @@ cargo read <day>
 # Fetching puzzle for day 1, 2022...
 # ...the input...
 ```
-
-### Download puzzle inputs via aoc-cli
-
-1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
-2. Create an `.adventofcode.session` file in your home directory and paste your session cookie[^1] into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
-
-Once installed, you can use the [download command](#download-input--description-for-a-day).
 
 ### Check code formatting in CI
 
