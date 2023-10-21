@@ -196,7 +196,7 @@ mod child_commands {
     }
 
     /// copied from: https://github.com/rust-lang/rust/blob/1.64.0/library/std/src/macros.rs#L328-L333
-    #[cfg(test)]
+    #[cfg(feature = "test_lib")]
     macro_rules! assert_approx_eq {
         ($a:expr, $b:expr) => {{
             let (a, b) = (&$a, &$b);
@@ -209,7 +209,7 @@ mod child_commands {
         }};
     }
 
-    #[cfg(test)]
+    #[cfg(feature = "test_lib")]
     mod tests {
         use super::parse_exec_time;
 

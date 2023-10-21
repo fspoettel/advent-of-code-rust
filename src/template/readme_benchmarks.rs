@@ -100,7 +100,7 @@ pub fn update(timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
     Ok(())
 }
 
-#[cfg(test)]
+#[cfg(feature = "test_lib")]
 mod tests {
     use super::{update_content, Timings, MARKER};
 
