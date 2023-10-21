@@ -17,6 +17,7 @@ This template supports all major OS (macOS, Linux, Windows).
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
 3.  Clone your repository to your computer.
+4.  If you are solving a previous year's aoc and want to use the `aoc-cli` integration, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect that.
 
 ### Setup rust 💻
 
@@ -29,9 +30,6 @@ This template supports all major OS (macOS, Linux, Windows).
 ✨ You can start solving puzzles now! Head to the [Usage section](#usage) to see how to use this template. If you like, you can configure [some optional features](#optional-template-features).
 
 ## Usage
-
-> **Note**  
-> If you are solving a previous year's aoc and want to use the `aoc-cli` integration, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect that.
 
 ### Scaffold a day
 
