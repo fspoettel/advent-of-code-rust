@@ -30,6 +30,9 @@ This template supports all major OS (macOS, Linux, Windows).
 
 ## Usage
 
+> **Note**  
+> If you are solving a previous year's aoc and want to use the `aoc-cli` integration, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect that.
+
 ### Scaffold a day
 
 ```sh
@@ -96,6 +99,13 @@ cargo solve <day>
 
 Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
 
+#### Submitting solutions
+
+> **Note**  
+> This requires [installing the aoc-cli crate](#download-puzzle-inputs-via-aoc-cli).
+
+In order to submit part of a solution for checking, append the `--submit <part>` option to the `solve` command.
+
 ### Run all solutions
 
 ```sh
@@ -140,6 +150,7 @@ cargo fmt
 ```sh
 cargo clippy
 ```
+## Optional template features
 
 ### Read puzzle description in terminal
 
@@ -157,8 +168,6 @@ cargo read <day>
 ```
 
 To read inputs for previous years, append the `--year/-y` flag. _(example: `cargo read 1 --year 2020`)_
-
-## Optional template features
 
 ### Download puzzle inputs via aoc-cli
 
