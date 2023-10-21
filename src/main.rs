@@ -1,45 +1,93 @@
-/*
- * This file contains template code.
- * There is no need to edit this file unless you want to change template functionality.
- */
-use advent_of_code::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
-use std::process::Command;
+use advent_of_code::template::commands::{
+    all::all_handler, download::download_handler, read::read_handler, scaffold::scaffold_handler,
+    solve::solve_handler,
+};
+use args::{parse_args, AppArgs};
+
+mod args {
+    use std::process;
+
+    pub enum AppArgs {
+        Download {
+            day: u8,
+        },
+        Read {
+            day: u8,
+        },
+        Scaffold {
+            day: u8,
+        },
+        Solve {
+            day: u8,
+            release: bool,
+            time: bool,
+            submit: Option<u8>,
+        },
+        All {
+            release: bool,
+            time: bool,
+        },
+    }
+
+    pub fn parse_args() -> Result<AppArgs, Box<dyn std::error::Error>> {
+        let mut args = pico_args::Arguments::from_env();
+
+        let app_args = match args.subcommand()?.as_deref() {
+            Some("all") => AppArgs::All {
+                release: args.contains("--release"),
+                time: args.contains("--time"),
+            },
+            Some("download") => AppArgs::Download {
+                day: args.free_from_str()?,
+            },
+            Some("read") => AppArgs::Read {
+                day: args.free_from_str()?,
+            },
+            Some("scaffold") => AppArgs::Scaffold {
+                day: args.free_from_str()?,
+            },
+            Some("solve") => AppArgs::Solve {
+                day: args.free_from_str()?,
+                release: args.contains("--release"),
+                submit: args.opt_value_from_str("--submit")?,
+                time: args.contains("--time"),
+            },
+            Some(x) => {
+                eprintln!("Unknown command: {}", x);
+                process::exit(1);
+            }
+            None => {
+                eprintln!("No command specified.");
+                process::exit(1);
+            }
+        };
+
+        let remaining = args.finish();
+        if !remaining.is_empty() {
+            eprintln!("Warning: unknown argument(s): {:?}.", remaining);
+        }
+
+        Ok(app_args)
+    }
+}
 
 fn main() {
-    let total: f64 = (1..=25)
-        .map(|day| {
-            let day = format!("{day:02}");
-
-            let mut args = vec!["run", "--bin", &day];
-            if cfg!(not(debug_assertions)) {
-                args.push("--release");
-            }
-
-            let cmd = Command::new("cargo").args(&args).output().unwrap();
-
-            println!("----------");
-            println!("{ANSI_BOLD}| Day {day} |{ANSI_RESET}");
-            println!("----------");
-
-            let output = String::from_utf8(cmd.stdout).unwrap();
-            let is_empty = output.is_empty();
-
-            println!(
-                "{}",
-                if is_empty {
-                    "Not solved."
-                } else {
-                    output.trim()
-                }
-            );
-
-            if is_empty {
-                0_f64
-            } else {
-                advent_of_code::parse_exec_time(&output)
-            }
-        })
-        .sum();
-
-    println!("{ANSI_BOLD}Total:{ANSI_RESET} {ANSI_ITALIC}{total:.2}ms{ANSI_RESET}");
+    match parse_args() {
+        Err(err) => {
+            eprintln!("Error: {}", err);
+            std::process::exit(1);
+        }
+        Ok(args) => match args {
+            AppArgs::All { release, time } => all_handler(release, time),
+            AppArgs::Download { day } => download_handler(day),
+            AppArgs::Read { day } => read_handler(day),
+            AppArgs::Scaffold { day } => scaffold_handler(day),
+            AppArgs::Solve {
+                day,
+                release,
+                time,
+                submit,
+            } => solve_handler(day, release, time, submit),
+        },
+    };
 }
