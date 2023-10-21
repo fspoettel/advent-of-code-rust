@@ -14,10 +14,42 @@ pub const ANSI_RESET: &str = "\x1b[0m";
 
 #[macro_export]
 macro_rules! solve {
-    ($part:expr, $solver:ident, $input:expr) => {{
-        use advent_of_code::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET};
+    ($day:expr, $part:expr, $solver:ident, $input:expr) => {{
+        use advent_of_code::{ANSI_BOLD, ANSI_ITALIC, ANSI_RESET, aoc_cli};
         use std::fmt::Display;
         use std::time::Instant;
+        use std::env;
+        use std::process;
+
+        fn submit_if_requested<T: Display>(result: T) {
+            let args: Vec<String> = env::args().collect();
+
+            if args.contains(&"--submit".into()) {
+                if aoc_cli::check().is_err() {
+                    eprintln!("command \"aoc\" not found or not callable. Try running \"cargo install aoc-cli\" to install it.");
+                    process::exit(1);
+                }
+
+                if args.len() < 3 {
+                    eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
+                    process::exit(1);
+                }
+
+                let part_index = args.iter().position(|x| x == "--submit").unwrap() + 1;
+                let part_submit =  match args[part_index].parse::<u8>() {
+                    Ok(x) => x,
+                    Err(_) => {
+                        eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
+                        process::exit(1);
+                    }
+                };
+
+                if part_submit == $part {
+                    println!("Submitting puzzle answer for part {}...", $part);
+                    aoc_cli::submit($day, $part, result).unwrap();
+                }
+            }
+        }
 
         fn print_result<T: Display>(func: impl FnOnce(&str) -> Option<T>, input: &str) {
             let timer = Instant::now();
@@ -29,6 +61,7 @@ macro_rules! solve {
                         "{} {}(elapsed: {:.2?}){}",
                         result, ANSI_ITALIC, elapsed, ANSI_RESET
                     );
+                    submit_if_requested(result);
                 }
                 None => {
                     println!("not solved.")
@@ -127,10 +160,10 @@ mod tests {
 pub mod aoc_cli {
     use std::{
         fmt::Display,
-        fs::create_dir_all,
         process::{Command, Output, Stdio},
     };
 
+    #[derive(Debug)]
     pub enum AocCliError {
         CommandNotFound,
         CommandNotCallable,
@@ -159,17 +192,26 @@ pub mod aoc_cli {
         Ok(())
     }
 
-    pub fn read(day: u8, year: Option<u16>) -> Result<Output, AocCliError> {
+    pub fn read(day: u8) -> Result<Output, AocCliError> {
         // TODO: output local puzzle if present.
-        let args = build_args("read", &[], day, year);
+        let puzzle_path = get_puzzle_path(day);
+
+        let args = build_args(
+            "read",
+            &[
+                "--description-only".into(),
+                "--puzzle-file".into(),
+                puzzle_path,
+            ],
+            day,
+        );
+
         call_aoc_cli(&args)
     }
 
-    pub fn download(day: u8, year: Option<u16>) -> Result<Output, AocCliError> {
+    pub fn download(day: u8) -> Result<Output, AocCliError> {
         let input_path = get_input_path(day);
-
         let puzzle_path = get_puzzle_path(day);
-        create_dir_all("src/puzzles").map_err(|_| AocCliError::IoError)?;
 
         let args = build_args(
             "download",
@@ -181,7 +223,6 @@ pub mod aoc_cli {
                 puzzle_path.to_string(),
             ],
             day,
-            year,
         );
 
         let output = call_aoc_cli(&args)?;
@@ -196,6 +237,14 @@ pub mod aoc_cli {
         }
     }
 
+    pub fn submit<T: Display>(day: u8, part: u8, result: T) -> Result<Output, AocCliError> {
+        // workaround: the argument order is inverted for submit.
+        let mut args = build_args("submit", &[], day);
+        args.push(part.to_string());
+        args.push(result.to_string());
+        call_aoc_cli(&args)
+    }
+
     fn get_input_path(day: u8) -> String {
         let day_padded = format!("{day:02}");
         format!("src/inputs/{day_padded}.txt")
@@ -206,10 +255,17 @@ pub mod aoc_cli {
         format!("src/puzzles/{day_padded}.md")
     }
 
-    fn build_args(command: &str, args: &[String], day: u8, year: Option<u16>) -> Vec<String> {
+    fn get_year() -> Option<u16> {
+        match std::env::var("AOC_YEAR") {
+            Ok(x) => x.parse().ok().or(None),
+            Err(_) => None,
+        }
+    }
+
+    fn build_args(command: &str, args: &[String], day: u8) -> Vec<String> {
         let mut cmd_args = args.to_vec();
 
-        if let Some(year) = year {
+        if let Some(year) = get_year() {
             cmd_args.push("--year".into());
             cmd_args.push(year.to_string());
         }

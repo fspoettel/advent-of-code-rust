@@ -8,7 +8,7 @@ use std::{
     process,
 };
 
-const MODULE_TEMPLATE: &str = r###"pub fn part_one(input: &str) -> Option<u32> {
+const MODULE_TEMPLATE: &str = r#"pub fn part_one(input: &str) -> Option<u32> {
     None
 }
 
@@ -18,8 +18,8 @@ pub fn part_two(input: &str) -> Option<u32> {
 
 fn main() {
     let input = &advent_of_code::read_file("inputs", DAY);
-    advent_of_code::solve!(1, part_one, input);
-    advent_of_code::solve!(2, part_two, input);
+    advent_of_code::solve!(DAY, 1, part_one, input);
+    advent_of_code::solve!(DAY, 2, part_two, input);
 }
 
 #[cfg(test)]
@@ -38,7 +38,7 @@ mod tests {
         assert_eq!(part_two(&input), None);
     }
 }
-"###;
+"#;
 
 fn parse_args() -> Result<u8, pico_args::Error> {
     let mut args = pico_args::Arguments::from_env();

@@ -17,6 +17,7 @@ This template supports all major OS (macOS, Linux, Windows).
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
 3.  Clone your repository to your computer.
+4.  If you are solving a previous year's aoc and want to use the `aoc-cli` integration, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect that.
 
 ### Setup rust 💻
 
@@ -71,8 +72,6 @@ cargo download <day>
 # 🎄 Successfully wrote puzzle to "src/puzzles/01.md".
 ```
 
-To download inputs for previous years, append the `--year/-y` flag. _(example: `cargo download 1 --year 2020`)_
-
 Puzzle descriptions are stored in `src/puzzles` as markdown files. Puzzle inputs are not checked into git. [Reasoning](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3).
 
 ### Run solutions for a day
@@ -95,6 +94,13 @@ cargo solve <day>
 `solve` is an alias for `cargo run --bin`. To run an optimized version for benchmarking, append the `--release` flag.
 
 Displayed _timings_ show the raw execution time of your solution without overhead (e.g. file reads).
+
+#### Submitting solutions
+
+> **Note**  
+> This requires [installing the aoc-cli crate](#download-puzzle-inputs-via-aoc-cli).
+
+In order to submit part of a solution for checking, append the `--submit <part>` option to the `solve` command.
 
 ### Run all solutions
 
@@ -140,6 +146,7 @@ cargo fmt
 ```sh
 cargo clippy
 ```
+## Optional template features
 
 ### Read puzzle description in terminal
 
@@ -156,13 +163,9 @@ cargo read <day>
 # ...the input...
 ```
 
-To read inputs for previous years, append the `--year/-y` flag. _(example: `cargo read 1 --year 2020`)_
-
-## Optional template features
-
 ### Download puzzle inputs via aoc-cli
 
-1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.7.0`
+1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
 2. Create an `.adventofcode.session` file in your home directory and paste your session cookie[^1] into it. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie value.
 
 Once installed, you can use the [download command](#download-input--description-for-a-day).
