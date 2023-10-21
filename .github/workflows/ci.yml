@@ -6,33 +6,28 @@ env:
     CARGO_TERM_COLOR: always
 
 jobs:
-    check:
-        runs-on: ubuntu-latest
-        name: Check
-        steps:
-            - uses: actions/checkout@v3
-            - name: cargo check
-              run: cargo check
     test:
         runs-on: ubuntu-latest
-        name: Test
+        name: CI
         steps:
             - uses: actions/checkout@v3
+            - name: Set up cargo cache
+              uses: actions/cache@v3
+              continue-on-error: false
+              with:
+                path: |
+                    ~/.cargo/bin/
+                    ~/.cargo/registry/index/
+                    ~/.cargo/registry/cache/
+                    ~/.cargo/git/db/
+                    target/
+                key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+                restore-keys: ${{ runner.os }}-cargo-
             - name: cargo test
               run: cargo test
-    # uncomment to enable clippy lints
-    # clippy:
-    #     runs-on: ubuntu-latest
-    #     name: Lint (clippy)
-    #     steps:
-    #         - uses: actions/checkout@v3
-    #         - name: cargo clippy
-    #           run: cargo clippy -- -D warnings
-    # uncoment to enable format checking
-    # fmt:
-    #     runs-on: ubuntu-latest
-    #     name: Format
-    #     steps:
-    #         - uses: actions/checkout@v3
-    #         - name: cargo fmt
-    #           run: cargo fmt --check
+# uncomment to enable clippy linter
+            # - name: cargo clippy
+            #   run: cargo clippy -- -D warnings
+# uncomment to enable format linter
+            # - name: cargo fmt
+            #   run: cargo fmt --check

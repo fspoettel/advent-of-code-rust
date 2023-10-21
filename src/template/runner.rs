@@ -69,7 +69,7 @@ fn bench<I: Clone, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> 
 
     (
         Duration::from_nanos(average_duration(&timers) as u64),
-        bench_iterations as u128,
+        bench_iterations,
     )
 }
 
