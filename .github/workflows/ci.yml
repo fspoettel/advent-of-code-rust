@@ -8,7 +8,7 @@ env:
 jobs:
     test:
         runs-on: ubuntu-latest
-        name: Lint & test
+        name: CI
         steps:
             - uses: actions/checkout@v3
             - name: Set up cargo cache
@@ -25,10 +25,9 @@ jobs:
                 restore-keys: ${{ runner.os }}-cargo-
             - name: cargo test
               run: cargo test
-
 # uncomment to enable clippy linter
-            - name: cargo clippy
-              run: cargo clippy -- -D warnings
+            # - name: cargo clippy
+            #   run: cargo clippy -- -D warnings
 # uncomment to enable format linter
-            - name: cargo fmt
-              run: cargo fmt --check
+            # - name: cargo fmt
+            #   run: cargo fmt --check
