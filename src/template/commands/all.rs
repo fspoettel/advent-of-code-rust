@@ -223,7 +223,7 @@ mod child_commands {
                 ],
                 1,
             );
-            assert_approx_eq!(res.total_nanos, 74137374.13_f64);
+            assert_approx_eq!(res.total_nanos, 74130074.13_f64);
             assert_eq!(res.part_1.unwrap(), "74.13ns");
             assert_eq!(res.part_2.unwrap(), "74.13ms");
         }
@@ -238,7 +238,7 @@ mod child_commands {
                 ],
                 1,
             );
-            assert_approx_eq!(res.total_nanos, 3100000000_f64);
+            assert_approx_eq!(res.total_nanos, 2100000000_f64);
             assert_eq!(res.part_1.unwrap(), "2s");
             assert_eq!(res.part_2.unwrap(), "100ms");
         }
@@ -253,7 +253,7 @@ mod child_commands {
                 ],
                 1,
             );
-            assert_approx_eq!(res.total_nanos, 1000000_f64);
+            assert_approx_eq!(res.total_nanos, 0_f64);
             assert_eq!(res.part_1.is_none(), true);
             assert_eq!(res.part_2.is_none(), true);
         }

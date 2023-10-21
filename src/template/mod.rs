@@ -27,7 +27,7 @@ macro_rules! main {
         fn main() {
             use advent_of_code::template::runner::*;
             let input = advent_of_code::template::read_file("inputs", $day);
-            run_part(part_one,&input, $day, 1);
+            run_part(part_one, &input, $day, 1);
             run_part(part_two, &input, $day, 2);
         }
     };
