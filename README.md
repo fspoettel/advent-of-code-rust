@@ -72,8 +72,6 @@ cargo download <day>
 # 🎄 Successfully wrote puzzle to "src/puzzles/01.md".
 ```
 
-To download inputs for previous years, append the `--year/-y` flag. _(example: `cargo download 1 --year 2020`)_
-
 Puzzle descriptions are stored in `src/puzzles` as markdown files. Puzzle inputs are not checked into git. [Reasoning](https://old.reddit.com/r/adventofcode/comments/k99rod/sharing_input_data_were_we_requested_not_to/gf2ukkf/?context=3).
 
 ### Run solutions for a day
@@ -164,8 +162,6 @@ cargo read <day>
 # Fetching puzzle for day 1, 2022...
 # ...the input...
 ```
-
-To read inputs for previous years, append the `--year/-y` flag. _(example: `cargo read 1 --year 2020`)_
 
 ### Download puzzle inputs via aoc-cli
 
