@@ -5,35 +5,35 @@ use std::{
 };
 
 #[derive(Debug)]
-pub enum AocCliError {
+pub enum AocCommandError {
     CommandNotFound,
     CommandNotCallable,
     BadExitStatus(Output),
     IoError,
 }
 
-impl Display for AocCliError {
+impl Display for AocCommandError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            AocCliError::CommandNotFound => write!(f, "aoc-cli is not present in environment."),
-            AocCliError::CommandNotCallable => write!(f, "aoc-cli could not be called."),
-            AocCliError::BadExitStatus(_) => {
+            AocCommandError::CommandNotFound => write!(f, "aoc-cli is not present in environment."),
+            AocCommandError::CommandNotCallable => write!(f, "aoc-cli could not be called."),
+            AocCommandError::BadExitStatus(_) => {
                 write!(f, "aoc-cli exited with a non-zero status.")
             }
-            AocCliError::IoError => write!(f, "could not write output files to file system."),
+            AocCommandError::IoError => write!(f, "could not write output files to file system."),
         }
     }
 }
 
-pub fn check() -> Result<(), AocCliError> {
+pub fn check() -> Result<(), AocCommandError> {
     Command::new("aoc")
         .arg("-V")
         .output()
-        .map_err(|_| AocCliError::CommandNotFound)?;
+        .map_err(|_| AocCommandError::CommandNotFound)?;
     Ok(())
 }
 
-pub fn read(day: u8) -> Result<Output, AocCliError> {
+pub fn read(day: u8) -> Result<Output, AocCommandError> {
     let puzzle_path = get_puzzle_path(day);
 
     let args = build_args(
@@ -49,7 +49,7 @@ pub fn read(day: u8) -> Result<Output, AocCliError> {
     call_aoc_cli(&args)
 }
 
-pub fn download(day: u8) -> Result<Output, AocCliError> {
+pub fn download(day: u8) -> Result<Output, AocCommandError> {
     let input_path = get_input_path(day);
     let puzzle_path = get_puzzle_path(day);
 
@@ -72,7 +72,7 @@ pub fn download(day: u8) -> Result<Output, AocCliError> {
     Ok(output)
 }
 
-pub fn submit(day: u8, part: u8, result: &str) -> Result<Output, AocCliError> {
+pub fn submit(day: u8, part: u8, result: &str) -> Result<Output, AocCommandError> {
     // workaround: the argument order is inverted for submit.
     let mut args = build_args("submit", &[], day);
     args.push(part.to_string());
@@ -81,13 +81,13 @@ pub fn submit(day: u8, part: u8, result: &str) -> Result<Output, AocCliError> {
 }
 
 fn get_input_path(day: u8) -> String {
-    let day_padded = format!("{:02}", day);
-    format!("data/inputs/{}.txt", day_padded)
+    let day_padded = format!("{day:02}");
+    format!("data/inputs/{day_padded}.txt")
 }
 
 fn get_puzzle_path(day: u8) -> String {
-    let day_padded = format!("{:02}", day);
-    format!("data/puzzles/{}.md", day_padded)
+    let day_padded = format!("{day:02}");
+    format!("data/puzzles/{day_padded}.md")
 }
 
 fn get_year() -> Option<u16> {
@@ -110,18 +110,18 @@ fn build_args(command: &str, args: &[String], day: u8) -> Vec<String> {
     cmd_args
 }
 
-fn call_aoc_cli(args: &[String]) -> Result<Output, AocCliError> {
+fn call_aoc_cli(args: &[String]) -> Result<Output, AocCommandError> {
     // println!("Calling >aoc with: {}", args.join(" "));
     let output = Command::new("aoc")
         .args(args)
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
         .output()
-        .map_err(|_| AocCliError::CommandNotCallable)?;
+        .map_err(|_| AocCommandError::CommandNotCallable)?;
 
     if output.status.success() {
         Ok(output)
     } else {
-        Err(AocCliError::BadExitStatus(output))
+        Err(AocCommandError::BadExitStatus(output))
     }
 }

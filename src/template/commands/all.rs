@@ -5,7 +5,7 @@ use crate::template::{
     ANSI_BOLD, ANSI_ITALIC, ANSI_RESET,
 };
 
-pub fn all_handler(is_release: bool, is_timed: bool) {
+pub fn handle(is_release: bool, is_timed: bool) {
     let mut timings: Vec<Timings> = vec![];
 
     (1..=25).for_each(|day| {
@@ -13,7 +13,7 @@ pub fn all_handler(is_release: bool, is_timed: bool) {
             println!();
         }
 
-        println!("{}Day {}{}", ANSI_BOLD, day, ANSI_RESET);
+        println!("{ANSI_BOLD}Day {day}{ANSI_RESET}");
         println!("------");
 
         let output = child_commands::run_solution(day, is_timed, is_release).unwrap();
@@ -27,16 +27,13 @@ pub fn all_handler(is_release: bool, is_timed: bool) {
     });
 
     if is_timed {
-        let total_millis = timings.iter().map(|x| x.total_nanos).sum::<f64>() / 1000000_f64;
+        let total_millis = timings.iter().map(|x| x.total_nanos).sum::<f64>() / 1_000_000_f64;
 
-        println!(
-            "\n{}Total:{} {}{:.2}ms{}",
-            ANSI_BOLD, ANSI_RESET, ANSI_ITALIC, total_millis, ANSI_RESET
-        );
+        println!("\n{ANSI_BOLD}Total:{ANSI_RESET} {ANSI_ITALIC}{total_millis:.2}ms{ANSI_RESET}");
 
         if is_release {
             match readme_benchmarks::update(timings, total_millis) {
-                Ok(_) => println!("Successfully updated README with benchmarks."),
+                Ok(()) => println!("Successfully updated README with benchmarks."),
                 Err(_) => {
                     eprintln!("Failed to update readme with benchmarks.");
                 }
@@ -58,9 +55,10 @@ impl From<std::io::Error> for Error {
     }
 }
 
+#[must_use]
 pub fn get_path_for_bin(day: usize) -> String {
-    let day_padded = format!("{:02}", day);
-    format!("./src/bin/{}.rs", day_padded)
+    let day_padded = format!("{day:02}");
+    format!("./src/bin/{day_padded}.rs")
 }
 
 /// All solutions live in isolated binaries.
@@ -80,7 +78,7 @@ mod child_commands {
         is_timed: bool,
         is_release: bool,
     ) -> Result<Vec<String>, Error> {
-        let day_padded = format!("{:02}", day);
+        let day_padded = format!("{day:02}");
 
         // skip command invocation for days that have not been scaffolded yet.
         if !Path::new(&get_path_for_bin(day)).exists() {
@@ -121,7 +119,7 @@ mod child_commands {
 
         for line in stdout.lines() {
             let line = line.unwrap();
-            println!("{}", line);
+            println!("{line}");
             output.push(line);
         }
 
@@ -146,12 +144,9 @@ mod child_commands {
                     return None;
                 }
 
-                let (timing_str, nanos) = match parse_time(l) {
-                    Some(v) => v,
-                    None => {
-                        eprintln!("Could not parse timings from line: {l}");
-                        return None;
-                    }
+                let Some((timing_str, nanos)) = parse_time(l) else {
+                    eprintln!("Could not parse timings from line: {l}");
+                    return None;
                 };
 
                 let part = l.split(':').next()?;
@@ -188,8 +183,8 @@ mod child_commands {
         let parsed_timing = match str_timing {
             s if s.contains("ns") => s.split("ns").next()?.parse::<f64>().ok(),
             s if s.contains("µs") => parse_to_float(s, "µs").map(|x| x * 1000_f64),
-            s if s.contains("ms") => parse_to_float(s, "ms").map(|x| x * 1000000_f64),
-            s => parse_to_float(s, "s").map(|x| x * 1000000000_f64),
+            s if s.contains("ms") => parse_to_float(s, "ms").map(|x| x * 1_000_000_f64),
+            s => parse_to_float(s, "s").map(|x| x * 1_000_000_000_f64),
         }?;
 
         Some((str_timing, parsed_timing))

@@ -29,9 +29,9 @@ pub struct TablePosition {
     pos_end: usize,
 }
 
-pub fn get_path_for_bin(day: usize) -> String {
-    let day_padded = format!("{:02}", day);
-    format!("./src/bin/{}.rs", day_padded)
+#[must_use] pub fn get_path_for_bin(day: usize) -> String {
+    let day_padded = format!("{day:02}");
+    format!("./src/bin/{day_padded}.rs")
 }
 
 fn locate_table(readme: &str) -> Result<TablePosition, Error> {
@@ -62,12 +62,12 @@ fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> St
     let mut lines: Vec<String> = vec![
         MARKER.into(),
         header,
-        "".into(),
+        String::new(),
         "| Day | Part 1 | Part 2 |".into(),
         "| :---: | :---: | :---:  |".into(),
     ];
 
-    timings.into_iter().for_each(|timing| {
+    for timing in timings {
         let path = get_path_for_bin(timing.day);
         lines.push(format!(
             "| [Day {}]({}) | `{}` | `{}` |",
@@ -76,10 +76,10 @@ fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> St
             timing.part_1.unwrap_or_else(|| "-".into()),
             timing.part_2.unwrap_or_else(|| "-".into())
         ));
-    });
+    }
 
-    lines.push("".into());
-    lines.push(format!("**Total: {:.2}ms**", total_millis));
+    lines.push(String::new());
+    lines.push(format!("**Total: {total_millis:.2}ms**"));
     lines.push(MARKER.into());
 
     lines.join("\n")

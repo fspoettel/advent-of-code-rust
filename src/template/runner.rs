@@ -9,7 +9,7 @@ use std::{cmp, env, process};
 use super::ANSI_BOLD;
 
 pub fn run_part<I: Clone, T: Display>(func: impl Fn(I) -> Option<T>, input: I, day: u8, part: u8) {
-    let part_str = format!("Part {}", part);
+    let part_str = format!("Part {part}");
 
     let (result, duration, samples) =
         run_timed(func, input, |result| print_result(result, &part_str, ""));
@@ -35,9 +35,10 @@ fn run_timed<I: Clone, T>(
 
     hook(&result);
 
-    let run = match std::env::args().any(|x| x == "--time") {
-        true => bench(func, input, &base_time),
-        false => (base_time, 1),
+    let run = if std::env::args().any(|x| x == "--time") {
+        bench(func, input, &base_time)
+    } else {
+        (base_time, 1)
     };
 
     (result, run.0, run.1)
@@ -46,7 +47,7 @@ fn run_timed<I: Clone, T>(
 fn bench<I: Clone, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> (Duration, u128) {
     let mut stdout = stdout();
 
-    print!(" > {}benching{}", ANSI_ITALIC, ANSI_RESET);
+    print!(" > {ANSI_ITALIC}benching{ANSI_RESET}");
     let _ = stdout.flush();
 
     let bench_iterations = cmp::min(
@@ -68,20 +69,25 @@ fn bench<I: Clone, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> 
     }
 
     (
+        #[allow(clippy::cast_possible_truncation)]
         Duration::from_nanos(average_duration(&timers) as u64),
         bench_iterations,
     )
 }
 
 fn average_duration(numbers: &[Duration]) -> u128 {
-    numbers.iter().map(|d| d.as_nanos()).sum::<u128>() / numbers.len() as u128
+    numbers
+        .iter()
+        .map(std::time::Duration::as_nanos)
+        .sum::<u128>()
+        / numbers.len() as u128
 }
 
 fn format_duration(duration: &Duration, samples: u128) -> String {
     if samples == 1 {
-        format!(" ({:.1?})", duration)
+        format!(" ({duration:.1?})")
     } else {
-        format!(" ({:.1?} @ {} samples)", duration, samples)
+        format!(" ({duration:.1?} @ {samples} samples)")
     }
 }
 
@@ -91,33 +97,30 @@ fn print_result<T: Display>(result: &Option<T>, part: &str, duration_str: &str) 
     match result {
         Some(result) => {
             if result.to_string().contains('\n') {
-                let str = format!("{}: ▼ {}", part, duration_str);
+                let str = format!("{part}: ▼ {duration_str}");
                 if is_intermediate_result {
-                    print!("{}", str);
+                    print!("{str}");
                 } else {
                     print!("\r");
-                    println!("{}", str);
-                    println!("{}", result);
+                    println!("{str}");
+                    println!("{result}");
                 }
             } else {
-                let str = format!(
-                    "{}: {}{}{}{}",
-                    part, ANSI_BOLD, result, ANSI_RESET, duration_str
-                );
+                let str = format!("{part}: {ANSI_BOLD}{result}{ANSI_RESET}{duration_str}");
                 if is_intermediate_result {
-                    print!("{}", str);
+                    print!("{str}");
                 } else {
                     print!("\r");
-                    println!("{}", str);
+                    println!("{str}");
                 }
             }
         }
         None => {
             if is_intermediate_result {
-                print!("{}: ✖", part);
+                print!("{part}: ✖");
             } else {
                 print!("\r");
-                println!("{}: ✖             ", part);
+                println!("{part}: ✖             ");
             }
         }
     }
@@ -130,7 +133,7 @@ fn submit_result<T: Display>(
     result: T,
     day: u8,
     part: u8,
-) -> Option<Result<Output, aoc_cli::AocCliError>> {
+) -> Option<Result<Output, aoc_cli::AocCommandError>> {
     let args: Vec<String> = env::args().collect();
 
     if !args.contains(&"--submit".into()) {
@@ -143,12 +146,10 @@ fn submit_result<T: Display>(
     }
 
     let part_index = args.iter().position(|x| x == "--submit").unwrap() + 1;
-    let part_submit = match args[part_index].parse::<u8>() {
-        Ok(x) => x,
-        Err(_) => {
-            eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
-            process::exit(1);
-        }
+
+    let Ok(part_submit) = args[part_index].parse::<u8>() else {
+        eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
+        process::exit(1);
     };
 
     if part_submit != part {
