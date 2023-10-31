@@ -84,11 +84,11 @@ cargo solve <day>
 # Part 2: 42 (41.0ns)
 ```
 
-The `solve` command runs your solution. If you set the `--release` flag, real puzzle _inputs_ will be passed to your solution, otherwise the _example_ inputs will be used.
+The `solve` command runs your solution against real puzzle inputs. To run an optimized build of your code, append the `--release` flag as with any other rust program.
 
-If you append the `--time` flag to the command, the runner will run your code between `10` and `10.000` times - depending on execution time of first execution - and print the average execution time.
+By default, `solve` executes your code once and shows the execution time. If you append the `--time` flag to the command, the runner will run your code between `10` and `10.000` times (depending on execution time of first execution) and print the average execution time.
 
-For example, a benchmarked execution against real inputs of day 1 would look like `cargo solve 1 --release --time`. Displayed _timings_ show the raw execution time of your solution without overhead like file reads.
+For example, running a benchmarked, optimized execution of day 1 would look like `cargo solve 1 --release --time`. Displayed _timings_ show the raw execution time of your solution without overhead like file reads.
 
 #### Submitting solutions
 
