@@ -56,7 +56,7 @@ Tip: when editing a solution, `rust-analyzer` will display buttons for running /
 ### Download input & description for a day
 
 > **Note**  
-> This command requires [installing the aoc-cli crate](#download-puzzle-inputs-via-aoc-cli).
+> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 ```sh
 # example: `cargo download 1`
@@ -93,7 +93,7 @@ For example, running a benchmarked, optimized execution of day 1 would look like
 #### Submitting solutions
 
 > **Note**  
-> This requires [installing the aoc-cli crate](#download-puzzle-inputs-via-aoc-cli).
+> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 In order to submit part of a solution for checking, append the `--submit <part>` option to the `solve` command.
 
@@ -140,19 +140,11 @@ cargo fmt
 ```sh
 cargo clippy
 ```
-## Optional template features
-
-### Download puzzle inputs via aoc-cli
-
-1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
-2. Create an `.adventofcode.session` file in your home directory and paste your session cookie. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in _Cookies_ under the _Application_ or _Storage_ tab, and copy out the `session` cookie value. [^1] 
-
-Once installed, you can use the [download command](#download-input--description-for-a-day).
 
 ### Read puzzle description in terminal
 
 > **Note**  
-> This command requires [installing the aoc-cli crate](#download-puzzle-inputs-via-aoc-cli).
+> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 ```sh
 # example: `cargo read 1`
@@ -164,13 +156,14 @@ cargo read <day>
 # ...the input...
 ```
 
-### Check code formatting in CI
+## Optional template features
 
-Uncomment the `format` job in the `ci.yml` workflow to enable fmt checks in CI.
+### Configure aoc-cli integration
 
-### Enable clippy lints in CI
+1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
+2. Create an `.adventofcode.session` file in your home directory and paste your session cookie. To retrieve the session cookie, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in _Cookies_ under the _Application_ or _Storage_ tab, and copy out the `session` cookie value. [^1] 
 
-Uncomment the `clippy` job in the `ci.yml` workflow to enable clippy checks in CI.
+Once installed, you can use the [download command](#download-input--description-for-a-day) and automatically submit solutions via the [`--submit` flag](#submitting-solutions).
 
 ### Automatically track ⭐️ progress in the readme
 
@@ -187,11 +180,15 @@ Go to the leaderboard page of the year you want to track and click _Private Lead
 Go to the _Secrets_ tab in your repository settings and create the following secrets:
 
 -   `AOC_ENABLED`: This variable controls whether the workflow is enabled. Set it to `true` to enable the progress tracker.
--   `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`
--   `AOC_YEAR`: the year you want to track. Example: `2021`
+-   `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`.
+-   `AOC_YEAR`: the year you want to track. Example: `2021`.
 -   `AOC_SESSION`: an active session[^2] for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
 
 ✨ You can now run this action manually via the _Run workflow_ button on the workflow page. If you want the workflow to run automatically, uncomment the `schedule` section in the `readme-stars.yml` workflow file or add a `push` trigger.
+
+### Check code formatting / clippy lints in CI
+
+Uncomment the respective sections in the `ci.yml` workflow.
 
 ### Use VS Code to debug your code
 
