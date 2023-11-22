@@ -73,7 +73,7 @@ fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> St
         let path = get_path_for_bin(timing.day);
         lines.push(format!(
             "| [Day {}]({}) | `{}` | `{}` |",
-            timing.day,
+            timing.day.into_inner(),
             path,
             timing.part_1.unwrap_or_else(|| "-".into()),
             timing.part_2.unwrap_or_else(|| "-".into())
@@ -105,23 +105,24 @@ pub fn update(timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
 #[cfg(feature = "test_lib")]
 mod tests {
     use super::{update_content, Timings, MARKER};
+    use crate::Day;
 
     fn get_mock_timings() -> Vec<Timings> {
         vec![
             Timings {
-                day: 1,
+                day: Day::new(1).unwrap(),
                 part_1: Some("10ms".into()),
                 part_2: Some("20ms".into()),
                 total_nanos: 3e+10,
             },
             Timings {
-                day: 2,
+                day: Day::new(2).unwrap(),
                 part_1: Some("30ms".into()),
                 part_2: Some("40ms".into()),
                 total_nanos: 7e+10,
             },
             Timings {
-                day: 4,
+                day: Day::new(4).unwrap(),
                 part_1: Some("40ms".into()),
                 part_2: Some("50ms".into()),
                 total_nanos: 9e+10,

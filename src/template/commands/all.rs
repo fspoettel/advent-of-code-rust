@@ -204,6 +204,8 @@ mod child_commands {
     mod tests {
         use super::parse_exec_time;
 
+        use crate::Day;
+
         #[test]
         fn test_well_formed() {
             let res = parse_exec_time(
@@ -212,7 +214,7 @@ mod child_commands {
                     "Part 2: 10 (74.13ms @ 99999 samples)".into(),
                     "".into(),
                 ],
-                1,
+                Day::new(1).unwrap(),
             );
             assert_approx_eq!(res.total_nanos, 74130074.13_f64);
             assert_eq!(res.part_1.unwrap(), "74.13ns");
@@ -227,7 +229,7 @@ mod child_commands {
                     "Part 2: 10s (100ms @ 1 samples)".into(),
                     "".into(),
                 ],
-                1,
+                Day::new(1).unwrap(),
             );
             assert_approx_eq!(res.total_nanos, 2100000000_f64);
             assert_eq!(res.part_1.unwrap(), "2s");
@@ -242,7 +244,7 @@ mod child_commands {
                     "Part 2: ✖        ".into(),
                     "".into(),
                 ],
-                1,
+                Day::new(1).unwrap(),
             );
             assert_approx_eq!(res.total_nanos, 0_f64);
             assert_eq!(res.part_1.is_none(), true);

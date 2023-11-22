@@ -28,6 +28,10 @@ impl Day {
         debug_assert!(day != 0 && day <= 25);
         Self(day)
     }
+
+    pub fn into_inner(self) -> u8 {
+        self.0
+    }
 }
 
 impl Display for Day {
