@@ -98,7 +98,7 @@ impl Iterator for EveryDay {
         if self.current > 25 {
             return None;
         }
-        // NOTE: the iterator start at 1 and we have verified that the value is not above 25.
+        // NOTE: the iterator starts at 1 and we have verified that the value is not above 25.
         let day = Day(self.current);
         self.current += 1;
 
