@@ -2,6 +2,8 @@
 /// The approach taken is similar to how `aoc-readme-stars` handles this.
 use std::{fs, io};
 
+use crate::Day;
+
 static MARKER: &str = "<!--- benchmarking table --->";
 
 #[derive(Debug)]
@@ -18,7 +20,7 @@ impl From<std::io::Error> for Error {
 
 #[derive(Clone)]
 pub struct Timings {
-    pub day: usize,
+    pub day: Day,
     pub part_1: Option<String>,
     pub part_2: Option<String>,
     pub total_nanos: f64,
@@ -29,9 +31,9 @@ pub struct TablePosition {
     pos_end: usize,
 }
 
-#[must_use] pub fn get_path_for_bin(day: usize) -> String {
-    let day_padded = format!("{day:02}");
-    format!("./src/bin/{day_padded}.rs")
+#[must_use]
+pub fn get_path_for_bin(day: Day) -> String {
+    format!("./src/bin/{day}.rs")
 }
 
 fn locate_table(readme: &str) -> Result<TablePosition, Error> {

@@ -4,18 +4,20 @@ use args::{parse, AppArguments};
 mod args {
     use std::process;
 
+    use advent_of_code::Day;
+
     pub enum AppArguments {
         Download {
-            day: u8,
+            day: Day,
         },
         Read {
-            day: u8,
+            day: Day,
         },
         Scaffold {
-            day: u8,
+            day: Day,
         },
         Solve {
-            day: u8,
+            day: Day,
             release: bool,
             time: bool,
             submit: Option<u8>,

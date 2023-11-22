@@ -1,9 +1,9 @@
 use std::process::{Command, Stdio};
 
-pub fn handle(day: u8, release: bool, time: bool, submit_part: Option<u8>) {
-    let day_padded = format!("{day:02}");
+use crate::Day;
 
-    let mut cmd_args = vec!["run".to_string(), "--bin".to_string(), day_padded];
+pub fn handle(day: Day, release: bool, time: bool, submit_part: Option<u8>) {
+    let mut cmd_args = vec!["run".to_string(), "--bin".to_string(), day.to_string()];
 
     if release {
         cmd_args.push("--release".to_string());

@@ -4,11 +4,12 @@ use crate::template::{
     readme_benchmarks::{self, Timings},
     ANSI_BOLD, ANSI_ITALIC, ANSI_RESET,
 };
+use crate::{every_day, Day};
 
 pub fn handle(is_release: bool, is_timed: bool) {
     let mut timings: Vec<Timings> = vec![];
 
-    (1..=25).for_each(|day| {
+    every_day().for_each(|day| {
         if day > 1 {
             println!();
         }
@@ -56,15 +57,15 @@ impl From<std::io::Error> for Error {
 }
 
 #[must_use]
-pub fn get_path_for_bin(day: usize) -> String {
-    let day_padded = format!("{day:02}");
-    format!("./src/bin/{day_padded}.rs")
+pub fn get_path_for_bin(day: Day) -> String {
+    format!("./src/bin/{day}.rs")
 }
 
 /// All solutions live in isolated binaries.
 /// This module encapsulates interaction with these binaries, both invoking them as well as parsing the timing output.
 mod child_commands {
     use super::{get_path_for_bin, Error};
+    use crate::Day;
     use std::{
         io::{BufRead, BufReader},
         path::Path,
@@ -73,18 +74,13 @@ mod child_commands {
     };
 
     /// Run the solution bin for a given day
-    pub fn run_solution(
-        day: usize,
-        is_timed: bool,
-        is_release: bool,
-    ) -> Result<Vec<String>, Error> {
-        let day_padded = format!("{day:02}");
-
+    pub fn run_solution(day: Day, is_timed: bool, is_release: bool) -> Result<Vec<String>, Error> {
         // skip command invocation for days that have not been scaffolded yet.
         if !Path::new(&get_path_for_bin(day)).exists() {
             return Ok(vec![]);
         }
 
+        let day_padded = day.to_string();
         let mut args = vec!["run", "--quiet", "--bin", &day_padded];
 
         if is_release {
@@ -129,7 +125,7 @@ mod child_commands {
         Ok(output)
     }
 
-    pub fn parse_exec_time(output: &[String], day: usize) -> super::Timings {
+    pub fn parse_exec_time(output: &[String], day: Day) -> super::Timings {
         let mut timings = super::Timings {
             day,
             part_1: None,
