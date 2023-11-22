@@ -81,7 +81,7 @@ impl Display for DayFromStrError {
 
 /* -------------------------------------------------------------------------- */
 
-/// An iterator that yield every day of advent from the 1st to the 25th.
+/// An iterator that yields every day of advent from the 1st to the 25th.
 pub fn every_day() -> EveryDay {
     EveryDay { current: 1 }
 }
