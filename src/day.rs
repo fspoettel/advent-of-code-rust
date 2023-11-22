@@ -74,7 +74,7 @@ impl Error for DayFromStrError {}
 
 impl Display for DayFromStrError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("expecting a number between 1 and 25")
+        f.write_str("expecting a day number between 1 and 25")
     }
 }
 
