@@ -10,6 +10,7 @@ use std::str::FromStr;
 /// This value is display as a two digit number.
 ///
 /// ```
+/// # use advent_of_code::Day;
 /// let day = Day::new(8).unwrap();
 /// assert_eq!(day.to_string(), "08")
 /// ```
