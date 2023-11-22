@@ -27,8 +27,9 @@ impl Day {
         Some(Self(day))
     }
 
-    fn new_unchecked(day: u8) -> Self {
-        debug_assert!(day != 0 && day <= 25);
+    // Not part of the public API
+    #[doc(hidden)]
+    pub const fn __new_unchecked(day: u8) -> Self {
         Self(day)
     }
 
@@ -99,11 +100,29 @@ impl Iterator for EveryDay {
             return None;
         }
         // NOTE: the iterator start at 1 and we have verified that the value is not above 25.
-        let day = Day::new_unchecked(self.current);
+        let day = Day(self.current);
         self.current += 1;
 
         Some(day)
     }
+}
+
+/* -------------------------------------------------------------------------- */
+
+/// Crates a [`Day`] value in a const context.
+#[macro_export]
+macro_rules! day {
+    ($day:expr) => {{
+        const _ASSERT: () = assert!(
+            $day != 0 && $day <= 25,
+            concat!(
+                "invalid day number `",
+                $day,
+                "`, expecting a value between 1 and 25"
+            ),
+        );
+        $crate::Day::__new_unchecked($day)
+    }};
 }
 
 /* -------------------------------------------------------------------------- */
