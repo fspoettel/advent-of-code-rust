@@ -137,7 +137,7 @@ mod tests {
     use super::{all_days, Day};
 
     #[test]
-    fn every_day_iterator() {
+    fn all_days_iterator() {
         let mut iter = all_days();
 
         assert_eq!(iter.next(), Some(Day(1)));
