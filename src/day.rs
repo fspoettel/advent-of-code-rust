@@ -106,3 +106,42 @@ impl Iterator for EveryDay {
 }
 
 /* -------------------------------------------------------------------------- */
+
+#[cfg(feature = "test_lib")]
+mod tests {
+    use super::{every_day, Day};
+
+    #[test]
+    fn every_day_iterator() {
+        let mut iter = every_day();
+
+        assert_eq!(iter.next(), Some(Day::new_unchecked(1)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(2)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(3)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(4)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(5)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(6)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(7)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(8)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(9)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(10)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(11)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(12)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(13)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(14)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(15)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(16)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(17)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(18)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(19)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(20)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(21)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(22)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(23)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(24)));
+        assert_eq!(iter.next(), Some(Day::new_unchecked(25)));
+        assert_eq!(iter.next(), None);
+    }
+}
+
+/* -------------------------------------------------------------------------- */
