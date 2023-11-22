@@ -19,9 +19,9 @@ pub fn read_file(folder: &str, day: Day) -> String {
     f.expect("could not open input file")
 }
 
-/// main! produces a block setting up the input and runner for each part.
+/// Creates the constant `DAY` and sets up the input and runner for each part.
 #[macro_export]
-macro_rules! main {
+macro_rules! solution {
     ($day:expr) => {
         /// The current day.
         const DAY: advent_of_code::Day = advent_of_code::day!($day);

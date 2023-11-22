@@ -6,15 +6,15 @@ use std::{
 
 use crate::Day;
 
-const MODULE_TEMPLATE: &str = r#"pub fn part_one(input: &str) -> Option<u32> {
+const MODULE_TEMPLATE: &str = r#"advent_of_code::solution!(DAY_NUMBER);
+
+pub fn part_one(input: &str) -> Option<u32> {
     None
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
     None
 }
-
-advent_of_code::main!(DAY_NUMBER);
 
 #[cfg(test)]
 mod tests {
