@@ -4,6 +4,8 @@ use std::{
     process::{Command, Output, Stdio},
 };
 
+use crate::Day;
+
 #[derive(Debug)]
 pub enum AocCommandError {
     CommandNotFound,
@@ -33,7 +35,7 @@ pub fn check() -> Result<(), AocCommandError> {
     Ok(())
 }
 
-pub fn read(day: u8) -> Result<Output, AocCommandError> {
+pub fn read(day: Day) -> Result<Output, AocCommandError> {
     let puzzle_path = get_puzzle_path(day);
 
     let args = build_args(
@@ -49,7 +51,7 @@ pub fn read(day: u8) -> Result<Output, AocCommandError> {
     call_aoc_cli(&args)
 }
 
-pub fn download(day: u8) -> Result<Output, AocCommandError> {
+pub fn download(day: Day) -> Result<Output, AocCommandError> {
     let input_path = get_input_path(day);
     let puzzle_path = get_puzzle_path(day);
 
@@ -72,7 +74,7 @@ pub fn download(day: u8) -> Result<Output, AocCommandError> {
     Ok(output)
 }
 
-pub fn submit(day: u8, part: u8, result: &str) -> Result<Output, AocCommandError> {
+pub fn submit(day: Day, part: u8, result: &str) -> Result<Output, AocCommandError> {
     // workaround: the argument order is inverted for submit.
     let mut args = build_args("submit", &[], day);
     args.push(part.to_string());
@@ -80,14 +82,12 @@ pub fn submit(day: u8, part: u8, result: &str) -> Result<Output, AocCommandError
     call_aoc_cli(&args)
 }
 
-fn get_input_path(day: u8) -> String {
-    let day_padded = format!("{day:02}");
-    format!("data/inputs/{day_padded}.txt")
+fn get_input_path(day: Day) -> String {
+    format!("data/inputs/{day}.txt")
 }
 
-fn get_puzzle_path(day: u8) -> String {
-    let day_padded = format!("{day:02}");
-    format!("data/puzzles/{day_padded}.md")
+fn get_puzzle_path(day: Day) -> String {
+    format!("data/puzzles/{day}.md")
 }
 
 fn get_year() -> Option<u16> {
@@ -97,7 +97,7 @@ fn get_year() -> Option<u16> {
     }
 }
 
-fn build_args(command: &str, args: &[String], day: u8) -> Vec<String> {
+fn build_args(command: &str, args: &[String], day: Day) -> Vec<String> {
     let mut cmd_args = args.to_vec();
 
     if let Some(year) = get_year() {

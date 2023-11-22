@@ -4,6 +4,8 @@ use std::{
     process,
 };
 
+use crate::Day;
+
 const MODULE_TEMPLATE: &str = r#"pub fn part_one(input: &str) -> Option<u32> {
     None
 }
@@ -12,7 +14,7 @@ pub fn part_two(input: &str) -> Option<u32> {
     None
 }
 
-advent_of_code::main!(DAY);
+advent_of_code::main!(DAY_NUMBER);
 
 #[cfg(test)]
 mod tests {
@@ -40,12 +42,10 @@ fn create_file(path: &str) -> Result<File, std::io::Error> {
     OpenOptions::new().write(true).create(true).open(path)
 }
 
-pub fn handle(day: u8) {
-    let day_padded = format!("{day:02}");
-
-    let input_path = format!("data/inputs/{day_padded}.txt");
-    let example_path = format!("data/examples/{day_padded}.txt");
-    let module_path = format!("src/bin/{day_padded}.rs");
+pub fn handle(day: Day) {
+    let input_path = format!("data/inputs/{day}.txt");
+    let example_path = format!("data/examples/{day}.txt");
+    let module_path = format!("src/bin/{day}.rs");
 
     let mut file = match safe_create_file(&module_path) {
         Ok(file) => file,
@@ -55,7 +55,11 @@ pub fn handle(day: u8) {
         }
     };
 
-    match file.write_all(MODULE_TEMPLATE.replace("DAY", &day.to_string()).as_bytes()) {
+    match file.write_all(
+        MODULE_TEMPLATE
+            .replace("DAY_NUMBER", &day.into_inner().to_string())
+            .as_bytes(),
+    ) {
         Ok(()) => {
             println!("Created module file \"{}\"", &module_path);
         }
@@ -86,8 +90,5 @@ pub fn handle(day: u8) {
     }
 
     println!("---");
-    println!(
-        "🎄 Type `cargo solve {}` to run your solution.",
-        &day_padded
-    );
+    println!("🎄 Type `cargo solve {}` to run your solution.", day);
 }

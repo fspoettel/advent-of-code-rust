@@ -2,6 +2,8 @@
 /// The approach taken is similar to how `aoc-readme-stars` handles this.
 use std::{fs, io};
 
+use crate::Day;
+
 static MARKER: &str = "<!--- benchmarking table --->";
 
 #[derive(Debug)]
@@ -18,7 +20,7 @@ impl From<std::io::Error> for Error {
 
 #[derive(Clone)]
 pub struct Timings {
-    pub day: usize,
+    pub day: Day,
     pub part_1: Option<String>,
     pub part_2: Option<String>,
     pub total_nanos: f64,
@@ -29,9 +31,9 @@ pub struct TablePosition {
     pos_end: usize,
 }
 
-#[must_use] pub fn get_path_for_bin(day: usize) -> String {
-    let day_padded = format!("{day:02}");
-    format!("./src/bin/{day_padded}.rs")
+#[must_use]
+pub fn get_path_for_bin(day: Day) -> String {
+    format!("./src/bin/{day}.rs")
 }
 
 fn locate_table(readme: &str) -> Result<TablePosition, Error> {
@@ -71,7 +73,7 @@ fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> St
         let path = get_path_for_bin(timing.day);
         lines.push(format!(
             "| [Day {}]({}) | `{}` | `{}` |",
-            timing.day,
+            timing.day.into_inner(),
             path,
             timing.part_1.unwrap_or_else(|| "-".into()),
             timing.part_2.unwrap_or_else(|| "-".into())
@@ -103,23 +105,24 @@ pub fn update(timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
 #[cfg(feature = "test_lib")]
 mod tests {
     use super::{update_content, Timings, MARKER};
+    use crate::day;
 
     fn get_mock_timings() -> Vec<Timings> {
         vec![
             Timings {
-                day: 1,
+                day: day!(1),
                 part_1: Some("10ms".into()),
                 part_2: Some("20ms".into()),
                 total_nanos: 3e+10,
             },
             Timings {
-                day: 2,
+                day: day!(2),
                 part_1: Some("30ms".into()),
                 part_2: Some("40ms".into()),
                 total_nanos: 7e+10,
             },
             Timings {
-                day: 4,
+                day: day!(4),
                 part_1: Some("40ms".into()),
                 part_2: Some("50ms".into()),
                 total_nanos: 9e+10,
