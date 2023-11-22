@@ -2,7 +2,6 @@ use std::error::Error;
 use std::fmt::Display;
 use std::str::FromStr;
 
-
 /// A valid day number of advent (i.e. an integer in range 1 to 25).
 ///
 /// # Display
@@ -82,16 +81,23 @@ impl Display for DayFromStrError {
 /* -------------------------------------------------------------------------- */
 
 /// An iterator that yields every day of advent from the 1st to the 25th.
-pub fn every_day() -> EveryDay {
-    EveryDay { current: 1 }
+pub fn all_days() -> AllDays {
+    AllDays::new()
 }
 
-/// An iterator that yield every day of advent from the 1st to the 25th.
-pub struct EveryDay {
+/// An iterator that yields every day of advent from the 1st to the 25th.
+pub struct AllDays {
     current: u8,
 }
 
-impl Iterator for EveryDay {
+impl AllDays {
+    #[allow(clippy::new_without_default)]
+    pub fn new() -> Self {
+        Self { current: 1 }
+    }
+}
+
+impl Iterator for AllDays {
     type Item = Day;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -128,11 +134,11 @@ macro_rules! day {
 
 #[cfg(feature = "test_lib")]
 mod tests {
-    use super::{every_day, Day};
+    use super::{all_days, Day};
 
     #[test]
     fn every_day_iterator() {
-        let mut iter = every_day();
+        let mut iter = all_days();
 
         assert_eq!(iter.next(), Some(Day(1)));
         assert_eq!(iter.next(), Some(Day(2)));

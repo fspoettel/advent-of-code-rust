@@ -4,12 +4,12 @@ use crate::template::{
     readme_benchmarks::{self, Timings},
     ANSI_BOLD, ANSI_ITALIC, ANSI_RESET,
 };
-use crate::{every_day, Day};
+use crate::{all_days, Day};
 
 pub fn handle(is_release: bool, is_timed: bool) {
     let mut timings: Vec<Timings> = vec![];
 
-    every_day().for_each(|day| {
+    all_days().for_each(|day| {
         if day > 1 {
             println!();
         }
