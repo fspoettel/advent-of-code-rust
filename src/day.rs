@@ -17,6 +17,8 @@ use std::str::FromStr;
 pub struct Day(u8);
 
 impl Day {
+    /// Creates a [`Day`] from the provided value if it's in the valid range,
+    /// returns [`None`] otherwise.
     pub fn new(day: u8) -> Option<Self> {
         if day == 0 || day > 25 {
             return None;
@@ -29,6 +31,7 @@ impl Day {
         Self(day)
     }
 
+    /// Converts the [`Day`] into an [`u8`].
     pub fn into_inner(self) -> u8 {
         self.0
     }
@@ -63,6 +66,7 @@ impl FromStr for Day {
     }
 }
 
+/// An error which can be returned when parsing a [`Day`].
 #[derive(Debug)]
 pub struct DayFromStrError;
 
