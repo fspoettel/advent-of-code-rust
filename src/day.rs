@@ -135,31 +135,31 @@ mod tests {
     fn every_day_iterator() {
         let mut iter = every_day();
 
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(1)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(2)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(3)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(4)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(5)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(6)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(7)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(8)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(9)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(10)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(11)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(12)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(13)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(14)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(15)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(16)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(17)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(18)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(19)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(20)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(21)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(22)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(23)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(24)));
-        assert_eq!(iter.next(), Some(Day::__new_unchecked(25)));
+        assert_eq!(iter.next(), Some(Day(1)));
+        assert_eq!(iter.next(), Some(Day(2)));
+        assert_eq!(iter.next(), Some(Day(3)));
+        assert_eq!(iter.next(), Some(Day(4)));
+        assert_eq!(iter.next(), Some(Day(5)));
+        assert_eq!(iter.next(), Some(Day(6)));
+        assert_eq!(iter.next(), Some(Day(7)));
+        assert_eq!(iter.next(), Some(Day(8)));
+        assert_eq!(iter.next(), Some(Day(9)));
+        assert_eq!(iter.next(), Some(Day(10)));
+        assert_eq!(iter.next(), Some(Day(11)));
+        assert_eq!(iter.next(), Some(Day(12)));
+        assert_eq!(iter.next(), Some(Day(13)));
+        assert_eq!(iter.next(), Some(Day(14)));
+        assert_eq!(iter.next(), Some(Day(15)));
+        assert_eq!(iter.next(), Some(Day(16)));
+        assert_eq!(iter.next(), Some(Day(17)));
+        assert_eq!(iter.next(), Some(Day(18)));
+        assert_eq!(iter.next(), Some(Day(19)));
+        assert_eq!(iter.next(), Some(Day(20)));
+        assert_eq!(iter.next(), Some(Day(21)));
+        assert_eq!(iter.next(), Some(Day(22)));
+        assert_eq!(iter.next(), Some(Day(23)));
+        assert_eq!(iter.next(), Some(Day(24)));
+        assert_eq!(iter.next(), Some(Day(25)));
         assert_eq!(iter.next(), None);
     }
 }
