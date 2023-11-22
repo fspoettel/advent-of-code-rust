@@ -6,7 +6,7 @@ use std::str::FromStr;
 /// A valid day number of advent (i.e. an integer in range 1 to 25).
 ///
 /// # Display
-/// This value is display as a two digit number.
+/// This value displays as a two digit number.
 ///
 /// ```
 /// # use advent_of_code::Day;
