@@ -105,24 +105,24 @@ pub fn update(timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
 #[cfg(feature = "test_lib")]
 mod tests {
     use super::{update_content, Timings, MARKER};
-    use crate::Day;
+    use crate::day;
 
     fn get_mock_timings() -> Vec<Timings> {
         vec![
             Timings {
-                day: Day::new(1).unwrap(),
+                day: day!(1),
                 part_1: Some("10ms".into()),
                 part_2: Some("20ms".into()),
                 total_nanos: 3e+10,
             },
             Timings {
-                day: Day::new(2).unwrap(),
+                day: day!(2),
                 part_1: Some("30ms".into()),
                 part_2: Some("40ms".into()),
                 total_nanos: 7e+10,
             },
             Timings {
-                day: Day::new(4).unwrap(),
+                day: day!(4),
                 part_1: Some("40ms".into()),
                 part_2: Some("50ms".into()),
                 total_nanos: 9e+10,
