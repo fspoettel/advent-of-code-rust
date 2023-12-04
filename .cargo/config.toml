@@ -1,4 +1,5 @@
 [alias]
+today = "run --quiet --release -- today"
 scaffold = "run --quiet --release -- scaffold"
 download = "run --quiet --release -- download"
 read = "run --quiet --release -- read"

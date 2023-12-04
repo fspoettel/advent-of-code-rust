@@ -74,6 +74,22 @@ cargo download <day>
 # 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
 ```
 
+### Scaffold and download in one go
+
+This command runs `cargo scaffold` and `cargo download` for the current day.
+
+```sh
+cargo today
+
+# output:
+# [INFO  aoc] 🎄 aoc-cli - Advent of Code command-line tool
+# [INFO  aoc_client] 🎅 Saved puzzle to 'data/puzzles/01.md'
+# [INFO  aoc_client] 🎅 Saved input to 'data/inputs/01.txt'
+# ---
+# 🎄 Successfully wrote input to "data/inputs/01.txt".
+# 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
+```
+
 ### Run solutions for a day
 
 ```sh

@@ -1,3 +1,4 @@
+use chrono::{DateTime, Datelike, Local};
 use std::error::Error;
 use std::fmt::Display;
 use std::str::FromStr;
@@ -34,6 +35,18 @@ impl Day {
     /// Converts the [`Day`] into an [`u8`].
     pub fn into_inner(self) -> u8 {
         self.0
+    }
+}
+
+impl TryFrom<DateTime<Local>> for Day {
+    type Error = &'static str;
+
+    fn try_from(date: DateTime<Local>) -> Result<Self, Self::Error> {
+        let day = date.day();
+        if date.month() != 12 || day == 0 || day > 25 {
+            return Err("Cannot run this command on a day outside of the Advent of Code days.");
+        }
+        Ok(Self(day as u8))
     }
 }
 
