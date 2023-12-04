@@ -74,22 +74,6 @@ cargo download <day>
 # 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
 ```
 
-### Scaffold and download in one go
-
-This command runs `cargo scaffold` and `cargo download` for the current day.
-
-```sh
-cargo today
-
-# output:
-# [INFO  aoc] 🎄 aoc-cli - Advent of Code command-line tool
-# [INFO  aoc_client] 🎅 Saved puzzle to 'data/puzzles/01.md'
-# [INFO  aoc_client] 🎅 Saved input to 'data/inputs/01.txt'
-# ---
-# 🎄 Successfully wrote input to "data/inputs/01.txt".
-# 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
-```
-
 ### Run solutions for a day
 
 ```sh
@@ -170,6 +154,32 @@ cargo clippy
 cargo read <day>
 
 # output:
+# Loaded session cookie from "/Users/<snip>/.adventofcode.session".
+# Fetching puzzle for day 1, 2022...
+# ...the input...
+```
+
+### Scaffold, download and read in one go
+
+This command runs `cargo scaffold`, `cargo download` and `cargo read` for the current day.
+
+```sh
+# example: `cargo today` on December 1st
+cargo today
+
+# output:
+# Created module file "src/bin/01.rs"
+# Created empty input file "data/inputs/01.txt"
+# Created empty example file "data/examples/01.txt"
+# ---
+# 🎄 Type `cargo solve 01` to run your solution.
+# [INFO  aoc] 🎄 aoc-cli - Advent of Code command-line tool
+# [INFO  aoc_client] 🎅 Saved puzzle to 'data/puzzles/01.md'
+# [INFO  aoc_client] 🎅 Saved input to 'data/inputs/01.txt'
+# ---
+# 🎄 Successfully wrote input to "data/inputs/01.txt".
+# 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
+#
 # Loaded session cookie from "/Users/<snip>/.adventofcode.session".
 # Fetching puzzle for day 1, 2022...
 # ...the input...
