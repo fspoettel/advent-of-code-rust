@@ -49,13 +49,10 @@ cargo scaffold <day>
 
 Individual solutions live in the `./src/bin/` directory as separate binaries. _Inputs_ and _examples_ live in the the `./data` directory.
 
-Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/template/commands/scaffold.rs#L9-L35) has _tests_ referencing its _example_ file in `./data/examples`. Use these tests to develop and debug your solutions against the example input.
+Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/template/commands/scaffold.rs#L9-L35) has _tests_ referencing its _example_ file in `./data/examples`. Use these tests to develop and debug your solutions against the example input. In VS Code, `rust-analyzer` will display buttons for running / debugging these unit tests above the unit test blocks.
 
 > [!TIP]
 > If a day has different example inputs for both parts, you can use the `read_file_part()` helper in your tests instead of `read_file()`. For example, if this applies to day 1, you can create a second example file `01-2.txt` and invoke the helper like `let result = part_two(&advent_of_code::template::read_file_part("examples", DAY, 2));` to read it in `test_part_two`.
-
-> [!TIP]
-> when editing a solution, `rust-analyzer` will display buttons for running / debugging unit tests above the unit test blocks.
 
 ### Download input & description for a day
 
@@ -99,7 +96,7 @@ For example, running a benchmarked, optimized execution of day 1 would look like
 #### Submitting solutions
 
 > [!IMPORTANT]
-> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
+> This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 In order to submit part of a solution for checking, append the `--submit <part>` option to the `solve` command.
 
@@ -123,7 +120,7 @@ This runs all solutions sequentially and prints output to the command-line. Same
 
 #### Update readme benchmarks
 
-The template can output a table with solution times to your readme. In order to generate a benchmarking table, run `cargo all --release --time`. If everything goes well, the command will output "_Successfully updated README with benchmarks._" after the execution finishes and the readme will be updated.
+The template can output a table with solution times to your readme. In order to generate a benchmarking table, run `cargo time`. If everything goes well, the command will output "_Successfully updated README with benchmarks._" after the execution finishes and the readme will be updated.
 
 Please note that these are not "scientific" benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
 
