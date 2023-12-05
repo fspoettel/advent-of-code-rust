@@ -1,10 +1,12 @@
-use crate::Day;
 use std::{env, fs};
 
 pub mod aoc_cli;
 pub mod commands;
+mod day;
 pub mod readme_benchmarks;
 pub mod runner;
+
+pub use day::*;
 
 pub const ANSI_ITALIC: &str = "\x1b[3m";
 pub const ANSI_BOLD: &str = "\x1b[1m";
@@ -36,7 +38,7 @@ pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
 macro_rules! solution {
     ($day:expr) => {
         /// The current day.
-        const DAY: advent_of_code::Day = advent_of_code::day!($day);
+        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
 
         fn main() {
             use advent_of_code::template::runner::*;
@@ -46,7 +48,7 @@ macro_rules! solution {
         }
     };
     ($day:expr, 1) => { /// Allows solving part one in isolation
-        const DAY: advent_of_code::Day = advent_of_code::day!($day);
+        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
 
         fn main() {
             use advent_of_code::template::runner::*;
@@ -55,7 +57,7 @@ macro_rules! solution {
         }
     };
     ($day:expr, 2) => { /// Allows solving part two in isolation
-        const DAY: advent_of_code::Day = advent_of_code::day!($day);
+        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
 
         fn main() {
             use advent_of_code::template::runner::*;

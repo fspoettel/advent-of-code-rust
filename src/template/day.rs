@@ -126,7 +126,7 @@ macro_rules! day {
                 "`, expecting a value between 1 and 25"
             ),
         );
-        $crate::Day::__new_unchecked($day)
+        $crate::template::Day::__new_unchecked($day)
     }};
 }
 

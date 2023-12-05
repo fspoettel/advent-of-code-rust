@@ -2,7 +2,7 @@
 /// The approach taken is similar to how `aoc-readme-stars` handles this.
 use std::{fs, io};
 
-use crate::Day;
+use crate::template::Day;
 
 static MARKER: &str = "<!--- benchmarking table --->";
 

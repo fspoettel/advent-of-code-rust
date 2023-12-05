@@ -4,7 +4,7 @@ use std::{
     process,
 };
 
-use crate::Day;
+use crate::template::Day;
 
 const MODULE_TEMPLATE: &str = r#"advent_of_code::solution!(DAY_NUMBER);
 

@@ -4,7 +4,7 @@ use std::{
     process::{Command, Output, Stdio},
 };
 
-use crate::Day;
+use crate::template::Day;
 
 #[derive(Debug)]
 pub enum AocCommandError {

@@ -2,9 +2,8 @@ use advent_of_code::template::commands::{all, download, read, scaffold, solve};
 use args::{parse, AppArguments};
 
 mod args {
+    use advent_of_code::template::Day;
     use std::process;
-
-    use advent_of_code::Day;
 
     pub enum AppArguments {
         Download {
@@ -15,6 +14,7 @@ mod args {
         },
         Scaffold {
             day: Day,
+            download: bool,
         },
         Solve {
             day: Day,
@@ -44,6 +44,7 @@ mod args {
             },
             Some("scaffold") => AppArguments::Scaffold {
                 day: args.free_from_str()?,
+                download: args.contains("--download"),
             },
             Some("solve") => AppArguments::Solve {
                 day: args.free_from_str()?,
@@ -80,7 +81,12 @@ fn main() {
             AppArguments::All { release, time } => all::handle(release, time),
             AppArguments::Download { day } => download::handle(day),
             AppArguments::Read { day } => read::handle(day),
-            AppArguments::Scaffold { day } => scaffold::handle(day),
+            AppArguments::Scaffold { day, download } => {
+                scaffold::handle(day);
+                if download {
+                    download::handle(day);
+                }
+            }
             AppArguments::Solve {
                 day,
                 release,
