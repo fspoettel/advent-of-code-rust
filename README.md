@@ -60,7 +60,9 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/
 ### Download input & description for a day
 
 > [!IMPORTANT] 
-> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
+> This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
+
+You can automatically download puzzle inputs and description by either appending the `--download` flag to `scaffold` (e.g. `cargo scaffold 4 --download`) or with the separate `download` command:
 
 ```sh
 # example: `cargo download 1`
