@@ -1,5 +1,4 @@
-use crate::template::aoc_cli;
-use crate::Day;
+use crate::template::{aoc_cli, Day};
 use std::process;
 
 pub fn handle(day: Day) {

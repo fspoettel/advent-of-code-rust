@@ -2,9 +2,8 @@ use advent_of_code::template::commands::{all, download, read, scaffold, solve};
 use args::{parse, AppArguments};
 
 mod args {
+    use advent_of_code::template::Day;
     use std::process;
-
-    use advent_of_code::Day;
 
     pub enum AppArguments {
         Download {
