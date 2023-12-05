@@ -45,4 +45,22 @@ macro_rules! solution {
             run_part(part_two, &input, DAY, 2);
         }
     };
+    ($day:expr, 1) => { /// Allows solving part one in isolation
+        const DAY: advent_of_code::Day = advent_of_code::day!($day);
+
+        fn main() {
+            use advent_of_code::template::runner::*;
+            let input = advent_of_code::template::read_file("inputs", DAY);
+            run_part(part_one, &input, DAY, 1);
+        }
+    };
+    ($day:expr, 2) => { /// Allows solving part two in isolation
+        const DAY: advent_of_code::Day = advent_of_code::day!($day);
+
+        fn main() {
+            use advent_of_code::template::runner::*;
+            let input = advent_of_code::template::read_file("inputs", DAY);
+            run_part(part_two, &input, DAY, 2);
+        }
+    };
 }
