@@ -34,6 +34,8 @@ pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
 }
 
 /// Creates the constant `DAY` and sets up the input and runner for each part.
+///
+/// The optional, second parameter (1 or 2) allows you to only run a single part of the solution.
 #[macro_export]
 macro_rules! solution {
     ($day:expr) => {
@@ -47,7 +49,8 @@ macro_rules! solution {
             run_part(part_two, &input, DAY, 2);
         }
     };
-    ($day:expr, 1) => { /// Allows solving part one in isolation
+    ($day:expr, 1) => {
+        /// Allows solving part one in isolation
         const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
 
         fn main() {
@@ -56,7 +59,8 @@ macro_rules! solution {
             run_part(part_one, &input, DAY, 1);
         }
     };
-    ($day:expr, 2) => { /// Allows solving part two in isolation
+    ($day:expr, 2) => {
+        /// Allows solving part two in isolation
         const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
 
         fn main() {
