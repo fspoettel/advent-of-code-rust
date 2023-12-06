@@ -39,34 +39,23 @@ pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
 #[macro_export]
 macro_rules! solution {
     ($day:expr) => {
-        /// The current day.
-        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
-
-        fn main() {
-            use advent_of_code::template::runner::*;
-            let input = advent_of_code::template::read_file("inputs", DAY);
-            run_part(part_one, &input, DAY, 1);
-            run_part(part_two, &input, DAY, 2);
-        }
+        $crate::solution!(@impl $day, [part_one, 1] [part_two, 2]);
     };
     ($day:expr, 1) => {
-        /// Allows solving part one in isolation
-        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
-
-        fn main() {
-            use advent_of_code::template::runner::*;
-            let input = advent_of_code::template::read_file("inputs", DAY);
-            run_part(part_one, &input, DAY, 1);
-        }
+        $crate::solution!(@impl $day, [part_one, 1]);
     };
     ($day:expr, 2) => {
-        /// Allows solving part two in isolation
-        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
+        $crate::solution!(@impl $day, [part_two, 2]);
+    };
+
+    (@impl $day:expr, $( [$func:expr, $part:expr] )*) => {
+        /// The current day.
+        const DAY: $crate::template::Day = $crate::day!($day);
 
         fn main() {
-            use advent_of_code::template::runner::*;
-            let input = advent_of_code::template::read_file("inputs", DAY);
-            run_part(part_two, &input, DAY, 2);
+            use $crate::template::runner::*;
+            let input = $crate::template::read_file("inputs", DAY);
+            $( run_part($func, &input, DAY, $part); )*
         }
     };
 }
