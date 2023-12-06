@@ -50,11 +50,11 @@ macro_rules! solution {
 
     (@impl $day:expr, $( [$func:expr, $part:expr] )*) => {
         /// The current day.
-        const DAY: advent_of_code::template::Day = advent_of_code::day!($day);
+        const DAY: $crate::template::Day = $crate::day!($day);
 
         fn main() {
-            use advent_of_code::template::runner::*;
-            let input = advent_of_code::template::read_file("inputs", DAY);
+            use $crate::template::runner::*;
+            let input = $crate::template::read_file("inputs", DAY);
             $( run_part($func, &input, DAY, $part); )*
         }
     };
