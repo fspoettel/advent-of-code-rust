@@ -1,6 +1,7 @@
 /// Encapsulates code that interacts with solution functions.
 use crate::template::{aoc_cli, Day, ANSI_ITALIC, ANSI_RESET};
 use std::fmt::Display;
+use std::hint::black_box;
 use std::io::{stdout, Write};
 use std::process::Output;
 use std::time::{Duration, Instant};
@@ -64,7 +65,7 @@ fn bench<I: Clone, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> 
         // need a clone here to make the borrow checker happy.
         let cloned = input.clone();
         let timer = Instant::now();
-        func(cloned);
+        black_box(func(black_box(cloned)));
         timers.push(timer.elapsed());
     }
 
