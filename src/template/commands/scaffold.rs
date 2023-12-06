@@ -6,33 +6,8 @@ use std::{
 
 use crate::template::Day;
 
-const MODULE_TEMPLATE: &str = r#"advent_of_code::solution!(DAY_NUMBER);
-
-pub fn part_one(input: &str) -> Option<u32> {
-    None
-}
-
-pub fn part_two(input: &str) -> Option<u32> {
-    None
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_part_one() {
-        let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
-    }
-
-    #[test]
-    fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
-    }
-}
-"#;
+const MODULE_TEMPLATE: &str =
+    include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/template.txt"));
 
 fn safe_create_file(path: &str) -> Result<File, std::io::Error> {
     OpenOptions::new().write(true).create_new(true).open(path)
