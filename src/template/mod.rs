@@ -52,6 +52,10 @@ macro_rules! solution {
         /// The current day.
         const DAY: $crate::template::Day = $crate::day!($day);
 
+        #[cfg(feature = "dhat-heap")]
+        #[global_allocator]
+        static ALLOC: dhat::Alloc = dhat::Alloc;
+
         fn main() {
             use $crate::template::runner::*;
             let input = $crate::template::read_file("inputs", DAY);

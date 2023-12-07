@@ -2,10 +2,17 @@ use std::process::{Command, Stdio};
 
 use crate::template::Day;
 
-pub fn handle(day: Day, release: bool, time: bool, submit_part: Option<u8>) {
+pub fn handle(day: Day, release: bool, time: bool, dhat: bool, submit_part: Option<u8>) {
     let mut cmd_args = vec!["run".to_string(), "--bin".to_string(), day.to_string()];
 
-    if release {
+    if dhat {
+        cmd_args.extend([
+            "--profile".to_string(),
+            "dhat".to_string(),
+            "--features".to_string(),
+            "dhat-heap".to_string(),
+        ]);
+    } else if release {
         cmd_args.push("--release".to_string());
     }
 

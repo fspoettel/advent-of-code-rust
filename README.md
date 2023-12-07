@@ -196,6 +196,26 @@ Go to the _Variables_ tab in your repository settings and create the following v
 
 Uncomment the respective sections in the `ci.yml` workflow.
 
+### Use DHAT to profile heap allocations
+
+If you are not only interested in the runtime of your solution, but also its memory allocation profile, you can use the template's [DHAT](https://valgrind.org/docs/manual/dh-manual.html) integration to analyze it. In order to activate DHAT, call the `solve` command with the `--dhat` flag.
+
+```sh
+cargo solve 1 --dhat
+
+# output:
+#     Running `target/dhat/1`
+# dhat: Total:     276 bytes in 3 blocks
+# dhat: At t-gmax: 232 bytes in 2 blocks
+# dhat: At t-end:  0 bytes in 0 blocks
+# dhat: The data has been saved to dhat-heap.json, and is viewable with dhat/dh_view.html
+# Part 1: 9001 (4.1ms)
+```
+
+The command will output some basic stats to the command-line and generate a `dhat-heap.json `report in the repo root directory.
+
+You can pass the report a tool like [dh-view](https://nnethercote.github.io/dh_view/dh_view.html) to view a detailed breakdown of heap allocations.
+
 ### Use VS Code to debug your code
 
 1.  Install [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) and [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb).

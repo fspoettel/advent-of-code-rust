@@ -20,6 +20,7 @@ mod args {
             day: Day,
             release: bool,
             time: bool,
+            dhat: bool,
             submit: Option<u8>,
         },
         All {
@@ -51,6 +52,7 @@ mod args {
                 release: args.contains("--release"),
                 submit: args.opt_value_from_str("--submit")?,
                 time: args.contains("--time"),
+                dhat: args.contains("--dhat"),
             },
             Some(x) => {
                 eprintln!("Unknown command: {x}");
@@ -91,8 +93,9 @@ fn main() {
                 day,
                 release,
                 time,
+                dhat,
                 submit,
-            } => solve::handle(day, release, time, submit),
+            } => solve::handle(day, release, time, dhat, submit),
         },
     };
 }
