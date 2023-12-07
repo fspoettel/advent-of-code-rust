@@ -212,7 +212,7 @@ cargo solve 1 --dhat
 # Part 1: 9001 (4.1ms)
 ```
 
-The command will output some basic stats to the command-line and generate a `dhat-heap.json `report in the repo root directory.
+The command will output some basic stats to the command-line and generate a `dhat-heap.json` report in the repo root directory.
 
 You can pass the report a tool like [dh-view](https://nnethercote.github.io/dh_view/dh_view.html) to view a detailed breakdown of heap allocations.
 
