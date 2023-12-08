@@ -1,4 +1,4 @@
-use chrono::{DateTime, Datelike, Local};
+use chrono::{Datelike, Local};
 use std::error::Error;
 use std::fmt::Display;
 use std::str::FromStr;
@@ -38,15 +38,15 @@ impl Day {
     }
 }
 
-impl TryFrom<DateTime<Local>> for Day {
-    type Error = &'static str;
-
-    fn try_from(date: DateTime<Local>) -> Result<Self, Self::Error> {
-        let day = date.day();
-        if date.month() != 12 || day == 0 || day > 25 {
-            return Err("Cannot run this command on a day outside of the Advent of Code days.");
+impl Day {
+    /// Returns the current day if it's between the 1st and the 25th of december, `None` otherwise.
+    pub fn today() -> Option<Self> {
+        let today = Local::now();
+        if today.month() == 12 && today.day() <= 25 {
+            Self::new(u8::try_from(today.day()).ok()?)
+        } else {
+            None
         }
-        Ok(Self(day as u8))
     }
 }
 

@@ -161,7 +161,7 @@ cargo read <day>
 
 ### Scaffold, download and read in one go
 
-This command runs `cargo scaffold`, `cargo download` and `cargo read` for the current day.
+This command runs `cargo scaffold --download`, and `cargo read` for the current day.
 
 ```sh
 # example: `cargo today` on December 1st

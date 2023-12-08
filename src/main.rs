@@ -1,6 +1,10 @@
-use advent_of_code::template::commands::{all, download, read, scaffold, solve};
+use std::process;
+
+use advent_of_code::template::{
+    commands::{all, download, read, scaffold, solve},
+    Day,
+};
 use args::{parse, AppArguments};
-use chrono::Local;
 
 mod args {
     use advent_of_code::template::Day;
@@ -100,13 +104,19 @@ fn main() {
                 submit,
             } => solve::handle(day, release, time, dhat, submit),
             AppArguments::Today => {
-                match Local::now().try_into() {
-                    Ok(day) => {
+                match Day::today() {
+                    Some(day) => {
                         scaffold::handle(day);
                         download::handle(day);
                         read::handle(day)
                     }
-                    Err(e) => println!("{e}"),
+                    None => {
+                        eprintln!(
+                            "`today` command can only be run between the 1st and \
+                            the 25th of december. Please use `scaffold` with a specific day."
+                        );
+                        process::exit(1)
+                    }
                 };
             }
         },
