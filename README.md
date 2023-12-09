@@ -159,6 +159,41 @@ cargo read <day>
 # ...the input...
 ```
 
+### Scaffold, download and read in one go
+
+> [!IMPORTANT]
+> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
+
+During december, the `today` shorthand command can be used to:
+
+ - scaffold a solution for the current day
+ - download its input
+ - and read the puzzle
+
+in one go.
+
+```sh
+# example: `cargo today` on December 1st
+cargo today
+
+# output:
+# Created module file "src/bin/01.rs"
+# Created empty input file "data/inputs/01.txt"
+# Created empty example file "data/examples/01.txt"
+# ---
+# 🎄 Type `cargo solve 01` to run your solution.
+# [INFO  aoc] 🎄 aoc-cli - Advent of Code command-line tool
+# [INFO  aoc_client] 🎅 Saved puzzle to 'data/puzzles/01.md'
+# [INFO  aoc_client] 🎅 Saved input to 'data/inputs/01.txt'
+# ---
+# 🎄 Successfully wrote input to "data/inputs/01.txt".
+# 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
+#
+# Loaded session cookie from "/Users/<snip>/.adventofcode.session".
+# Fetching puzzle for day 1, 2022...
+# ...the input...
+```
+
 ## Optional template features
 
 ### Configure aoc-cli integration

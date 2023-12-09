@@ -10,14 +10,16 @@ publish = false
 [lib]
 doctest = false
 
+[profile.dhat]
+inherits = "release"
+debug = 1
+
 [features]
+today = ["chrono"]
 test_lib = []
 dhat-heap = ["dhat"]
 
 [dependencies]
+chrono = { version = "0.4.31", optional = true }
 pico-args = "0.5.0"
 dhat = { version = "0.3.2", optional = true }
-
-[profile.dhat]
-inherits = "release"
-debug = 1

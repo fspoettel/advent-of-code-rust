@@ -1,6 +1,11 @@
 use advent_of_code::template::commands::{all, download, read, scaffold, solve};
 use args::{parse, AppArguments};
 
+#[cfg(feature = "today")]
+use advent_of_code::template::Day;
+#[cfg(feature = "today")]
+use std::process;
+
 mod args {
     use advent_of_code::template::Day;
     use std::process;
@@ -27,6 +32,8 @@ mod args {
             release: bool,
             time: bool,
         },
+        #[cfg(feature = "today")]
+        Today,
     }
 
     pub fn parse() -> Result<AppArguments, Box<dyn std::error::Error>> {
@@ -54,6 +61,8 @@ mod args {
                 time: args.contains("--time"),
                 dhat: args.contains("--dhat"),
             },
+            #[cfg(feature = "today")]
+            Some("today") => AppArguments::Today,
             Some(x) => {
                 eprintln!("Unknown command: {x}");
                 process::exit(1);
@@ -96,6 +105,23 @@ fn main() {
                 dhat,
                 submit,
             } => solve::handle(day, release, time, dhat, submit),
+            #[cfg(feature = "today")]
+            AppArguments::Today => {
+                match Day::today() {
+                    Some(day) => {
+                        scaffold::handle(day);
+                        download::handle(day);
+                        read::handle(day)
+                    }
+                    None => {
+                        eprintln!(
+                            "`today` command can only be run between the 1st and \
+                            the 25th of december. Please use `scaffold` with a specific day."
+                        );
+                        process::exit(1)
+                    }
+                };
+            }
         },
     };
 }
