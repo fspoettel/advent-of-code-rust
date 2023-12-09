@@ -120,7 +120,9 @@ This runs all solutions sequentially and prints output to the command-line. Same
 
 #### Update readme benchmarks
 
-The template can output a table with solution times to your readme. In order to generate a benchmarking table, run `cargo time`. If everything goes well, the command will output "_Successfully updated README with benchmarks._" after the execution finishes and the readme will be updated.
+The template can output a table with solution times to your readme.
+
+In order to generate the benchmarking table, run `cargo time`. By default, this command checks for missing benchmarks, runs those solutions, and then updates the table. If you want to (re-)time all solutions, run `cargo time --force` flag. If you want to (re-)time a specific solution, run `cargo time <day>`.
 
 Please note that these are not "scientific" benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
 

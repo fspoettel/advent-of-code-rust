@@ -5,6 +5,8 @@ pub mod commands;
 mod day;
 pub mod readme_benchmarks;
 pub mod runner;
+pub mod run_multi;
+pub mod timings;
 
 pub use day::*;
 

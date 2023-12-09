@@ -2,6 +2,7 @@
 /// The approach taken is similar to how `aoc-readme-stars` handles this.
 use std::{fs, io};
 
+use crate::template::timings::Timings;
 use crate::template::Day;
 
 static MARKER: &str = "<!--- benchmarking table --->";
@@ -16,14 +17,6 @@ impl From<std::io::Error> for Error {
     fn from(e: std::io::Error) -> Self {
         Error::IO(e)
     }
-}
-
-#[derive(Clone)]
-pub struct Timings {
-    pub day: Day,
-    pub part_1: Option<String>,
-    pub part_2: Option<String>,
-    pub total_nanos: f64,
 }
 
 pub struct TablePosition {
@@ -58,7 +51,7 @@ fn locate_table(readme: &str) -> Result<TablePosition, Error> {
     Ok(TablePosition { pos_start, pos_end })
 }
 
-fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> String {
+fn construct_table(prefix: &str, timings: Timings, total_millis: f64) -> String {
     let header = format!("{prefix} Benchmarks");
 
     let mut lines: Vec<String> = vec![
@@ -69,7 +62,7 @@ fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> St
         "| :---: | :---: | :---:  |".into(),
     ];
 
-    for timing in timings {
+    for timing in timings.data {
         let path = get_path_for_bin(timing.day);
         lines.push(format!(
             "| [Day {}]({}) | `{}` | `{}` |",
@@ -87,16 +80,17 @@ fn construct_table(prefix: &str, timings: Vec<Timings>, total_millis: f64) -> St
     lines.join("\n")
 }
 
-fn update_content(s: &mut String, timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
+fn update_content(s: &mut String, timings: Timings, total_millis: f64) -> Result<(), Error> {
     let positions = locate_table(s)?;
     let table = construct_table("##", timings, total_millis);
     s.replace_range(positions.pos_start..positions.pos_end, &table);
     Ok(())
 }
 
-pub fn update(timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
+pub fn update(timings: Timings) -> Result<(), Error> {
     let path = "README.md";
     let mut readme = String::from_utf8_lossy(&fs::read(path)?).to_string();
+    let total_millis = timings.total_millis();
     update_content(&mut readme, timings, total_millis)?;
     fs::write(path, &readme)?;
     Ok(())
@@ -104,30 +98,32 @@ pub fn update(timings: Vec<Timings>, total_millis: f64) -> Result<(), Error> {
 
 #[cfg(feature = "test_lib")]
 mod tests {
-    use super::{update_content, Timings, MARKER};
-    use crate::day;
+    use super::{update_content, MARKER};
+    use crate::{day, template::timings::Timing, template::timings::Timings};
 
-    fn get_mock_timings() -> Vec<Timings> {
-        vec![
-            Timings {
-                day: day!(1),
-                part_1: Some("10ms".into()),
-                part_2: Some("20ms".into()),
-                total_nanos: 3e+10,
-            },
-            Timings {
-                day: day!(2),
-                part_1: Some("30ms".into()),
-                part_2: Some("40ms".into()),
-                total_nanos: 7e+10,
-            },
-            Timings {
-                day: day!(4),
-                part_1: Some("40ms".into()),
-                part_2: Some("50ms".into()),
-                total_nanos: 9e+10,
-            },
-        ]
+    fn get_mock_timings() -> Timings {
+        Timings {
+            data: vec![
+                Timing {
+                    day: day!(1),
+                    part_1: Some("10ms".into()),
+                    part_2: Some("20ms".into()),
+                    total_nanos: 3e+10,
+                },
+                Timing {
+                    day: day!(2),
+                    part_1: Some("30ms".into()),
+                    part_2: Some("40ms".into()),
+                    total_nanos: 7e+10,
+                },
+                Timing {
+                    day: day!(4),
+                    part_1: Some("40ms".into()),
+                    part_2: Some("50ms".into()),
+                    total_nanos: 9e+10,
+                },
+            ],
+        }
     }
 
     #[test]
