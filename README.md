@@ -161,7 +161,16 @@ cargo read <day>
 
 ### Scaffold, download and read in one go
 
-This command runs `cargo scaffold --download`, and `cargo read` for the current day.
+> [!IMPORTANT]
+> This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
+
+During december, the `today` shorthand command can be used to:
+
+ - scaffold a solution for the current day
+ - download its input
+ - and read the puzzle
+
+in one go.
 
 ```sh
 # example: `cargo today` on December 1st
