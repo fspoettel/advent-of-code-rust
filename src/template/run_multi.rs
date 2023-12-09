@@ -208,7 +208,7 @@ pub mod child_commands {
         use crate::day;
 
         #[test]
-        fn test_well_formed() {
+        fn parses_execution_times() {
             let res = parse_exec_time(
                 &[
                     "Part 1: 0 (74.13ns @ 100000 samples)".into(),
@@ -223,7 +223,7 @@ pub mod child_commands {
         }
 
         #[test]
-        fn test_patterns_in_input() {
+        fn parses_with_patterns_in_input() {
             let res = parse_exec_time(
                 &[
                     "Part 1: @ @ @ ( ) ms (2s @ 5 samples)".into(),
@@ -238,7 +238,7 @@ pub mod child_commands {
         }
 
         #[test]
-        fn test_missing_parts() {
+        fn parses_missing_parts() {
             let res = parse_exec_time(
                 &[
                     "Part 1: ✖        ".into(),

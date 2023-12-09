@@ -214,7 +214,7 @@ mod tests {
         use crate::{day, template::timings::Timings};
 
         #[test]
-        fn test_from_json_ok() {
+        fn handles_json_timings() {
             let json = r#"{ "data": [{ "day": "01", "part_1": "1ms", "part_2": null, "total_nanos": 1000000000 }] }"#.to_string();
             let timings = Timings::try_from(json).unwrap();
             assert_eq!(timings.data.len(), 1);
@@ -226,7 +226,7 @@ mod tests {
         }
 
         #[test]
-        fn test_from_json_empty() {
+        fn handles_empty_timings() {
             let json = r#"{ "data": [] }"#.to_string();
             let timings = Timings::try_from(json).unwrap();
             assert_eq!(timings.data.len(), 0);
@@ -234,14 +234,14 @@ mod tests {
 
         #[test]
         #[should_panic]
-        fn test_from_json_malformed() {
+        fn panics_for_invalid_json() {
             let json = r#"{}"#.to_string();
             Timings::try_from(json).unwrap();
         }
 
         #[test]
         #[should_panic]
-        fn test_from_json_malformed_items() {
+        fn panics_for_malformed_timings() {
             let json = r#"{ "data": [{ "day": "01" }, { "day": "26" }, { "day": "02", "part_2": null, "total_nanos": 0 }] }"#.to_string();
             Timings::try_from(json).unwrap();
         }
@@ -253,7 +253,7 @@ mod tests {
         use tinyjson::JsonValue;
 
         #[test]
-        fn test_to_json_ok() {
+        fn serializes_timings() {
             let timings = get_mock_timings();
             let value = JsonValue::try_from(timings).unwrap();
             assert_eq!(
@@ -279,7 +279,7 @@ mod tests {
         use super::get_mock_timings;
 
         #[test]
-        fn test_merge_timings_join() {
+        fn handles_disjunct_timings() {
             let timings = get_mock_timings();
             let other = Timings {
                 data: vec![Timing {
@@ -298,7 +298,7 @@ mod tests {
         }
 
         #[test]
-        fn test_merge_timings_overwrite() {
+        fn handles_overlapping_timings() {
             let timings = get_mock_timings();
 
             let other = Timings {
@@ -319,7 +319,7 @@ mod tests {
         }
 
         #[test]
-        fn test_merge_timings_empty() {
+        fn handles_empty_timings() {
             let timings = Timings::default();
             let other = get_mock_timings();
             let merged = timings.merge(&other);
@@ -327,7 +327,7 @@ mod tests {
         }
 
         #[test]
-        fn test_merge_timings_other_empty() {
+        fn handles_empty_other_timings() {
             let timings = get_mock_timings();
             let other = Timings::default();
             let merged = timings.merge(&other);
