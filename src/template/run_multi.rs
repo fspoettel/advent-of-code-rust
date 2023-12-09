@@ -48,7 +48,6 @@ pub fn run_multi(days_to_run: HashSet<Day>, is_release: bool, is_timed: bool) ->
 #[derive(Debug)]
 pub enum Error {
     BrokenPipe,
-    Parser(String),
     IO(io::Error),
 }
 

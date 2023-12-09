@@ -1,7 +1,7 @@
 use std::{collections::HashMap, fs, io::Error, str::FromStr};
 use tinyjson::JsonValue;
 
-use super::Day;
+use crate::template::Day;
 
 static TIMINGS_FILE_PATH: &str = "./data/timings.json";
 
