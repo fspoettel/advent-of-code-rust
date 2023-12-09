@@ -14,14 +14,14 @@ Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.
 
 This template supports all major OS (macOS, Linux, Windows).
 
-### Create your repository 📝
+###  📝 Create your repository
 
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
 3.  Clone your repository to your computer.
 4.  If you are solving a previous year's advent of code, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect the year you are solving.
 
-### Setup rust 💻
+### 💻 Setup rust
 
 1.  Install the [Rust toolchain](https://www.rust-lang.org/tools/install).
 2.  (recommended) Install the [rust-analyzer](https://rust-analyzer.github.io/manual.html) extension for your code editor.
@@ -33,7 +33,7 @@ This template supports all major OS (macOS, Linux, Windows).
 
 ## Usage
 
-### Scaffold a day
+### ➡️ Scaffold a day
 
 ```sh
 # example: `cargo scaffold 1`
@@ -54,12 +54,12 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/
 > [!TIP]
 > If a day has different example inputs for both parts, you can use the `read_file_part()` helper in your tests instead of `read_file()`. For example, if this applies to day 1, you can create a second example file `01-2.txt` and invoke the helper like `let result = part_two(&advent_of_code::template::read_file_part("examples", DAY, 2));` to read it in `test_part_two`.
 
-### Download input & description for a day
+### ➡️ Download input for a day
 
 > [!IMPORTANT] 
 > This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
-You can automatically download puzzle inputs and description by either appending the `--download` flag to `scaffold` (e.g. `cargo scaffold 4 --download`) or with the separate `download` command:
+You can automatically download puzzle input and description by either appending the `--download` flag to `scaffold` (e.g. `cargo scaffold 4 --download`) or with the separate `download` command:
 
 ```sh
 # example: `cargo download 1`
@@ -74,7 +74,7 @@ cargo download <day>
 # 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
 ```
 
-### Run solutions for a day
+### ➡️ Run solutions for a day
 
 ```sh
 # example: `cargo solve 01`
@@ -100,7 +100,7 @@ For example, running a benchmarked, optimized execution of day 1 would look like
 
 In order to submit part of a solution for checking, append the `--submit <part>` option to the `solve` command.
 
-### Run all solutions
+### ➡️ Run all solutions
 
 ```sh
 cargo all
@@ -124,7 +124,7 @@ The template can output a table with solution times to your readme. In order to 
 
 Please note that these are not "scientific" benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
 
-### Run all tests
+### ➡️ Run all tests
 
 ```sh
 cargo test
@@ -132,19 +132,19 @@ cargo test
 
 To run tests for a specific day, append `--bin <day>`, e.g. `cargo test --bin 01`. You can further scope it down to a specific part, e.g. `cargo test --bin 01 part_one`.
 
-### Format code
+### ➡️ Format code
 
 ```sh
 cargo fmt
 ```
 
-### Lint code
+### ➡️ Lint code
 
 ```sh
 cargo clippy
 ```
 
-### Read puzzle description in terminal
+### ➡️ Read puzzle description
 
 > [!IMPORTANT]
 > This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
@@ -159,7 +159,7 @@ cargo read <day>
 # ...the input...
 ```
 
-### Scaffold, download and read in one go
+### ➡️ Scaffold, download & read the current aoc day
 
 > [!IMPORTANT]
 > This command requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
