@@ -12,7 +12,9 @@ pub fn handle(day: Option<Day>, recreate_all: bool) {
             all_days().collect()
         } else {
             // when the `--all` flag is not set, filter out days that are fully benched.
-            all_days().filter(|day| !stored_timings.is_day_complete(&day)).collect()
+            all_days()
+                .filter(|day| !stored_timings.is_day_complete(day))
+                .collect()
         }
     });
 
