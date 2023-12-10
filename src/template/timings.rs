@@ -25,9 +25,8 @@ impl Timings {
     /// Dehydrate timings to a JSON file.
     pub fn store_file(&self) -> Result<(), Error> {
         let json = JsonValue::from(self.clone());
-        let mut bytes = vec![];
-        json.format_to(&mut bytes)?;
-        fs::write(TIMINGS_FILE_PATH, bytes)
+        let mut file = fs::File::create(TIMINGS_FILE_PATH)?;
+        json.format_to(&mut file)
     }
 
     /// Rehydrate timings from a JSON file. If not present, returns empty timings.
@@ -67,6 +66,12 @@ impl Timings {
     pub fn total_millis(&self) -> f64 {
         self.data.iter().map(|x| x.total_nanos).sum::<f64>() / 1_000_000_f64
     }
+
+    pub fn is_day_complete(&self, day: &Day) -> bool {
+        self.data
+            .iter()
+            .any(|t| &t.day == day && t.part_1.is_some() && t.part_2.is_some())
+    }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -101,8 +106,8 @@ impl TryFrom<String> for Timings {
         Ok(Timings {
             data: json_data
                 .iter()
-                .map(|value| Timing::try_from(value).unwrap())
-                .collect(),
+                .map(Timing::try_from)
+                .collect::<Result<_, _>>()?,
         })
     }
 }
@@ -270,7 +275,56 @@ mod tests {
         }
     }
 
-    mod helpers {
+    mod is_day_complete {
+        use crate::{
+            day,
+            template::timings::{Timing, Timings},
+        };
+
+        #[test]
+        fn handles_completed_days() {
+            let timings = Timings {
+                data: vec![Timing {
+                    day: day!(1),
+                    part_1: Some("1ms".into()),
+                    part_2: Some("2ms".into()),
+                    total_nanos: 3_000_000_000_f64,
+                }],
+            };
+
+            assert_eq!(timings.is_day_complete(&day!(1)), true);
+        }
+
+        #[test]
+        fn handles_partial_days() {
+            let timings = Timings {
+                data: vec![Timing {
+                    day: day!(1),
+                    part_1: Some("1ms".into()),
+                    part_2: None,
+                    total_nanos: 1_000_000_000_f64,
+                }],
+            };
+
+            assert_eq!(timings.is_day_complete(&day!(1)), false);
+        }
+
+        #[test]
+        fn handles_uncompleted_days() {
+            let timings = Timings {
+                data: vec![Timing {
+                    day: day!(1),
+                    part_1: None,
+                    part_2: None,
+                    total_nanos: 0.0,
+                }],
+            };
+
+            assert_eq!(timings.is_day_complete(&day!(1)), false);
+        }
+    }
+
+    mod merge {
         use crate::{
             day,
             template::timings::{Timing, Timings},

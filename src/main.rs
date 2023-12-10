@@ -33,8 +33,8 @@ mod args {
             time: bool,
         },
         Time {
+            all: bool,
             day: Option<Day>,
-            force: bool,
         },
         #[cfg(feature = "today")]
         Today,
@@ -49,10 +49,10 @@ mod args {
                 time: args.contains("--time"),
             },
             Some("time") => {
-                let force = args.contains("--force");
+                let all = args.contains("--all");
 
                 AppArguments::Time {
-                    force,
+                    all,
                     day: args.opt_free_from_str()?,
                 }
             }
@@ -102,7 +102,7 @@ fn main() {
         }
         Ok(args) => match args {
             AppArguments::All { release, time } => all::handle(release, time),
-            AppArguments::Time { day, force } => time::handle(day, force),
+            AppArguments::Time { day, all } => time::handle(day, all),
             AppArguments::Download { day } => download::handle(day),
             AppArguments::Read { day } => read::handle(day),
             AppArguments::Scaffold { day, download } => {
