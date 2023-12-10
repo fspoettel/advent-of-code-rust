@@ -2,11 +2,14 @@ use std::{env, fs};
 
 pub mod aoc_cli;
 pub mod commands;
-mod day;
-pub mod readme_benchmarks;
 pub mod runner;
 
 pub use day::*;
+
+mod day;
+mod readme_benchmarks;
+mod run_multi;
+mod timings;
 
 pub const ANSI_ITALIC: &str = "\x1b[3m";
 pub const ANSI_BOLD: &str = "\x1b[1m";

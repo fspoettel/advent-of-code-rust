@@ -1,5 +1,4 @@
 /// Encapsulates code that interacts with solution functions.
-use crate::template::{aoc_cli, Day, ANSI_ITALIC, ANSI_RESET};
 use std::fmt::Display;
 use std::hint::black_box;
 use std::io::{stdout, Write};
@@ -7,7 +6,8 @@ use std::process::Output;
 use std::time::{Duration, Instant};
 use std::{cmp, env, process};
 
-use super::ANSI_BOLD;
+use crate::template::ANSI_BOLD;
+use crate::template::{aoc_cli, Day, ANSI_ITALIC, ANSI_RESET};
 
 pub fn run_part<I: Clone, T: Display>(func: impl Fn(I) -> Option<T>, input: I, day: Day, part: u8) {
     let part_str = format!("Part {part}");
