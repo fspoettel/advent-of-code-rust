@@ -7,13 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'advent_of_code'",
+            "name": "Debug unit tests for a solution",
             "cargo": {
-                "args": ["test", "--no-run", "--bin=advent_of_code", "--package=advent_of_code"],
-                "filter": {
-                    "name": "advent_of_code",
-                    "kind": "bin"
-                }
+                "args": [
+                    "test",
+                    "--no-run",
+                    // replace `01` here with the solution you like to debug.
+                    "--bin=01",
+                    "--package=advent_of_code"
+                ],
             },
             "args": [],
             "cwd": "${workspaceFolder}"
@@ -21,15 +23,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'advent_of_code'",
+            "name": "Debug a solution",
             "cargo": {
-                "args": ["build", "--bin=advent_of_code", "--package=advent_of_code"],
-                "filter": {
-                    "name": "advent_of_code",
-                    "kind": "bin"
-                }
+                "args": [
+                    "build",
+                    // replace `01` here with the solution you like to debug.
+                    "--bin=01",
+                    "--package=advent_of_code"
+                ],
             },
-            "args": ["1"],
             "cwd": "${workspaceFolder}"
         },
         {
@@ -37,7 +39,13 @@
             "request": "launch",
             "name": "Debug unit tests in library 'advent_of_code'",
             "cargo": {
-                "args": ["test", "--no-run", "--lib", "--package=advent_of_code"],
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--features=test_lib",
+                    "--package=advent_of_code"
+                ],
                 "filter": {
                     "name": "advent_of_code",
                     "kind": "lib"
