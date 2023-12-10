@@ -28,3 +28,6 @@ dhat-heap.json
 # Benchmarks
 
 data/timings.json
+
+#aoc-cli
+.adventofcode.session
