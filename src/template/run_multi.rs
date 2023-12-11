@@ -11,7 +11,8 @@ pub fn run_multi(days_to_run: &HashSet<Day>, is_release: bool, is_timed: bool) -
     let mut timings: Vec<Timing> = Vec::with_capacity(days_to_run.len());
 
     let mut need_space = false;
-    // NOTE: we didn't want duplicate day value, but we want days to be sorted.
+
+    // NOTE: use non-duplicate, sorted day values.
     all_days()
         .filter(|day| days_to_run.contains(day))
         .for_each(|day| {
