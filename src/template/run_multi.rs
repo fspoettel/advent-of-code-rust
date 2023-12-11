@@ -7,7 +7,7 @@ use super::{
     timings::{Timing, Timings},
 };
 
-pub fn run_multi(days_to_run: HashSet<Day>, is_release: bool, is_timed: bool) -> Option<Timings> {
+pub fn run_multi(days_to_run: &HashSet<Day>, is_release: bool, is_timed: bool) -> Option<Timings> {
     let mut timings: Vec<Timing> = Vec::with_capacity(days_to_run.len());
 
     all_days().for_each(|day| {

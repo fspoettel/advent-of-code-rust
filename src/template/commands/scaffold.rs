@@ -65,5 +65,5 @@ pub fn handle(day: Day) {
     }
 
     println!("---");
-    println!("🎄 Type `cargo solve {}` to run your solution.", day);
+    println!("🎄 Type `cargo solve {day}` to run your solution.");
 }

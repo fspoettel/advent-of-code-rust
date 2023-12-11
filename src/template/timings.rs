@@ -38,7 +38,7 @@ impl Timings {
         match s {
             Ok(timings) => timings,
             Err(e) => {
-                eprintln!("{}", e);
+                eprintln!("{e}");
                 Timings::default()
             }
         }
@@ -67,10 +67,10 @@ impl Timings {
         self.data.iter().map(|x| x.total_nanos).sum::<f64>() / 1_000_000_f64
     }
 
-    pub fn is_day_complete(&self, day: &Day) -> bool {
+    pub fn is_day_complete(&self, day: Day) -> bool {
         self.data
             .iter()
-            .any(|t| &t.day == day && t.part_1.is_some() && t.part_2.is_some())
+            .any(|t| t.day == day && t.part_1.is_some() && t.part_2.is_some())
     }
 }
 
