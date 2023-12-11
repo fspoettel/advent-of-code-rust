@@ -52,7 +52,7 @@ Individual solutions live in the `./src/bin/` directory as separate binaries. _I
 Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/template.txt) has _tests_ referencing its _example_ file in `./data/examples`. Use these tests to develop and debug your solutions against the example input. In VS Code, `rust-analyzer` will display buttons for running / debugging these unit tests above the unit test blocks.
 
 > [!TIP]
-> If a day has different example inputs for both parts, you can use the `read_file_part()` helper in your tests instead of `read_file()`. For example, if this applies to day 1, you can create a second example file `01-2.txt` and invoke the helper like `let result = part_two(&advent_of_code::template::read_file_part("examples", DAY, 2));` to read it in `test_part_two`.
+> If a day has multiple example inputs, you can use the `read_file_part()` helper in your tests instead of `read_file()`. If this e.g. applies to day 1, you can create a second example file `01-2.txt` and invoke the helper like `let result = part_two(&advent_of_code::template::read_file_part("examples", DAY, 2));`. This supports an arbitrary number of example files.
 
 ### ➡️ Download input for a day
 
@@ -98,7 +98,7 @@ For example, running a benchmarked, optimized execution of day 1 would look like
 > [!IMPORTANT]
 > This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
-In order to submit part of a solution for checking, append the `--submit <part>` option to the `solve` command.
+Append the `--submit <part>` option to the `solve` command to submit your solution for checking.
 
 ### ➡️ Run all solutions
 
@@ -120,7 +120,7 @@ This runs all solutions sequentially and prints output to the command-line. Same
 
 ### ➡️ Update readme benchmarks
 
-The template can write benchmark times to the README via the `cargo time` command.
+The template can write benchmark times to the readme via the `cargo time` command.
 
 By default, this command checks for missing benchmarks, runs those solutions, and then updates the table. If you want to (re-)time all solutions, run `cargo time --all`. If you want to (re-)time one specific solution, run `cargo time <day>`.
 
@@ -133,18 +133,6 @@ cargo test
 ```
 
 To run tests for a specific day, append `--bin <day>`, e.g. `cargo test --bin 01`. You can further scope it down to a specific part, e.g. `cargo test --bin 01 part_one`.
-
-### ➡️ Format code
-
-```sh
-cargo fmt
-```
-
-### ➡️ Lint code
-
-```sh
-cargo clippy
-```
 
 ### ➡️ Read puzzle description
 
@@ -196,12 +184,24 @@ cargo today
 # ...the input...
 ```
 
+### ➡️ Format code
+
+```sh
+cargo fmt
+```
+
+### ➡️ Lint code
+
+```sh
+cargo clippy
+```
+
 ## Optional template features
 
 ### Configure aoc-cli integration
 
 1. Install [`aoc-cli`](https://github.com/scarvalhojr/aoc-cli/) via cargo: `cargo install aoc-cli --version 0.12.0`
-2. Create an `.adventofcode.session` file in your home directory and paste your session cookie. To retrieve the session cookie, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in _Cookies_ under the _Application_ or _Storage_ tab, and copy out the `session` cookie value. [^1]
+2. Create the file `<home_directory>/.adventofcode.session` and paste your session cookie into it. To retrieve the session cookie, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in _Cookies_ under the _Application_ or _Storage_ tab, and copy out the `session` cookie value. [^1]
 
 Once installed, you can use the [download command](#download-input--description-for-a-day), the read command, and automatically submit solutions via the [`--submit` flag](#submitting-solutions).
 
@@ -229,7 +229,7 @@ Go to the _Variables_ tab in your repository settings and create the following v
 
 ✨ You can now run this action manually via the _Run workflow_ button on the workflow page. If you want the workflow to run automatically, uncomment the `schedule` section in the `readme-stars.yml` workflow file or add a `push` trigger.
 
-### Check code formatting / clippy lints in CI
+### Enable code formatting / clippy checks in the CI
 
 Uncomment the respective sections in the `ci.yml` workflow.
 
