@@ -4,7 +4,7 @@ use crate::template::run_multi::run_multi;
 use crate::template::timings::Timings;
 use crate::template::{all_days, readme_benchmarks, Day};
 
-pub fn handle(day: Option<Day>, recreate_all: bool) {
+pub fn handle(day: Option<Day>, recreate_all: bool, update_readme: bool) {
     let stored_timings = Timings::read_from_file();
 
     let days_to_run = day.map_or_else(
@@ -26,13 +26,15 @@ pub fn handle(day: Option<Day>, recreate_all: bool) {
     let merged_timings = stored_timings.merge(&timings);
     merged_timings.store_file().unwrap();
 
-    println!();
-    match readme_benchmarks::update(merged_timings) {
-        Ok(()) => {
-            println!("Stored updated benchmarks.");
-        }
-        Err(_) => {
-            eprintln!("Failed to store updated benchmarks.");
+    if update_readme {
+        println!();
+        match readme_benchmarks::update(merged_timings) {
+            Ok(()) => {
+                println!("Stored updated benchmarks.");
+            }
+            Err(_) => {
+                eprintln!("Failed to store updated benchmarks.");
+            }
         }
     }
 }

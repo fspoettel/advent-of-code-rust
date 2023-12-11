@@ -14,7 +14,7 @@ Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.
 
 This template supports all major OS (macOS, Linux, Windows).
 
-###  📝 Create your repository
+### 📝 Create your repository
 
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
@@ -56,7 +56,7 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/
 
 ### ➡️ Download input for a day
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 You can automatically download puzzle input and description by either appending the `--download` flag to `scaffold` (e.g. `cargo scaffold 4 --download`) or with the separate `download` command:
@@ -126,6 +126,8 @@ By default, this command checks for missing benchmarks, runs those solutions, an
 
 Please note that these are not _scientific_ benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
 
+To compute the times but not update the benchmarks table in the readme, use the `--no-readme` flag.
+
 ### ➡️ Run all tests
 
 ```sh
@@ -156,9 +158,9 @@ cargo read <day>
 
 During december, the `today` shorthand command can be used to:
 
- - scaffold a solution for the current day
- - download its input
- - and read the puzzle
+-   scaffold a solution for the current day
+-   download its input
+-   and read the puzzle
 
 in one go.
 
