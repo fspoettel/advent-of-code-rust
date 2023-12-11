@@ -10,28 +10,29 @@ use super::{
 pub fn run_multi(days_to_run: &HashSet<Day>, is_release: bool, is_timed: bool) -> Option<Timings> {
     let mut timings: Vec<Timing> = Vec::with_capacity(days_to_run.len());
 
-    all_days().for_each(|day| {
-        if day > 1 {
-            println!();
-        }
+    let mut need_space = false;
 
-        println!("{ANSI_BOLD}Day {day}{ANSI_RESET}");
-        println!("------");
+    // NOTE: use non-duplicate, sorted day values.
+    all_days()
+        .filter(|day| days_to_run.contains(day))
+        .for_each(|day| {
+            if need_space {
+                println!();
+            }
+            need_space = true;
 
-        if !days_to_run.contains(&day) {
-            println!("Skipped.");
-            return;
-        }
+            println!("{ANSI_BOLD}Day {day}{ANSI_RESET}");
+            println!("------");
 
-        let output = child_commands::run_solution(day, is_timed, is_release).unwrap();
+            let output = child_commands::run_solution(day, is_timed, is_release).unwrap();
 
-        if output.is_empty() {
-            println!("Not solved.");
-        } else {
-            let val = child_commands::parse_exec_time(&output, day);
-            timings.push(val);
-        }
-    });
+            if output.is_empty() {
+                println!("Not solved.");
+            } else {
+                let val = child_commands::parse_exec_time(&output, day);
+                timings.push(val);
+            }
+        });
 
     if is_timed {
         let timings = Timings { data: timings };
