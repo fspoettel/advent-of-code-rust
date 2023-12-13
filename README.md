@@ -117,6 +117,9 @@ This runs all solutions sequentially and prints output to the command-line. Same
 ### ➡️ Benchmark your solutions
 
 ```sh
+# example: `cargo time 8 --store`
+cargo time <day> [--all] [--store]
+
 # output:
 # Day 08
 # ------
