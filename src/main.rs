@@ -24,17 +24,16 @@ mod args {
         Solve {
             day: Day,
             release: bool,
-            time: bool,
             dhat: bool,
             submit: Option<u8>,
         },
         All {
             release: bool,
-            time: bool,
         },
         Time {
             all: bool,
             day: Option<Day>,
+            store: bool,
         },
         #[cfg(feature = "today")]
         Today,
@@ -46,14 +45,15 @@ mod args {
         let app_args = match args.subcommand()?.as_deref() {
             Some("all") => AppArguments::All {
                 release: args.contains("--release"),
-                time: args.contains("--time"),
             },
             Some("time") => {
                 let all = args.contains("--all");
+                let store = args.contains("--store");
 
                 AppArguments::Time {
                     all,
                     day: args.opt_free_from_str()?,
+                    store,
                 }
             }
             Some("download") => AppArguments::Download {
@@ -70,7 +70,6 @@ mod args {
                 day: args.free_from_str()?,
                 release: args.contains("--release"),
                 submit: args.opt_value_from_str("--submit")?,
-                time: args.contains("--time"),
                 dhat: args.contains("--dhat"),
             },
             #[cfg(feature = "today")]
@@ -101,8 +100,8 @@ fn main() {
             std::process::exit(1);
         }
         Ok(args) => match args {
-            AppArguments::All { release, time } => all::handle(release, time),
-            AppArguments::Time { day, all } => time::handle(day, all),
+            AppArguments::All { release } => all::handle(release),
+            AppArguments::Time { day, all, store } => time::handle(day, all, store),
             AppArguments::Download { day } => download::handle(day),
             AppArguments::Read { day } => read::handle(day),
             AppArguments::Scaffold { day, download } => {
@@ -114,10 +113,9 @@ fn main() {
             AppArguments::Solve {
                 day,
                 release,
-                time,
                 dhat,
                 submit,
-            } => solve::handle(day, release, time, dhat, submit),
+            } => solve::handle(day, release, dhat, submit),
             #[cfg(feature = "today")]
             AppArguments::Today => {
                 match Day::today() {

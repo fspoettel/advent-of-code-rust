@@ -89,10 +89,6 @@ cargo solve <day>
 
 The `solve` command runs your solution against real puzzle inputs. To run an optimized build of your code, append the `--release` flag as with any other rust program.
 
-By default, `solve` executes your code once and shows the execution time. If you append the `--time` flag to the command, the runner will run your code between `10` and `10.000` times (depending on execution time of first execution) and print the average execution time.
-
-For example, running a benchmarked, optimized execution of day 1 would look like `cargo solve 1 --release --time`. Displayed _timings_ show the raw execution time of your solution without overhead like file reads.
-
 #### Submitting solutions
 
 > [!IMPORTANT]
@@ -116,15 +112,36 @@ cargo all
 # Total: 0.20ms
 ```
 
-This runs all solutions sequentially and prints output to the command-line. Same as for the `solve` command, the `--release` flag runs an optimized build and the `--time` flag outputs benchmarks.
+This runs all solutions sequentially and prints output to the command-line. Same as for the `solve` command, the `--release` flag runs an optimized build.
 
-### ➡️ Update readme benchmarks
+### ➡️ Benchmark your solutions
 
-The template can write benchmark times to the readme via the `cargo time` command.
+```sh
+# example: `cargo time 8 --store`
+cargo time <day> [--all] [--store]
 
-By default, this command checks for missing benchmarks, runs those solutions, and then updates the table. If you want to (re-)time all solutions, run `cargo time --all`. If you want to (re-)time one specific solution, run `cargo time <day>`.
+# output:
+# Day 08
+# ------
+# Part 1: 1 (39.0ns @ 10000 samples)
+# Part 2: 2 (39.0ns @ 10000 samples)
+#
+# Total (Run): 0.00ms
+#
+# Stored updated benchmarks.
+```
 
-Please note that these are not _scientific_ benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
+The `cargo time` command allows you to benchmark your code and store timings in the readme. When benching, the runner will run your code between `10` and `10.000` times, depending on execution time of first execution, and print the average execution time.
+
+`cargo time` has three modes of execution:
+
+ 1. `cargo time` without arguments incrementally benches solutions that do not have been stored in the readme yet and skips the rest.
+ 2. `cargo time <day>` benches a single solution.
+ 3. `cargo time --all` benches all solutions.
+
+By default, `cargo time` does not write to the readme. In order to do so, append the `--store` flag: `cargo time --store`.
+
+> Please note that these are not _scientific_ benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
 
 ### ➡️ Run all tests
 
