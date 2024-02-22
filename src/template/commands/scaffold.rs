@@ -9,20 +9,24 @@ use crate::template::Day;
 const MODULE_TEMPLATE: &str =
     include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/template.txt"));
 
-fn safe_create_file(path: &str) -> Result<File, std::io::Error> {
-    OpenOptions::new().write(true).create_new(true).open(path)
+fn safe_create_file(path: &str, overwrite: bool) -> Result<File, std::io::Error> {
+    if overwrite {
+        OpenOptions::new().write(true).create(true).truncate(true).open(path)
+    } else {
+        OpenOptions::new().write(true).create_new(true).open(path)
+    }
 }
 
 fn create_file(path: &str) -> Result<File, std::io::Error> {
     OpenOptions::new().write(true).create(true).open(path)
 }
 
-pub fn handle(day: Day) {
+pub fn handle(day: Day, overwrite: bool) {
     let input_path = format!("data/inputs/{day}.txt");
     let example_path = format!("data/examples/{day}.txt");
     let module_path = format!("src/bin/{day}.rs");
 
-    let mut file = match safe_create_file(&module_path) {
+    let mut file = match safe_create_file(&module_path, overwrite) {
         Ok(file) => file,
         Err(e) => {
             eprintln!("Failed to create module file: {e}");
