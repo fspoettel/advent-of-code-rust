@@ -20,6 +20,7 @@ mod args {
         Scaffold {
             day: Day,
             download: bool,
+            overwrite: bool,
         },
         Solve {
             day: Day,
@@ -65,6 +66,7 @@ mod args {
             Some("scaffold") => AppArguments::Scaffold {
                 day: args.free_from_str()?,
                 download: args.contains("--download"),
+                overwrite: args.contains("--overwrite"),
             },
             Some("solve") => AppArguments::Solve {
                 day: args.free_from_str()?,
@@ -104,8 +106,8 @@ fn main() {
             AppArguments::Time { day, all, store } => time::handle(day, all, store),
             AppArguments::Download { day } => download::handle(day),
             AppArguments::Read { day } => read::handle(day),
-            AppArguments::Scaffold { day, download } => {
-                scaffold::handle(day);
+            AppArguments::Scaffold { day, download, overwrite } => {
+                scaffold::handle(day, overwrite);
                 if download {
                     download::handle(day);
                 }
@@ -120,7 +122,7 @@ fn main() {
             AppArguments::Today => {
                 match Day::today() {
                     Some(day) => {
-                        scaffold::handle(day);
+                        scaffold::handle(day, false);
                         download::handle(day);
                         read::handle(day)
                     }
