@@ -22,8 +22,8 @@ test_lib = []
 [dependencies]
 
 # Template dependencies
-chrono = { version = "0.4.31", optional = true }
-dhat = { version = "0.3.2", optional = true }
+chrono = { version = "0.4.38", optional = true }
+dhat = { version = "0.3.3", optional = true }
 pico-args = "0.5.0"
 tinyjson = "2.5.1"
 
