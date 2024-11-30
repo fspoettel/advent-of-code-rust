@@ -9,4 +9,4 @@ all = "run --quiet --release -- all"
 time = "run --quiet --release -- time"
 
 [env]
-AOC_YEAR = "2023"
+AOC_YEAR = "2024"
