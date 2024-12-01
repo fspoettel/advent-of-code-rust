@@ -106,7 +106,11 @@ fn main() {
             AppArguments::Time { day, all, store } => time::handle(day, all, store),
             AppArguments::Download { day } => download::handle(day),
             AppArguments::Read { day } => read::handle(day),
-            AppArguments::Scaffold { day, download, overwrite } => {
+            AppArguments::Scaffold {
+                day,
+                download,
+                overwrite,
+            } => {
                 scaffold::handle(day, overwrite);
                 if download {
                     download::handle(day);
