@@ -63,7 +63,7 @@ fn bench<I: Copy, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> (
 
     for _ in 0..bench_iterations {
         let timer = Instant::now();
-        black_box(func(black_box(cloned)));
+        black_box(func(black_box(input)));
         timers.push(timer.elapsed());
     }
 
