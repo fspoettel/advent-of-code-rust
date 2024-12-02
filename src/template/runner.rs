@@ -9,7 +9,7 @@ use std::{cmp, env, process};
 use crate::template::ANSI_BOLD;
 use crate::template::{aoc_cli, Day, ANSI_ITALIC, ANSI_RESET};
 
-pub fn run_part<I: Clone, T: Display>(func: impl Fn(I) -> Option<T>, input: I, day: Day, part: u8) {
+pub fn run_part<I: Copy, T: Display>(func: impl Fn(I) -> Option<T>, input: I, day: Day, part: u8) {
     let part_str = format!("Part {part}");
 
     let (result, duration, samples) =
@@ -25,15 +25,13 @@ pub fn run_part<I: Clone, T: Display>(func: impl Fn(I) -> Option<T>, input: I, d
 /// Run a solution part. The behavior differs depending on whether we are running a release or debug build:
 ///  1. in debug, the function is executed once.
 ///  2. in release, the function is benched (approx. 1 second of execution time or 10 samples, whatever take longer.)
-fn run_timed<I: Clone, T>(
+fn run_timed<I: Copy, T>(
     func: impl Fn(I) -> T,
     input: I,
     hook: impl Fn(&T),
 ) -> (T, Duration, u128) {
     let timer = Instant::now();
     let result = {
-        let input = input.clone();
-
         #[cfg(feature = "dhat-heap")]
         let _profiler = dhat::Profiler::new_heap();
 
@@ -52,7 +50,7 @@ fn run_timed<I: Clone, T>(
     (result, run.0, run.1)
 }
 
-fn bench<I: Clone, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> (Duration, u128) {
+fn bench<I: Copy, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> (Duration, u128) {
     let mut stdout = stdout();
 
     print!(" > {ANSI_ITALIC}benching{ANSI_RESET}");
@@ -64,10 +62,8 @@ fn bench<I: Clone, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> 
     let mut timers: Vec<Duration> = vec![];
 
     for _ in 0..bench_iterations {
-        // need a clone here to make the borrow checker happy.
-        let cloned = input.clone();
         let timer = Instant::now();
-        black_box(func(black_box(cloned)));
+        black_box(func(black_box(input)));
         timers.push(timer.elapsed());
     }
 
