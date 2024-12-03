@@ -12,8 +12,10 @@
                 "args": [
                     "test",
                     "--no-run",
-                    // replace `01` here with the solution you like to debug.
-                    "--bin=01",
+                    // replace with binary name (e.g. "01") here if you always
+                    // want to debug one file regardless of the active file in
+                    // the editor.
+                    "--bin=${fileBasenameNoExtension}",
                     "--package=advent_of_code"
                 ],
             },
@@ -27,8 +29,10 @@
             "cargo": {
                 "args": [
                     "build",
-                    // replace `01` here with the solution you like to debug.
-                    "--bin=01",
+                    // replace with binary name (e.g. "01") here if you always
+                    // want to debug one file regardless of the active file in
+                    // the editor
+                    "--bin=${fileBasenameNoExtension}",
                     "--package=advent_of_code"
                 ],
             },
