@@ -133,11 +133,8 @@ impl Iterator for AllDays {
 macro_rules! day {
     ($day:expr) => {
         const {
-            let day: u8 = $day;
-            match $crate::template::Day::new(day) {
-                Some(day) => day,
-                None => panic!("invalid day number, expecting a value between 1 and 25"),
-            }
+            $crate::template::Day::new($day)
+                .expect("invalid day number, expecting a value between 1 and 25")
         }
     };
 }
