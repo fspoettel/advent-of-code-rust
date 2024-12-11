@@ -24,7 +24,7 @@ pub struct Day(u8);
 impl Day {
     /// Creates a [`Day`] from the provided value if it's in the valid range,
     /// returns [`None`] otherwise.
-    pub fn new(day: u8) -> Option<Self> {
+    pub const fn new(day: u8) -> Option<Self> {
         if day == 0 || day > 25 {
             return None;
         }
