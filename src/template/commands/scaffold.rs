@@ -40,11 +40,7 @@ pub fn handle(day: Day, overwrite: bool) {
         }
     };
 
-    match file.write_all(
-        MODULE_TEMPLATE
-            .replace("%DAY_NUMBER%", &day.into_inner().to_string())
-            .as_bytes(),
-    ) {
+    match file.write_all(MODULE_TEMPLATE.as_bytes()) {
         Ok(()) => {
             println!("Created module file \"{}\"", &module_path);
         }
