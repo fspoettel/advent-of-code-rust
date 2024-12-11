@@ -191,7 +191,7 @@ macro_rules! day_from_file_name {
                 Err(_) => unreachable!(),
             };
 
-            let day = match u8::from_str_radix(path, 10) {
+            let day = match ::core::primitive::u8::from_str_radix(path, 10) {
                 Ok(day) => day,
                 Err(_) => panic!("the file name is expected to be a number"),
             };
