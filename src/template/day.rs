@@ -150,6 +150,58 @@ macro_rules! day {
     }};
 }
 
+/// Creates a [`Day`] using the current file name.
+///
+/// The file name must be a valid integer in the range 1-25.
+#[macro_export]
+macro_rules! day_from_file_name {
+    () => {
+        const {
+            let mut path = ::core::panic::Location::caller().file().as_bytes();
+
+            // Get the last part of the path (e.g. "11.rs")
+            // path = path.rsplit_once(|c| c == '\\' || c == '/').map(|(_, s)| s).unwrap_or(path)
+            let mut i = path.len();
+            while i > 0 {
+                let c = path[i - 1];
+                if c == b'\\' || c == b'/' {
+                    path = path.split_at(i).1;
+                    break;
+                }
+
+                i -= 1;
+            }
+
+            // Remove the extension
+            // path = path.split_once('.').map(|(s, _)| s).unwrap_or(path)
+            let mut i = 0;
+            while i < path.len() {
+                if path[i] == b'.' {
+                    path = path.split_at(i).0;
+                    break;
+                }
+
+                i += 1;
+            }
+
+            // Convert the path back into a &str
+            // Note: as we only split at ascii chars (/, \ or .) the path should be a valid &str
+            let path = match ::core::str::from_utf8(path) {
+                Ok(path) => path,
+                Err(_) => unreachable!(),
+            };
+
+            let day = match u8::from_str_radix(path, 10) {
+                Ok(day) => day,
+                Err(_) => panic!("the file name is expected to be a number"),
+            };
+
+            $crate::template::Day::new(day)
+                .expect("the file name should be a number between 1 and 25")
+        }
+    };
+}
+
 /* -------------------------------------------------------------------------- */
 
 #[cfg(feature = "test_lib")]
