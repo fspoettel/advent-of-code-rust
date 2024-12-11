@@ -42,18 +42,31 @@ pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
 #[macro_export]
 macro_rules! solution {
     ($day:expr) => {
-        $crate::solution!(@impl $day, [part_one, 1] [part_two, 2]);
+        $crate::solution!(@impl $crate::day!($day), [part_one, 1] [part_two, 2]);
     };
     ($day:expr, 1) => {
-        $crate::solution!(@impl $day, [part_one, 1]);
+        $crate::solution!(@impl $crate::day!($day), [part_one, 1]);
     };
     ($day:expr, 2) => {
-        $crate::solution!(@impl $day, [part_two, 2]);
+        $crate::solution!(@impl $crate::day!($day), [part_two, 2]);
+    };
+
+    () => {
+        $crate::solution!(@impl $crate::day_from_file_name!(), [part_one, 1] [part_two, 2]);
+    };
+    (*) => {
+        $crate::solution!();
+    };
+    (*, 1) => {
+        $crate::solution!(@impl $crate::day_from_file_name!(), [part_one, 1]);
+    };
+    (*, 2) => {
+        $crate::solution!(@impl $crate::day_from_file_name!(), [part_two, 2]);
     };
 
     (@impl $day:expr, $( [$func:expr, $part:expr] )*) => {
         /// The current day.
-        const DAY: $crate::template::Day = $crate::day!($day);
+        const DAY: $crate::template::Day = $day;
 
         #[cfg(feature = "dhat-heap")]
         #[global_allocator]
