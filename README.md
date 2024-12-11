@@ -282,13 +282,9 @@ You can pass the report a tool like [dh-view](https://nnethercote.github.io/dh_v
 -   [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.
 -   [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
 
-A curated list of popular crates can be found on [blessred.rs](https://blessed.rs/crates).
+A curated list of popular crates can be found on [blessed.rs](https://blessed.rs/crates).
 
 Do you have aoc-specific crate recommendations? [Share them!](https://github.com/fspoettel/advent-of-code-rust/edit/main/README.md)
-
-## Common pitfalls
-
--   **Integer overflows:** This template uses 32-bit integers by default because it is generally faster - for example when packed in large arrays or structs - than using 64-bit integers everywhere. For some problems, solutions for real input might exceed 32-bit integer space. While this is checked and panics in `debug` mode, integers [wrap](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-overflow) in `release` mode, leading to wrong output when running your solution.
 
 ## Footnotes
 
