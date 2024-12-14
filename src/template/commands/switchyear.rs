@@ -13,7 +13,6 @@ pub fn handle(year: Year) {
     }
 }
 
-#[cfg(feature = "today")]
 pub fn handle_today() {
     let year = Year::this_year().unwrap();
     let env_year = Year::new(env::var("AOC_YEAR").unwrap().parse().unwrap()).unwrap();

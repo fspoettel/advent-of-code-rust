@@ -16,7 +16,6 @@ debug = 1
 
 [features]
 dhat-heap = ["dhat"]
-today = []
 test_lib = []
 
 [dependencies]

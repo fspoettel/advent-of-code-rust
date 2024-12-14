@@ -1,10 +1,7 @@
 use advent_of_code::template::commands::{all, download, read, scaffold, solve, switchyear, time};
+use advent_of_code::template::Day;
 use advent_of_code::template::{ANSI_BOLD, ANSI_RESET};
 use args::{parse, AppArguments};
-
-#[cfg(feature = "today")]
-use advent_of_code::template::Day;
-#[cfg(feature = "today")]
 use std::process;
 
 mod args {
@@ -37,7 +34,6 @@ mod args {
             day: Option<Day>,
             store: bool,
         },
-        #[cfg(feature = "today")]
         Today,
         SwitchYear {
             year: Year,
@@ -78,7 +74,6 @@ mod args {
                 submit: args.opt_value_from_str("--submit")?,
                 dhat: args.contains("--dhat"),
             },
-            #[cfg(feature = "today")]
             Some("today") => AppArguments::Today,
             Some("switch-year") => AppArguments::SwitchYear {
                 year: args.free_from_str()?,
@@ -133,7 +128,6 @@ fn main() {
                 dhat,
                 submit,
             } => solve::handle(day, release, dhat, submit),
-            #[cfg(feature = "today")]
             AppArguments::Today => {
                 match Day::today() {
                     Some(day) => {
