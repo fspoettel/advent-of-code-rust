@@ -53,7 +53,10 @@ fn locate_table(readme: &str) -> Result<TablePosition, Error> {
 }
 
 fn construct_table(prefix: &str, timings: Timings, total_millis: f64) -> String {
-    let header = format!("{prefix} Benchmarks");
+    let header = format!(
+        "{prefix} Benchmarks for {}",
+        std::env::var("AOC_YEAR").unwrap()
+    );
 
     let mut lines: Vec<String> = vec![
         MARKER.into(),
@@ -95,6 +98,24 @@ pub fn update(timings: Timings) -> Result<(), Error> {
     update_content(&mut readme, timings, total_millis)?;
     fs::write(path, &readme)?;
     Ok(())
+}
+
+fn remove_benchmarks() {
+    let path = "README.md";
+    let mut readme = String::from_utf8_lossy(&fs::read(path).unwrap()).to_string();
+    let positions = locate_table(&readme).unwrap();
+    readme.replace_range(positions.pos_start..positions.pos_end, MARKER);
+    fs::write(path, &readme).unwrap();
+}
+
+pub fn update_after_switch_year() -> Result<(), Error> {
+    let timings = Timings::read_from_file();
+    if timings.data.is_empty() {
+        remove_benchmarks();
+        Ok(())
+    } else {
+        update(timings)
+    }
 }
 
 #[cfg(feature = "test_lib")]
