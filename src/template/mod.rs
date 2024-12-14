@@ -5,11 +5,13 @@ pub mod commands;
 pub mod runner;
 
 pub use day::*;
+pub use year::*;
 
 mod day;
 mod readme_benchmarks;
 mod run_multi;
 mod timings;
+mod year;
 
 pub const ANSI_ITALIC: &str = "\x1b[3m";
 pub const ANSI_BOLD: &str = "\x1b[1m";

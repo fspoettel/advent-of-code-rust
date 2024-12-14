@@ -1,4 +1,5 @@
-use advent_of_code::template::commands::{all, download, read, scaffold, solve, time};
+use advent_of_code::template::commands::{all, download, read, scaffold, solve, switchyear, time};
+use advent_of_code::template::{ANSI_BOLD, ANSI_RESET};
 use args::{parse, AppArguments};
 
 #[cfg(feature = "today")]
@@ -7,7 +8,7 @@ use advent_of_code::template::Day;
 use std::process;
 
 mod args {
-    use advent_of_code::template::Day;
+    use advent_of_code::template::{Day, Year};
     use std::process;
 
     pub enum AppArguments {
@@ -38,6 +39,9 @@ mod args {
         },
         #[cfg(feature = "today")]
         Today,
+        SwitchYear {
+            year: Year,
+        },
     }
 
     pub fn parse() -> Result<AppArguments, Box<dyn std::error::Error>> {
@@ -76,6 +80,9 @@ mod args {
             },
             #[cfg(feature = "today")]
             Some("today") => AppArguments::Today,
+            Some("switch-year") => AppArguments::SwitchYear {
+                year: args.free_from_str()?,
+            },
             Some(x) => {
                 eprintln!("Unknown command: {x}");
                 process::exit(1);
@@ -96,6 +103,10 @@ mod args {
 }
 
 fn main() {
+    println!(
+        "🎄{ANSI_BOLD} Advent of Code {} {ANSI_RESET}🎄",
+        std::env::var("AOC_YEAR").unwrap()
+    );
     match parse() {
         Err(err) => {
             eprintln!("Error: {err}");
@@ -126,6 +137,7 @@ fn main() {
             AppArguments::Today => {
                 match Day::today() {
                     Some(day) => {
+                        switchyear::handle_today();
                         scaffold::handle(day, false);
                         download::handle(day);
                         read::handle(day)
@@ -138,6 +150,9 @@ fn main() {
                         process::exit(1)
                     }
                 };
+            }
+            AppArguments::SwitchYear { year } => {
+                switchyear::handle(year);
             }
         },
     };

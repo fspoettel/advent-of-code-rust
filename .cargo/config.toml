@@ -3,6 +3,7 @@ today = "run --quiet --release --features today -- today"
 scaffold = "run --quiet --release -- scaffold"
 download = "run --quiet --release -- download"
 read = "run --quiet --release -- read"
+switch-year = "run --quiet --release -- switch-year"
 
 solve = "run --quiet --release -- solve"
 all = "run --quiet --release -- all"
