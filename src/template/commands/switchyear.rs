@@ -85,4 +85,7 @@ pub fn switch_to_year(year: Year, previous_year: Year) {
         &year.into_inner().to_string(),
     );
     fs::write(config_toml, config_toml_updated_content).unwrap();
+
+    // Update benchmarks in README.md
+    crate::template::readme_benchmarks::update_after_switch_year().unwrap();
 }
