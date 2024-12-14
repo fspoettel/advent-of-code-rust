@@ -1,5 +1,5 @@
 use crate::template::year::Year;
-use std::{collections::HashSet, env, fs, path::PathBuf};
+use std::{env, fs, path::PathBuf};
 
 extern crate fs_extra;
 
@@ -9,7 +9,10 @@ pub fn handle(year: Year) {
         println!("🔔 You are already in the year you want to switch to.");
     } else {
         switch_to_year(year, env_year);
-        println!("🎄 Switched to year {}.", year.into_inner());
+        println!(
+            "---\n🎄 Successfully switched to year {}.",
+            year.into_inner()
+        );
     }
 }
 
@@ -25,18 +28,9 @@ pub fn handle_today() {
     }
 }
 
-fn clean_folder(path: PathBuf) {
-    let paths = fs::read_dir(path).unwrap();
-    let mut files = HashSet::new();
-    for path in paths {
-        let path = path.unwrap().path();
-        if path.is_file() && path.file_name().unwrap() != ".keep" {
-            files.insert(path);
-        }
-    }
-    for file in files {
-        fs::remove_file(file).unwrap();
-    }
+fn create_folder_with_gitkeep(path: PathBuf) {
+    fs_extra::dir::create_all(&path, false).unwrap();
+    fs::write(path.join(".keep"), "").unwrap();
 }
 
 pub fn switch_to_year(year: Year, previous_year: Year) {
@@ -53,25 +47,31 @@ pub fn switch_to_year(year: Year, previous_year: Year) {
     let destination = years.join(previous_year.into_inner().to_string());
 
     let default_copy = fs_extra::dir::CopyOptions::new();
-    fs_extra::dir::create(&destination, true).unwrap();
+    let mut inside_copy = fs_extra::dir::CopyOptions::new();
+    inside_copy.content_only = true;
+    fs_extra::dir::create_all(&destination, false).unwrap();
     fs_extra::dir::move_dir(&bin, &destination, &default_copy).unwrap();
-    fs_extra::dir::move_dir(&examples, &destination, &default_copy).unwrap();
-    clean_folder(inputs);
-    clean_folder(puzzles);
+    fs_extra::dir::move_dir(&data, &destination, &inside_copy).unwrap();
 
     // Move years/ to src and data files
     let source = years.join(year.into_inner().to_string());
     if source.exists() {
         let source_bin = source.join("bin");
-        let source_examples = source.join("examples");
         fs_extra::dir::move_dir(&source_bin, &src, &default_copy).unwrap();
-        fs_extra::dir::move_dir(&source_examples, &data, &default_copy).unwrap();
-        fs_extra::dir::remove(&source).unwrap();
+        fs_extra::dir::move_dir(&source, &data, &inside_copy).unwrap();
+        println!(
+            "Found existing files for year {}, moved them.",
+            year.into_inner()
+        );
     } else {
-        fs::create_dir(&bin).unwrap();
-        fs::create_dir(&examples).unwrap();
-        fs::write(bin.join(".keep"), "").unwrap();
-        fs::write(examples.join(".keep"), "").unwrap();
+        println!(
+            "No existing files for year {}, generating blank folders.",
+            year.into_inner()
+        );
+        create_folder_with_gitkeep(bin);
+        create_folder_with_gitkeep(examples);
+        create_folder_with_gitkeep(inputs);
+        create_folder_with_gitkeep(puzzles);
     }
 
     // Set the environment variable

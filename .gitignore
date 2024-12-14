@@ -21,6 +21,10 @@ data/inputs/*
 !data/inputs/.keep
 data/puzzles/*
 !data/puzzles/.keep
+years/*/inputs/*
+!years/*/inputs/.keep
+years/*/puzzles/*
+!years/*/puzzles/.keep
 
 # Dhat
 dhat-heap.json
@@ -28,3 +32,4 @@ dhat-heap.json
 # Benchmarks
 
 data/timings.json
+years/*/timings.json
