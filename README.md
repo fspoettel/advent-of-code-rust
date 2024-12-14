@@ -1,6 +1,6 @@
 <img src="./.assets/christmas_ferris.png" width="164">
 
-# 🎄 Advent of Code {year}
+# 🎄 Advent of Code
 
 Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.rust-lang.org/).
 
@@ -200,6 +200,28 @@ cargo today
 # Fetching puzzle for day 1, 2022...
 # ...the input...
 ```
+
+### ➡️ Change year
+
+You can use the `switch-year` command to navigate through years.
+
+The files of the year defined in the environment variable `AOC_YEAR` in `.cargo/config.toml` are as usual in `src/` and `data/` folders, while the others are stored in `years/{AOC_YEAR}/`. Benchmarks on the readme are automatically updated.
+
+```sh
+# example: `cargo switch-year 2015` with no files already written for 2015
+cargo switch-year 2015
+
+# output:
+# No existing files for year 2015, generating blank folders.
+# ---
+# 🎄 Successfully switched to year 2015.
+```
+
+> [!TIP]
+> Remember to switch to the last event year before doing any commits on your personal repo, or else you will have many files changes as there were moved during year switches.
+
+> Please note that [stars tracking](#automatically-track-️-progress-in-the-readme) will still track the year you specified in the GitHub action and will not be changed.
+
 
 ### ➡️ Format code
 
