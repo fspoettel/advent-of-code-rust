@@ -27,7 +27,8 @@ pub struct TablePosition {
 
 #[must_use]
 pub fn get_path_for_bin(day: Day) -> String {
-    format!("./src/bin/{day}.rs")
+    let year = crate::template::get_year_exit_on_fail();
+    format!("{year}/src/bin/{day}.rs")
 }
 
 fn locate_table(readme: &str) -> Result<TablePosition, Error> {

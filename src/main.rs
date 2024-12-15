@@ -1,4 +1,6 @@
-use advent_of_code::template::commands::{all, download, read, scaffold, solve, time};
+use advent_of_code::template::commands::{
+    all, attempt, download, new_year, read, scaffold, set_year, solve, time,
+};
 use args::{parse, AppArguments};
 
 #[cfg(feature = "today")]
@@ -28,6 +30,11 @@ mod args {
             dhat: bool,
             submit: Option<u8>,
         },
+        Try {
+            day: Day,
+            release: bool,
+            dhat: bool,
+        },
         All {
             release: bool,
         },
@@ -36,6 +43,13 @@ mod args {
             day: Option<Day>,
             store: bool,
         },
+        NewYear {
+            year: u32,
+        },
+        SetYear {
+            year: u32,
+        },
+        GetYear,
         #[cfg(feature = "today")]
         Today,
     }
@@ -74,6 +88,18 @@ mod args {
                 submit: args.opt_value_from_str("--submit")?,
                 dhat: args.contains("--dhat"),
             },
+            Some("try") => AppArguments::Try {
+                day: args.free_from_str()?,
+                release: args.contains("--submit"),
+                dhat: args.contains("--dhat"),
+            },
+            Some("new-year") => AppArguments::NewYear {
+                year: args.free_from_str()?,
+            },
+            Some("set-year") => AppArguments::SetYear {
+                year: args.free_from_str()?,
+            },
+            Some("get-year") => AppArguments::GetYear,
             #[cfg(feature = "today")]
             Some("today") => AppArguments::Today,
             Some(x) => {
@@ -122,6 +148,7 @@ fn main() {
                 dhat,
                 submit,
             } => solve::handle(day, release, dhat, submit),
+            AppArguments::Try { day, release, dhat } => attempt::handle(day, release, dhat),
             #[cfg(feature = "today")]
             AppArguments::Today => {
                 match Day::today() {
@@ -138,6 +165,12 @@ fn main() {
                         process::exit(1)
                     }
                 };
+            }
+            AppArguments::NewYear { year } => new_year::handle(year),
+            AppArguments::SetYear { year } => set_year::handle(year),
+            AppArguments::GetYear => {
+                let year = advent_of_code::template::get_year_exit_on_fail();
+                println!("The repository is currently set to {}", year);
             }
         },
     };

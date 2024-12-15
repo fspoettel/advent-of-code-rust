@@ -2,11 +2,11 @@ use std::process::{Command, Stdio};
 
 use crate::template::Day;
 
-pub fn handle(day: Day, release: bool, dhat: bool, submit_part: Option<u8>) {
+pub fn handle(day: Day, release: bool, dhat: bool) {
     let year = crate::template::get_year_exit_on_fail();
     let year = format!("advent_of_code_{}", year);
     let mut cmd_args = vec![
-        "run".to_string(),
+        "test".to_string(),
         "-p".to_string(),
         year,
         "--bin".to_string(),
@@ -25,11 +25,6 @@ pub fn handle(day: Day, release: bool, dhat: bool, submit_part: Option<u8>) {
     }
 
     cmd_args.push("--".to_string());
-
-    if let Some(submit_part) = submit_part {
-        cmd_args.push("--submit".to_string());
-        cmd_args.push(submit_part.to_string());
-    }
 
     let mut cmd = Command::new("cargo")
         .args(&cmd_args)

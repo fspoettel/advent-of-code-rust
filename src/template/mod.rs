@@ -1,15 +1,15 @@
-use std::{env, fs};
+use std::{env, fs, path::PathBuf, str::FromStr};
 
 pub mod aoc_cli;
 pub mod commands;
+pub mod readme_benchmarks;
+pub mod run_multi;
 pub mod runner;
+pub mod timings;
 
 pub use day::*;
 
 mod day;
-mod readme_benchmarks;
-mod run_multi;
-mod timings;
 
 pub const ANSI_ITALIC: &str = "\x1b[3m";
 pub const ANSI_BOLD: &str = "\x1b[1m";
@@ -18,7 +18,7 @@ pub const ANSI_RESET: &str = "\x1b[0m";
 /// Helper function that reads a text file to a string.
 #[must_use]
 pub fn read_file(folder: &str, day: Day) -> String {
-    let cwd = env::current_dir().unwrap();
+    let cwd = PathBuf::from_str(env!("CARGO_MANIFEST_DIR")).unwrap();
     let filepath = cwd.join("data").join(folder).join(format!("{day}.txt"));
     let f = fs::read_to_string(filepath);
     f.expect("could not open input file")
@@ -27,13 +27,28 @@ pub fn read_file(folder: &str, day: Day) -> String {
 /// Helper function that reads a text file to string, appending a part suffix. E.g. like `01-2.txt`.
 #[must_use]
 pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
-    let cwd = env::current_dir().unwrap();
+    let cwd = PathBuf::from_str(env!("CARGO_MANIFEST_DIR")).unwrap();
     let filepath = cwd
         .join("data")
         .join(folder)
         .join(format!("{day}-{part}.txt"));
     let f = fs::read_to_string(filepath);
     f.expect("could not open input file")
+}
+
+pub fn get_year() -> Option<u32> {
+    std::env::var("AOC_YEAR")
+        .ok()
+        .and_then(|x| x.parse::<u32>().ok())
+}
+
+pub fn get_year_exit_on_fail() -> u32 {
+    let year = get_year();
+    if year.is_none() {
+        eprintln!("Failed to get the currently set AOC year");
+        std::process::exit(1);
+    }
+    year.unwrap()
 }
 
 /// Creates the constant `DAY` and sets up the input and runner for each part.
