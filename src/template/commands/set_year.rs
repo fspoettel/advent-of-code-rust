@@ -29,8 +29,8 @@ pub fn set_year(year: u32) -> bool {
             &new_aoc_year_line
         }
     });
-    let new_contents: Vec<&str> = lines.collect();
-    let new_contents = new_contents.join("\n");
+    let mut new_contents: String = lines.collect::<Vec<&str>>().join("\n");
+    new_contents.push('\n');
 
     match write_file(&config_path, new_contents.as_bytes()) {
         Ok(_) => true,
