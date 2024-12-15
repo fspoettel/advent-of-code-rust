@@ -1,0 +1,28 @@
+advent_of_code_YEAR_NUMBER::solution!(DAY_NUMBER);
+
+pub fn part_one(input: &str) -> Option<u64> {
+    None
+}
+
+pub fn part_two(input: &str) -> Option<u64> {
+    None
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part_one() {
+        let input = advent_of_code_YEAR_NUMBER::template::read_file("examples", DAY);
+        let result = part_one(&input);
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_part_two() {
+        let input = advent_of_code_YEAR_NUMBER::template::read_file("examples", DAY);
+        let result = part_two(&input);
+        assert_eq!(result, None);
+    }
+}
