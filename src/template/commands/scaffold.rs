@@ -7,7 +7,7 @@ use std::{
 use crate::template::{get_year_exit_on_fail, Day};
 
 const MODULE_TEMPLATE: &str =
-    include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/template.txt"));
+    include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/template/template.txt"));
 
 fn safe_create_file(path: &str, overwrite: bool) -> Result<File, std::io::Error> {
     let mut file = OpenOptions::new();
