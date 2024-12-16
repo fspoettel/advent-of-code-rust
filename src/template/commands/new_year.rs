@@ -26,6 +26,10 @@ pub fn handle(year: u32) {
     let new_root = PathBuf::from_str(env!("CARGO_MANIFEST_DIR"))
         .unwrap()
         .join(format!("{}", year));
+    if new_root.exists() {
+        eprintln!("{} directory already exists", year);
+        process::exit(1);
+    }
 
     copy_year_template(&project_root, &new_root);
     set_year_numbers(year, &new_root);
