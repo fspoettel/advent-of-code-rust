@@ -32,7 +32,7 @@ mod args {
         },
         Try {
             day: Day,
-            release: bool,
+            test: Option<String>,
             dhat: bool,
         },
         All {
@@ -88,7 +88,7 @@ mod args {
             },
             Some("try") => AppArguments::Try {
                 day: args.free_from_str()?,
-                release: args.contains("--submit"),
+                test: args.free_from_str().ok(),
                 dhat: args.contains("--dhat"),
             },
             Some("new-year") => AppArguments::NewYear,
@@ -144,7 +144,7 @@ fn main() {
                 dhat,
                 submit,
             } => solve::handle(day, release, dhat, submit),
-            AppArguments::Try { day, release, dhat } => attempt::handle(day, release, dhat),
+            AppArguments::Try { day, test, dhat } => attempt::handle(day, test, dhat),
             #[cfg(feature = "today")]
             AppArguments::Today => {
                 match Day::today() {
