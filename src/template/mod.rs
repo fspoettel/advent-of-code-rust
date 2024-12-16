@@ -45,7 +45,7 @@ pub fn get_year() -> Option<u32> {
 pub fn get_year_exit_on_fail() -> u32 {
     let year = get_year();
     if year.is_none() {
-        eprintln!("Failed to get the currently set AOC year");
+        eprintln!("Failed to get the currently set year.");
         std::process::exit(1);
     }
     year.unwrap()

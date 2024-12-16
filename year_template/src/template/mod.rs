@@ -1,4 +1,4 @@
-use std::{env, fs, path::PathBuf, process, str::FromStr};
+use std::{env, fs, path::PathBuf, str::FromStr};
 
 pub mod aoc_cli;
 pub mod commands;
@@ -40,7 +40,7 @@ pub fn get_year() -> Option<u32> {
     let config_path = get_config_path();
     let config_contents = read_config(&config_path);
     if let Err(()) = config_contents {
-        process::exit(1);
+        std::process::exit(1);
     }
     let config_contents = config_contents.unwrap();
     let year: String = config_contents
@@ -55,7 +55,7 @@ pub fn get_year() -> Option<u32> {
 pub fn get_year_exit_on_fail() -> u32 {
     let year = get_year();
     if year.is_none() {
-        eprintln!("Failed to get the currently set AOC year");
+        eprintln!("Failed to get the currently set year.");
         std::process::exit(1);
     }
     year.unwrap()
@@ -73,7 +73,7 @@ fn get_config_path() -> PathBuf {
 fn read_config(filepath: &PathBuf) -> Result<String, ()> {
     let f = fs::read_to_string(filepath);
     if f.is_err() {
-        eprintln!("failed to read Cargo.toml");
+        eprintln!("Failed to read config.toml.");
         return Err(());
     }
     Ok(f.unwrap())

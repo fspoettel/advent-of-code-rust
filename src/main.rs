@@ -170,7 +170,7 @@ fn main() {
             AppArguments::SetYear { year } => set_year::handle(year),
             AppArguments::GetYear => {
                 let year = advent_of_code::template::get_year_exit_on_fail();
-                println!("The repository is currently set to {}", year);
+                println!("The repository is currently set to {}.", year);
             }
         },
     };

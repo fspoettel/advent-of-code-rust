@@ -5,9 +5,10 @@ use crate::template::{get_config_path, read_config};
 use super::write_file;
 
 pub fn handle(year: u32) {
-    if set_year(year) {
+    if !set_year(year) {
         process::exit(1);
     }
+    println!("Set repository to year {}.", year);
 }
 
 pub fn set_year(year: u32) -> bool {
@@ -31,7 +32,7 @@ pub fn set_year(year: u32) -> bool {
     match write_file(&config_path, new_contents.as_bytes()) {
         Ok(_) => true,
         Err(_) => {
-            eprintln!("failed to write new year to the config file");
+            eprintln!("Failed to write the new year to config.toml.");
             false
         }
     }

@@ -31,7 +31,11 @@ pub fn handle(year: u32) {
     set_year_numbers(year, &new_root);
     set_year(year);
     add_to_workspace(year);
-    println!("Created AOC year {} workspace module", year);
+    println!("Created {} workspace project.", year);
+    println!("Set the repository's current working year to {}.", year);
+    println!("---");
+    println!("🎄 Type `cargo scaffold <day>` to get started on the year.");
+    println!("🎄 Or type `cargo set-year <year>` to switch to working on a different year.");
 }
 
 fn copy_year_template(project_root: &Path, new_root: &Path) {
@@ -57,7 +61,8 @@ fn set_year_numbers(year: u32, new_root: &Path) {
         let original_contents = match fs::read_to_string(filepath.clone()) {
             Ok(original) => original,
             Err(_) => {
-                eprintln!("Could not read from file to set year numbers");
+                eprintln!("Could not read from file {} to set year numbers.",
+                    filepath.to_str().unwrap());
                 cleanup(year);
                 process::exit(1);
             }
@@ -109,7 +114,7 @@ fn read_toml_file() -> Result<String, ()> {
     let filepath = concat!(env!("CARGO_MANIFEST_DIR"), "/Cargo.toml");
     let f = fs::read_to_string(filepath);
     if f.is_err() {
-        eprintln!("failed to read Cargo.toml");
+        eprintln!("Failed to read Cargo.toml.");
         return Err(());
     }
     Ok(f.unwrap())
@@ -132,7 +137,7 @@ fn add_year_to_toml_str(year: u32, original: &str) -> String {
 fn get_end_pos_of_members(original: &str) -> Result<usize, ()> {
     let start_idx = original[..].find("members = [");
     if start_idx.is_none() {
-        eprintln!("failed to find a members section of Cargo.toml");
+        eprintln!("Failed to find a members section of Cargo.toml.");
         return Err(());
     }
     let start_idx = start_idx.unwrap();
@@ -140,7 +145,7 @@ fn get_end_pos_of_members(original: &str) -> Result<usize, ()> {
     match end_idx {
         Some(i) => Ok(i + start_idx),
         None => {
-            eprintln!("failed to find the end of the members section of Cargo.toml");
+            eprintln!("Failed to find the end of the members section of Cargo.toml.");
             Err(())
         }
     }

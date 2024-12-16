@@ -165,13 +165,10 @@ fn main() {
             AppArguments::NewYear => {
                 println!("You can only generate new year folders at the project root");
             }
-            AppArguments::SetYear { year } => {
-                set_year::handle(year);
-                println!("Set repository to AOC year {}", year);
-            }
+            AppArguments::SetYear { year } => set_year::handle(year),
             AppArguments::GetYear => {
                 let year = advent_of_code_YEAR_NUMBER::template::get_year_exit_on_fail();
-                println!("The repository is currently set to {}", year);
+                println!("The repository is currently set to {}.", year);
             }
         },
     };
