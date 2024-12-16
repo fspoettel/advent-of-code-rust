@@ -1,22 +1,11 @@
 [package]
-name = "advent_of_code"
+name = "advent_of_code_YEAR_NUMBER"
 version = "0.11.0"
 authors = ["Felix Spöttel <1682504+fspoettel@users.noreply.github.com>"]
 edition = "2021"
-default-run = "advent_of_code"
 publish = false
 
-[workspace]
-members = ["year_template"]
-
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[lib]
-doctest = false
-
-[profile.dhat]
-inherits = "release"
-debug = 1
-
 [features]
 dhat-heap = ["dhat"]
 today = ["chrono"]

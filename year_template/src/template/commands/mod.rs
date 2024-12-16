@@ -7,7 +7,6 @@ use std::{
 pub mod all;
 pub mod attempt;
 pub mod download;
-pub mod new_year;
 pub mod read;
 pub mod scaffold;
 pub mod set_year;

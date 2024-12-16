@@ -19,7 +19,6 @@ This template supports all major OS (macOS, Linux, Windows).
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
 3.  Clone your repository to your computer.
-4.  If you are solving a previous year's advent of code, change the `AOC_YEAR` variable in `.cargo/config.toml` to reflect the year you are solving.
 
 ### 💻 Setup rust
 
@@ -32,6 +31,22 @@ This template supports all major OS (macOS, Linux, Windows).
 ✨ You can start solving puzzles now! Head to the [Usage section](#usage) to see how to use this template. If you like, you can configure [some optional features](#optional-template-features).
 
 ## Usage
+
+### ➡️ Start a new year
+
+```sh
+# example: `cargo new-year 2024`
+cargo new-year <year>
+
+# output:
+# Created 2024 workspace project.
+# Set the repository's current working year to 2024.
+# ---
+# 🎄 Type `cargo scaffold <day>` to get started on the year.
+# 🎄 Or type `cargo set-year <year>` to switch to working on a different year.
+```
+
+A year has its own directory `./<year>/` within the repository. This subdirectory behaves as its own crate with its own dependencies separate from the repository root. Its contents are copied from the directory `./year_template/` so if you add dependencies or utility files there they will be copied into any new year project you create. You can run all of the following commands from within the `./<year>/` directory. You can also run the Advent of Code custom commands from the project root directory so long as the repository year is set to `<year>` (see the `set-year` command).
 
 ### ➡️ Scaffold a day
 
@@ -74,6 +89,24 @@ cargo download <day>
 # 🎄 Successfully wrote puzzle to "data/puzzles/01.md".
 ```
 
+### ➡️ Run tests for a day
+
+```sh
+# example: `cargo try 1`
+cargo try <day>
+
+#    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.84s
+#     Running unittests src/bin/01.rs (target/debug/deps/01-faca1023160cfe39)
+
+# running 2 tests
+# test tests::test_part_two ... ok
+# test tests::test_part_one ... ok
+#
+# test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+
+The `try` command runs the tests for your solution against the example puzzle inputs. You can narrow it down to a specific test or set of tests, e.g. `cargo try 1 part_one` to run just the part one test.
+
 ### ➡️ Run solutions for a day
 
 ```sh
@@ -112,7 +145,7 @@ cargo all
 # Total: 0.20ms
 ```
 
-This runs all solutions sequentially and prints output to the command-line. Same as for the `solve` command, the `--release` flag runs an optimized build.
+This runs all solutions for a year sequentially and prints output to the command-line. Same as for the `solve` command, the `--release` flag runs an optimized build.
 
 ### ➡️ Benchmark your solutions
 
@@ -149,7 +182,7 @@ By default, `cargo time` does not write to the readme. In order to do so, append
 cargo test
 ```
 
-To run tests for a specific day, append `--bin <day>`, e.g. `cargo test --bin 01`. You can further scope it down to a specific part, e.g. `cargo test --bin 01 part_one`.
+To run tests for a specific day, append `--bin <day>`, e.g. `cargo test --bin 01`. You can further scope it down to a specific part, e.g. `cargo test --bin 01 part_one`. This command only works within a given year's subdirectory (such as running all the 2024 tests by running `cargo test` in `./2024/`).
 
 ### ➡️ Read puzzle description
 
@@ -201,17 +234,41 @@ cargo today
 # ...the input...
 ```
 
+### ➡️ Change what year the repository is set to
+```sh
+# example: `cargo set-year 2024`
+cargo set-year 2024
+
+# output:
+# Set repository to year 2024.
+```
+
+This sets the repository's "configured year" which is tracked in `./.cargo/config.toml`. When running Advent of Code custom commands from the project's root directory, it will execute them for this year. Creating a new year subproject automatically sets the repository's year to that year.
+
+### ➡️ Check what year the repository is set to
+```sh
+# example: `cargo get-year` when you've been working on 2024
+cargo get-year
+
+# output:
+# The repository is currently set to 2024.
+```
+
 ### ➡️ Format code
 
 ```sh
 cargo fmt
 ```
 
+Run this inside the `./<year>` directory.
+
 ### ➡️ Lint code
 
 ```sh
 cargo clippy
 ```
+
+Run this inside the `./<year>` directory.
 
 ## Optional template features
 

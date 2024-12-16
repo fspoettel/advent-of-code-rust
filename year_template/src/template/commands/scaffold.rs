@@ -4,7 +4,7 @@ use std::{
     process,
 };
 
-use crate::template::{get_year_exit_on_fail, Day};
+use crate::template::Day;
 
 const MODULE_TEMPLATE: &str = include_str!(concat!(
     env!("CARGO_MANIFEST_DIR"),
@@ -30,10 +30,9 @@ fn create_file(path: &str) -> Result<File, std::io::Error> {
 }
 
 pub fn handle(day: Day, overwrite: bool) {
-    let year = get_year_exit_on_fail();
-    let input_path = format!("{year}/data/inputs/{day}.txt");
-    let example_path = format!("{year}/data/examples/{day}.txt");
-    let module_path = format!("{year}/src/bin/{day}.rs");
+    let input_path = format!("data/inputs/{day}.txt");
+    let example_path = format!("data/examples/{day}.txt");
+    let module_path = format!("src/bin/{day}.rs");
 
     let mut file = match safe_create_file(&module_path, overwrite) {
         Ok(file) => file,
@@ -45,7 +44,7 @@ pub fn handle(day: Day, overwrite: bool) {
 
     match file.write_all(
         MODULE_TEMPLATE
-            .replace("YEAR_NUMBER", &year.to_string())
+            .replace("YEAR_NUMBER", "%YEAR_NUMBER%")
             .replace("DAY_NUMBER", &day.into_inner().to_string())
             .as_bytes(),
     ) {

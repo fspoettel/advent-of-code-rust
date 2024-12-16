@@ -37,9 +37,19 @@ pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
 }
 
 pub fn get_year() -> Option<u32> {
-    std::env::var("AOC_YEAR")
-        .ok()
-        .and_then(|x| x.parse::<u32>().ok())
+    let config_path = get_config_path();
+    let config_contents = read_config(&config_path);
+    if let Err(()) = config_contents {
+        std::process::exit(1);
+    }
+    let config_contents = config_contents.unwrap();
+    let year: String = config_contents
+        .lines()
+        .filter(|s| s.contains("AOC_YEAR"))
+        .collect();
+    let year: Vec<&str> = year.split("\"").collect();
+    let year = year.get(year.len() - 2).unwrap();
+    year.parse::<u32>().ok()
 }
 
 pub fn get_year_exit_on_fail() -> u32 {
@@ -49,6 +59,24 @@ pub fn get_year_exit_on_fail() -> u32 {
         std::process::exit(1);
     }
     year.unwrap()
+}
+
+fn get_config_path() -> PathBuf {
+    let config_path = PathBuf::from_str(env!("CARGO_MANIFEST_DIR"))
+        .unwrap()
+        .join("..")
+        .join(".cargo")
+        .join("config.toml");
+    config_path.canonicalize().unwrap()
+}
+
+fn read_config(filepath: &PathBuf) -> Result<String, ()> {
+    let f = fs::read_to_string(filepath);
+    if f.is_err() {
+        eprintln!("Failed to read config.toml.");
+        return Err(());
+    }
+    Ok(f.unwrap())
 }
 
 /// Creates the constant `DAY` and sets up the input and runner for each part.
