@@ -4,3 +4,4 @@ pub mod read;
 pub mod scaffold;
 pub mod solve;
 pub mod time;
+pub mod input_sync;

@@ -1,4 +1,4 @@
-use advent_of_code::template::commands::{all, download, read, scaffold, solve, time};
+use advent_of_code::template::commands::{all, download, input_sync, read, scaffold, solve, time};
 use args::{parse, AppArguments};
 
 #[cfg(feature = "today")]
@@ -35,6 +35,9 @@ mod args {
             all: bool,
             day: Option<Day>,
             store: bool,
+        },
+        InputSync {
+            replace: bool,
         },
         #[cfg(feature = "today")]
         Today,
@@ -73,6 +76,9 @@ mod args {
                 release: args.contains("--release"),
                 submit: args.opt_value_from_str("--submit")?,
                 dhat: args.contains("--dhat"),
+            },
+            Some("input-sync") => AppArguments::InputSync {
+                replace: args.contains("--replace"),
             },
             #[cfg(feature = "today")]
             Some("today") => AppArguments::Today,
@@ -122,6 +128,7 @@ fn main() {
                 dhat,
                 submit,
             } => solve::handle(day, release, dhat, submit),
+            AppArguments::InputSync { replace } => input_sync::handle(replace),
             #[cfg(feature = "today")]
             AppArguments::Today => {
                 match Day::today() {
