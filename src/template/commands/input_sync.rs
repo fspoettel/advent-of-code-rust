@@ -12,7 +12,7 @@ pub fn handle(replace_existing: bool) {
             eprintln!("Skipping day: {}", day);
             continue;
         }
-        if !replace_existing && existence.unwrap() { return; }
+        if !replace_existing && existence.unwrap() { continue; }
         let result = download(day, DownloadMode::InputOnly);
         if result.is_err() {
             eprintln!("Unable to download input for day: {}", day);
