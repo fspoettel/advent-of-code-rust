@@ -24,17 +24,11 @@ pub struct Day(u8);
 impl Day {
     /// Creates a [`Day`] from the provided value if it's in the valid range,
     /// returns [`None`] otherwise.
-    pub fn new(day: u8) -> Option<Self> {
+    pub const fn new(day: u8) -> Option<Self> {
         if day == 0 || day > 25 {
             return None;
         }
         Some(Self(day))
-    }
-
-    // Not part of the public API
-    #[doc(hidden)]
-    pub const fn __new_unchecked(day: u8) -> Self {
-        Self(day)
     }
 
     /// Converts the [`Day`] into an [`u8`].
@@ -137,17 +131,12 @@ impl Iterator for AllDays {
 /// Creates a [`Day`] value in a const context.
 #[macro_export]
 macro_rules! day {
-    ($day:expr) => {{
-        const _ASSERT: () = assert!(
-            $day != 0 && $day <= 25,
-            concat!(
-                "invalid day number `",
-                $day,
-                "`, expecting a value between 1 and 25"
-            ),
-        );
-        $crate::template::Day::__new_unchecked($day)
-    }};
+    ($day:expr) => {
+        const {
+            $crate::template::Day::new($day)
+                .expect("invalid day number, expecting a value between 1 and 25")
+        }
+    };
 }
 
 /* -------------------------------------------------------------------------- */
