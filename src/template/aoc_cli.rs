@@ -13,6 +13,41 @@ pub enum AocCommandError {
     BadExitStatus(Output),
 }
 
+pub enum DownloadMode {
+    InputOnly,
+    PuzzleOnly,
+    InputAndPuzzle,
+}
+
+impl DownloadMode {
+    fn modify_args(&self, input_path: &str, puzzle_path: &str) -> Vec<String> {
+        let mut args = vec!["--overwrite".into()];
+        match self {
+            DownloadMode::InputOnly => {
+                args.extend(["--input-only", "--input-file", input_path].iter().map(|s| s.to_string()));
+            }
+            DownloadMode::PuzzleOnly => {
+                args.extend(["--puzzle-only", "--puzzle-file", puzzle_path].iter().map(|s| s.to_string()));
+            }
+            DownloadMode::InputAndPuzzle => {
+                args.extend([
+                    "--input-file", input_path,
+                    "--puzzle-file", puzzle_path
+                ].iter().map(|s| s.to_string()));
+            }
+        }
+        args
+    }
+
+    fn downloads_input(&self) -> bool {
+        matches!(self, DownloadMode::InputOnly | DownloadMode::InputAndPuzzle)
+    }
+
+    fn downloads_puzzle(&self) -> bool {
+        matches!(self, DownloadMode::PuzzleOnly | DownloadMode::InputAndPuzzle)
+    }
+}
+
 impl Display for AocCommandError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -49,26 +84,24 @@ pub fn read(day: Day) -> Result<Output, AocCommandError> {
     call_aoc_cli(&args)
 }
 
-pub fn download(day: Day) -> Result<Output, AocCommandError> {
+pub fn download(day: Day, download_variants: DownloadMode) -> Result<Output, AocCommandError> {
     let input_path = get_input_path(day);
     let puzzle_path = get_puzzle_path(day);
 
-    let args = build_args(
+    let args = &build_args(
         "download",
-        &[
-            "--overwrite".into(),
-            "--input-file".into(),
-            input_path.to_string(),
-            "--puzzle-file".into(),
-            puzzle_path.to_string(),
-        ],
+        &download_variants.modify_args(&input_path, &puzzle_path)[..],
         day,
     );
 
     let output = call_aoc_cli(&args)?;
     println!("---");
-    println!("🎄 Successfully wrote input to \"{}\".", &input_path);
-    println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
+    if download_variants.downloads_input() {
+        println!("🎄 Successfully wrote input to \"{}\".", &input_path);
+    }
+    if download_variants.downloads_puzzle() {
+        println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
+    }
     Ok(output)
 }
 
