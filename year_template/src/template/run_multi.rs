@@ -61,15 +61,14 @@ impl From<std::io::Error> for Error {
 
 #[must_use]
 pub fn get_path_for_bin(day: Day) -> String {
-    let year = crate::template::get_year_exit_on_fail();
-    format!("{year}/src/bin/{day}.rs")
+    format!("src/bin/{day}.rs")
 }
 
 /// All solutions live in isolated binaries.
 /// This module encapsulates interaction with these binaries, both invoking them as well as parsing the timing output.
 pub mod child_commands {
     use super::{get_path_for_bin, Error};
-    use crate::template::{get_year_exit_on_fail, Day};
+    use crate::template::Day;
     use std::{
         io::{BufRead, BufReader},
         path::Path,
@@ -84,11 +83,8 @@ pub mod child_commands {
             return Ok(vec![]);
         }
 
-        let year = get_year_exit_on_fail();
-        let year = format!("advent_of_code_{}", year);
-
         let day_padded = day.to_string();
-        let mut args = vec!["run", "-p", &year, "--quiet", "--bin", &day_padded];
+        let mut args = vec!["run", "--quiet", "--bin", &day_padded];
 
         if is_release {
             args.push("--release");
@@ -178,7 +174,7 @@ pub mod child_commands {
             .split(" samples)")
             .next()?
             .split('(')
-            .next_back()?
+            .last()?
             .split('@')
             .next()?
             .trim();

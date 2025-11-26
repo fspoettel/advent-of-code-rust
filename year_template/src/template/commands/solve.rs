@@ -3,15 +3,7 @@ use std::process::{Command, Stdio};
 use crate::template::Day;
 
 pub fn handle(day: Day, release: bool, dhat: bool, submit_part: Option<u8>) {
-    let year = crate::template::get_year_exit_on_fail();
-    let year = format!("advent_of_code_{}", year);
-    let mut cmd_args = vec![
-        "run".to_string(),
-        "-p".to_string(),
-        year,
-        "--bin".to_string(),
-        day.to_string(),
-    ];
+    let mut cmd_args = vec!["run".to_string(), "--bin".to_string(), day.to_string()];
 
     if dhat {
         cmd_args.extend([

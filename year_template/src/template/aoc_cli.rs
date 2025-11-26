@@ -81,22 +81,18 @@ pub fn submit(day: Day, part: u8, result: &str) -> Result<Output, AocCommandErro
 }
 
 fn get_input_path(day: Day) -> String {
-    let year = crate::template::get_year_exit_on_fail();
-    format!("{year}/data/inputs/{day}.txt")
+    format!("data/inputs/{day}.txt")
 }
 
 fn get_puzzle_path(day: Day) -> String {
-    let year = crate::template::get_year_exit_on_fail();
-    format!("{year}/data/puzzles/{day}.md")
+    format!("data/puzzles/{day}.md")
 }
 
 fn build_args(command: &str, args: &[String], day: Day) -> Vec<String> {
     let mut cmd_args = args.to_vec();
 
-    if let Some(year) = super::get_year() {
-        cmd_args.push("--year".into());
-        cmd_args.push(year.to_string());
-    }
+    cmd_args.push("--year".into());
+    cmd_args.push("%YEAR_NUMBER%".to_string());
 
     cmd_args.append(&mut vec!["--day".into(), day.to_string(), command.into()]);
 

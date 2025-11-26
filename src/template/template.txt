@@ -1,4 +1,4 @@
-advent_of_code::solution!(%DAY_NUMBER%);
+advent_of_code_YEAR_NUMBER::solution!(DAY_NUMBER);
 
 pub fn part_one(input: &str) -> Option<u64> {
     None
@@ -14,13 +14,13 @@ mod tests {
 
     #[test]
     fn test_part_one() {
-        let result = part_one(&advent_of_code::template::read_file("examples", DAY));
+        let result = part_one(&advent_of_code_YEAR_NUMBER::template::read_file("examples", DAY));
         assert_eq!(result, None);
     }
 
     #[test]
     fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
+        let result = part_two(&advent_of_code_YEAR_NUMBER::template::read_file("examples", DAY));
         assert_eq!(result, None);
     }
 }

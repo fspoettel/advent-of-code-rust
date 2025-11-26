@@ -1,0 +1,13 @@
+[alias]
+today = "run --quiet --release --bin advent_of_code_YEAR_NUMBER --features today -- today"
+scaffold = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- scaffold"
+download = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- download"
+read = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- read"
+set-year = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- set-year"
+new-year = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- new-year"
+get-year = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- get-year"
+try = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- try"
+solve = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- solve"
+all = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- all"
+time = "run --quiet --release --bin advent_of_code_YEAR_NUMBER -- time"
+

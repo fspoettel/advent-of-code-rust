@@ -1,5 +1,5 @@
-use advent_of_code::template::commands::{
-    all, attempt, download, new_year, read, scaffold, set_year, solve, time,
+use advent_of_code_YEAR_NUMBER::template::commands::{
+    all, attempt, download, read, scaffold, set_year, solve, time,
 };
 use args::{parse, AppArguments};
 
@@ -9,7 +9,7 @@ use advent_of_code::template::Day;
 use std::process;
 
 mod args {
-    use advent_of_code::template::Day;
+    use advent_of_code_YEAR_NUMBER::template::Day;
     use std::process;
 
     pub enum AppArguments {
@@ -43,9 +43,7 @@ mod args {
             day: Option<Day>,
             store: bool,
         },
-        NewYear {
-            year: u32,
-        },
+        NewYear,
         SetYear {
             year: u32,
         },
@@ -93,9 +91,7 @@ mod args {
                 test: args.free_from_str().ok(),
                 dhat: args.contains("--dhat"),
             },
-            Some("new-year") => AppArguments::NewYear {
-                year: args.free_from_str()?,
-            },
+            Some("new-year") => AppArguments::NewYear,
             Some("set-year") => AppArguments::SetYear {
                 year: args.free_from_str()?,
             },
@@ -166,10 +162,12 @@ fn main() {
                     }
                 };
             }
-            AppArguments::NewYear { year } => new_year::handle(year),
+            AppArguments::NewYear => {
+                println!("You can only generate new year folders at the project root");
+            }
             AppArguments::SetYear { year } => set_year::handle(year),
             AppArguments::GetYear => {
-                let year = advent_of_code::template::get_year_exit_on_fail();
+                let year = advent_of_code_YEAR_NUMBER::template::get_year_exit_on_fail();
                 println!("The repository is currently set to {}.", year);
             }
         },
