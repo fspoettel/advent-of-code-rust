@@ -1,13 +1,13 @@
 /// Encapsulates code that interacts with solution functions.
 use std::fmt::Display;
 use std::hint::black_box;
-use std::io::{stdout, Write};
+use std::io::{Write, stdout};
 use std::process::Output;
 use std::time::{Duration, Instant};
 use std::{cmp, env, process};
 
 use crate::template::ANSI_BOLD;
-use crate::template::{aoc_cli, Day, ANSI_ITALIC, ANSI_RESET};
+use crate::template::{ANSI_ITALIC, ANSI_RESET, Day, aoc_cli};
 
 pub fn run_part<I: Copy, T: Display>(func: impl Fn(I) -> Option<T>, input: I, day: Day, part: u8) {
     let part_str = format!("Part {part}");
@@ -156,7 +156,9 @@ fn submit_result<T: Display>(
     }
 
     if aoc_cli::check().is_err() {
-        eprintln!("command \"aoc\" not found or not callable. Try running \"cargo install aoc-cli\" to install it.");
+        eprintln!(
+            "command \"aoc\" not found or not callable. Try running \"cargo install aoc-cli\" to install it."
+        );
         process::exit(1);
     }
 

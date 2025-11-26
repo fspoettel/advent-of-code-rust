@@ -143,7 +143,7 @@ macro_rules! day {
 
 #[cfg(feature = "test_lib")]
 mod tests {
-    use super::{all_days, Day};
+    use super::{Day, all_days};
 
     #[test]
     fn all_days_iterator() {
