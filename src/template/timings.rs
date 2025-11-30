@@ -285,7 +285,7 @@ mod tests {
                 }],
             };
 
-            assert_eq!(timings.is_day_complete(&day!(1)), true);
+            assert_eq!(timings.is_day_complete(day!(1)), true);
         }
 
         #[test]
@@ -299,7 +299,7 @@ mod tests {
                 }],
             };
 
-            assert_eq!(timings.is_day_complete(&day!(1)), false);
+            assert_eq!(timings.is_day_complete(day!(1)), false);
         }
 
         #[test]
@@ -313,7 +313,7 @@ mod tests {
                 }],
             };
 
-            assert_eq!(timings.is_day_complete(&day!(1)), false);
+            assert_eq!(timings.is_day_complete(day!(1)), false);
         }
     }
 
