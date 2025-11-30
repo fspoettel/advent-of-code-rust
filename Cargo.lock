@@ -22,6 +22,7 @@ name = "advent_of_code"
 version = "0.12.0"
 dependencies = [
  "chrono",
+ "const-str",
  "dhat",
  "pico-args",
  "tinyjson",
@@ -103,6 +104,12 @@ dependencies = [
  "wasm-bindgen",
  "windows-targets 0.52.6",
 ]
+
+[[package]]
+name = "const-str"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f4d34b8f066904ed7cfa4a6f9ee96c3214aa998cb44b69ca20bd2054f47402ed"
 
 [[package]]
 name = "core-foundation-sys"
