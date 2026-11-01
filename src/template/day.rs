@@ -8,7 +8,7 @@ use chrono::{Datelike, FixedOffset, Utc};
 #[cfg(feature = "today")]
 const SERVER_UTC_OFFSET: i32 = -5;
 
-/// A valid day number of advent (i.e. an integer in range 1 to 25).
+/// A valid day number of advent (i.e. an integer in range 1 to [`LAST_DAY`]).
 ///
 /// # Display
 /// This value displays as a two digit number.
@@ -21,11 +21,34 @@ const SERVER_UTC_OFFSET: i32 = -5;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Day(u8);
 
+/// The last day of advent for the configured `AOC_YEAR`.
+///
+/// Since 2025, advent of code has 12 days. Before that, it had 25.
+/// Defaults to 12 if `AOC_YEAR` is not set at compile time.
+pub const LAST_DAY: u8 = match option_env!("AOC_YEAR") {
+    Some(year) if parse_year(year) < 2025 => 25,
+    _ => 12,
+};
+
+/// Parses a year in a const context. Non-digit characters are ignored.
+const fn parse_year(s: &str) -> u16 {
+    let bytes = s.as_bytes();
+    let mut year: u16 = 0;
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i].is_ascii_digit() {
+            year = year * 10 + (bytes[i] - b'0') as u16;
+        }
+        i += 1;
+    }
+    year
+}
+
 impl Day {
     /// Creates a [`Day`] from the provided value if it's in the valid range,
     /// returns [`None`] otherwise.
     pub const fn new(day: u8) -> Option<Self> {
-        if day == 0 || day > 25 {
+        if day == 0 || day > LAST_DAY {
             return None;
         }
         Some(Self(day))
@@ -35,15 +58,20 @@ impl Day {
     pub fn into_inner(self) -> u8 {
         self.0
     }
+
+    pub fn has_part_two(self) -> bool {
+        self.0 != LAST_DAY
+    }
 }
 
 #[cfg(feature = "today")]
 impl Day {
-    /// Returns the current day if it's between the 1st and the 25th of december, `None` otherwise.
+    /// Returns the current day if it's between the 1st and the 12th of december, `None` otherwise.
+    /// Accepts days up to the 25th if the Year is before 2025.
     pub fn today() -> Option<Self> {
         let offset = FixedOffset::east_opt(SERVER_UTC_OFFSET * 3600)?;
         let today = Utc::now().with_timezone(&offset);
-        if today.month() == 12 && today.day() <= 25 {
+        if today.month() == 12 && today.day() <= u32::from(LAST_DAY) {
             Self::new(u8::try_from(today.day()).ok()?)
         } else {
             None
@@ -88,18 +116,18 @@ impl Error for DayFromStrError {}
 
 impl Display for DayFromStrError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("expecting a day number between 1 and 25")
+        write!(f, "expecting a day number between 1 and {LAST_DAY}")
     }
 }
 
 /* -------------------------------------------------------------------------- */
 
-/// An iterator that yields every day of advent from the 1st to the 25th.
+/// An iterator that yields every day of advent from the 1st to the 12th (or 25th before 2025).
 pub fn all_days() -> AllDays {
     AllDays::new()
 }
 
-/// An iterator that yields every day of advent from the 1st to the 25th.
+/// An iterator that yields every day of advent from the 1st to the 12th (or 25th before 2025).
 pub struct AllDays {
     current: u8,
 }
@@ -115,10 +143,10 @@ impl Iterator for AllDays {
     type Item = Day;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.current > 25 {
+        if self.current > LAST_DAY {
             return None;
         }
-        // NOTE: the iterator starts at 1 and we have verified that the value is not above 25.
+        // NOTE: the iterator starts at 1 and we have verified that the value is not above `LAST_DAY`.
         let day = Day(self.current);
         self.current += 1;
 
@@ -133,8 +161,9 @@ impl Iterator for AllDays {
 macro_rules! day {
     ($day:expr) => {
         const {
-            $crate::template::Day::new($day)
-                .expect("invalid day number, expecting a value between 1 and 25")
+            $crate::template::Day::new($day).expect(
+                "invalid day number, expecting a value between 1 and 12 (or 25 before 2025)",
+            )
         }
     };
 }
@@ -143,7 +172,7 @@ macro_rules! day {
 
 #[cfg(feature = "test_lib")]
 mod tests {
-    use super::{Day, all_days};
+    use super::{Day, LAST_DAY, all_days, parse_year};
 
     #[test]
     fn all_days_iterator() {
@@ -161,20 +190,35 @@ mod tests {
         assert_eq!(iter.next(), Some(Day(10)));
         assert_eq!(iter.next(), Some(Day(11)));
         assert_eq!(iter.next(), Some(Day(12)));
-        assert_eq!(iter.next(), Some(Day(13)));
-        assert_eq!(iter.next(), Some(Day(14)));
-        assert_eq!(iter.next(), Some(Day(15)));
-        assert_eq!(iter.next(), Some(Day(16)));
-        assert_eq!(iter.next(), Some(Day(17)));
-        assert_eq!(iter.next(), Some(Day(18)));
-        assert_eq!(iter.next(), Some(Day(19)));
-        assert_eq!(iter.next(), Some(Day(20)));
-        assert_eq!(iter.next(), Some(Day(21)));
-        assert_eq!(iter.next(), Some(Day(22)));
-        assert_eq!(iter.next(), Some(Day(23)));
-        assert_eq!(iter.next(), Some(Day(24)));
-        assert_eq!(iter.next(), Some(Day(25)));
+        if LAST_DAY > 12 {
+            assert_eq!(iter.next(), Some(Day(13)));
+            assert_eq!(iter.next(), Some(Day(14)));
+            assert_eq!(iter.next(), Some(Day(15)));
+            assert_eq!(iter.next(), Some(Day(16)));
+            assert_eq!(iter.next(), Some(Day(17)));
+            assert_eq!(iter.next(), Some(Day(18)));
+            assert_eq!(iter.next(), Some(Day(19)));
+            assert_eq!(iter.next(), Some(Day(20)));
+            assert_eq!(iter.next(), Some(Day(21)));
+            assert_eq!(iter.next(), Some(Day(22)));
+            assert_eq!(iter.next(), Some(Day(23)));
+            assert_eq!(iter.next(), Some(Day(24)));
+            assert_eq!(iter.next(), Some(Day(25)));
+        }
         assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn has_part_two() {
+        assert!(Day(1).has_part_two());
+        assert!(Day(LAST_DAY - 1).has_part_two());
+        assert!(!Day(LAST_DAY).has_part_two());
+    }
+
+    #[test]
+    fn parse_year_const() {
+        assert_eq!(parse_year("2024"), 2024);
+        assert_eq!(parse_year("2025"), 2025);
     }
 }
 

@@ -9,6 +9,11 @@ use crate::template::Day;
 const MODULE_TEMPLATE: &str =
     include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/template.txt"));
 
+const LAST_DAY_MODULE_TEMPLATE: &str = include_str!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/src/template_last_day.txt"
+));
+
 fn safe_create_file(path: &str, overwrite: bool) -> Result<File, std::io::Error> {
     let mut file = OpenOptions::new();
     if overwrite {
@@ -40,8 +45,14 @@ pub fn handle(day: Day, overwrite: bool) {
         }
     };
 
-    match file.write_all(
+    let template = if day.has_part_two() {
         MODULE_TEMPLATE
+    } else {
+        LAST_DAY_MODULE_TEMPLATE
+    };
+
+    match file.write_all(
+        template
             .replace("%DAY_NUMBER%", &day.into_inner().to_string())
             .as_bytes(),
     ) {

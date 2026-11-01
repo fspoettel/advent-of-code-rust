@@ -61,9 +61,9 @@ impl Timings {
     }
 
     pub fn is_day_complete(&self, day: Day) -> bool {
-        self.data
-            .iter()
-            .any(|t| t.day == day && t.part_1.is_some() && t.part_2.is_some())
+        self.data.iter().any(|t| {
+            t.day == day && t.part_1.is_some() && (t.part_2.is_some() || !day.has_part_two())
+        })
     }
 }
 
@@ -271,7 +271,10 @@ mod tests {
     mod is_day_complete {
         use crate::{
             day,
-            template::timings::{Timing, Timings},
+            template::{
+                LAST_DAY,
+                timings::{Timing, Timings},
+            },
         };
 
         #[test]
@@ -285,7 +288,7 @@ mod tests {
                 }],
             };
 
-            assert_eq!(timings.is_day_complete(&day!(1)), true);
+            assert_eq!(timings.is_day_complete(day!(1)), true);
         }
 
         #[test]
@@ -299,7 +302,21 @@ mod tests {
                 }],
             };
 
-            assert_eq!(timings.is_day_complete(&day!(1)), false);
+            assert_eq!(timings.is_day_complete(day!(1)), false);
+        }
+
+        #[test]
+        fn handles_last_day_without_part_two() {
+            let timings = Timings {
+                data: vec![Timing {
+                    day: day!(LAST_DAY),
+                    part_1: Some("1ms".into()),
+                    part_2: None,
+                    total_nanos: 1_000_000_000_f64,
+                }],
+            };
+
+            assert_eq!(timings.is_day_complete(day!(LAST_DAY)), true);
         }
 
         #[test]
@@ -313,7 +330,7 @@ mod tests {
                 }],
             };
 
-            assert_eq!(timings.is_day_complete(&day!(1)), false);
+            assert_eq!(timings.is_day_complete(day!(1)), false);
         }
     }
 
