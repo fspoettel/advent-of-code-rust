@@ -58,6 +58,10 @@ impl Day {
     pub fn into_inner(self) -> u8 {
         self.0
     }
+
+    pub fn has_part_two(self) -> bool {
+        self.0 != LAST_DAY
+    }
 }
 
 #[cfg(feature = "today")]
@@ -202,6 +206,13 @@ mod tests {
             assert_eq!(iter.next(), Some(Day(25)));
         }
         assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn has_part_two() {
+        assert!(Day(1).has_part_two());
+        assert!(Day(LAST_DAY - 1).has_part_two());
+        assert!(!Day(LAST_DAY).has_part_two());
     }
 
     #[test]

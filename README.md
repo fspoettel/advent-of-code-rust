@@ -14,7 +14,7 @@ Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.
 
 This template supports all major OS (macOS, Linux, Windows).
 
-###  📝 Create your repository
+### 📝 Create your repository
 
 1.  Open [the template repository](https://github.com/fspoettel/advent-of-code-rust) on Github.
 2.  Click [Use this template](https://github.com/fspoettel/advent-of-code-rust/generate) and create your repository.
@@ -56,7 +56,7 @@ Every [solution](https://github.com/fspoettel/advent-of-code-rust/blob/main/src/
 
 ### ➡️ Download input for a day
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > This requires [installing the aoc-cli crate](#configure-aoc-cli-integration).
 
 You can automatically download puzzle input and description by either appending the `--download` flag to `scaffold` (e.g. `cargo scaffold 4 --download`) or with the separate `download` command:
@@ -135,9 +135,9 @@ The `cargo time` command allows you to benchmark your code and store timings in 
 
 `cargo time` has three modes of execution:
 
- 1. `cargo time` without arguments incrementally benches solutions that do not have been stored in the readme yet and skips the rest.
- 2. `cargo time <day>` benches a single solution.
- 3. `cargo time --all` benches all solutions.
+1.  `cargo time` without arguments incrementally benches solutions that do not have been stored in the readme yet and skips the rest.
+2.  `cargo time <day>` benches a single solution.
+3.  `cargo time --all` benches all solutions.
 
 By default, `cargo time` does not write to the readme. In order to do so, append the `--store` flag: `cargo time --store`.
 
@@ -173,9 +173,9 @@ cargo read <day>
 
 During december, the `today` shorthand command can be used to:
 
- - scaffold a solution for the current day
- - download its input
- - and read the puzzle
+- scaffold a solution for the current day
+- download its input
+- and read the puzzle
 
 in one go.
 
@@ -236,13 +236,13 @@ Go to the leaderboard page of the year you want to track and click _Private Lead
 
 Go to the _Secrets_ tab in your repository settings and create the following secrets:
 
--   `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`.
--   `AOC_YEAR`: the year you want to track. Example: `2021`.
--   `AOC_SESSION`: an active session[^2] for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
+- `AOC_USER_ID`: Go to [this page](https://adventofcode.com/settings) and copy your user id. It's the number behind the `#` symbol in the first name option. Example: `3031`.
+- `AOC_YEAR`: the year you want to track. Example: `2021`.
+- `AOC_SESSION`: an active session[^2] for the advent of code website. To get this, press F12 anywhere on the Advent of Code website to open your browser developer tools. Look in your Cookies under the Application or Storage tab, and copy out the `session` cookie.
 
 Go to the _Variables_ tab in your repository settings and create the following variable:
 
--   `AOC_ENABLED`: This variable controls whether the workflow is enabled. Set it to `true` to enable the progress tracker. After you complete AoC or no longer work on it, you can set this to `false` to disable the CI.
+- `AOC_ENABLED`: This variable controls whether the workflow is enabled. Set it to `true` to enable the progress tracker. After you complete AoC or no longer work on it, you can set this to `false` to disable the CI.
 
 ✨ You can now run this action manually via the _Run workflow_ button on the workflow page. If you want the workflow to run automatically, uncomment the `schedule` section in the `readme-stars.yml` workflow file or add a `push` trigger.
 
@@ -279,8 +279,8 @@ You can pass the report a tool like [dh-view](https://nnethercote.github.io/dh_v
 
 ## Useful crates
 
--   [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.
--   [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
+- [itertools](https://crates.io/crates/itertools): Extends iterators with extra methods and adaptors. Frequently useful for aoc puzzles.
+- [regex](https://crates.io/crates/regex): Official regular expressions implementation for Rust.
 
 A curated list of popular crates can be found on [blessed.rs](https://blessed.rs/crates).
 
@@ -289,7 +289,9 @@ Do you have aoc-specific crate recommendations? [Share them!](https://github.com
 ## Footnotes
 
 [^1]: The session cookie might expire after a while (~1 month) which causes the downloads to fail. To fix this issue, refresh the `.adventofcode.session` file.
+
 [^2]: The session cookie might expire after a while (~1 month) which causes the automated workflow to fail. To fix this issue, refresh the AOC_SESSION secret.
+
 [^3]:
     <img src="https://user-images.githubusercontent.com/1682504/198838369-453dc22c-c645-4803-afe0-fc50d5a3f00c.png" alt="Set a breakpoint" width="450" />
 
