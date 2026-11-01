@@ -8,8 +8,7 @@ use chrono::{Datelike, FixedOffset, Utc};
 #[cfg(feature = "today")]
 const SERVER_UTC_OFFSET: i32 = -5;
 
-/// A valid day number of advent (i.e. an integer in range 1 to 12).
-/// Before the year 2025, allow integers up to 25.
+/// A valid day number of advent (i.e. an integer in range 1 to [`LAST_DAY`]).
 ///
 /// # Display
 /// This value displays as a two digit number.
@@ -22,20 +21,34 @@ const SERVER_UTC_OFFSET: i32 = -5;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Day(u8);
 
-macro_rules! day_count {
-    () => {
-        match const_str::parse!(env!("AOC_YEAR"), u16) < 2025 {
-            true => 25u8,
-            false => 12u8,
+/// The last day of advent for the configured `AOC_YEAR`.
+///
+/// Since 2025, advent of code has 12 days. Before that, it had 25.
+/// Defaults to 12 if `AOC_YEAR` is not set at compile time.
+pub const LAST_DAY: u8 = match option_env!("AOC_YEAR") {
+    Some(year) if parse_year(year) < 2025 => 25,
+    _ => 12,
+};
+
+/// Parses a year in a const context. Non-digit characters are ignored.
+const fn parse_year(s: &str) -> u16 {
+    let bytes = s.as_bytes();
+    let mut year: u16 = 0;
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i].is_ascii_digit() {
+            year = year * 10 + (bytes[i] - b'0') as u16;
         }
+        i += 1;
     }
+    year
 }
 
 impl Day {
     /// Creates a [`Day`] from the provided value if it's in the valid range,
     /// returns [`None`] otherwise.
     pub const fn new(day: u8) -> Option<Self> {
-        if day == 0 || day > day_count!() {
+        if day == 0 || day > LAST_DAY {
             return None;
         }
         Some(Self(day))
@@ -54,7 +67,7 @@ impl Day {
     pub fn today() -> Option<Self> {
         let offset = FixedOffset::east_opt(SERVER_UTC_OFFSET * 3600)?;
         let today = Utc::now().with_timezone(&offset);
-        if today.month() == 12 && today.day() <= day_count!() as u32 {
+        if today.month() == 12 && today.day() <= u32::from(LAST_DAY) {
             Self::new(u8::try_from(today.day()).ok()?)
         } else {
             None
@@ -99,7 +112,7 @@ impl Error for DayFromStrError {}
 
 impl Display for DayFromStrError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&format!("expecting a day number between 1 and {}", day_count!()))
+        write!(f, "expecting a day number between 1 and {LAST_DAY}")
     }
 }
 
@@ -126,10 +139,10 @@ impl Iterator for AllDays {
     type Item = Day;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.current > day_count!() {
+        if self.current > LAST_DAY {
             return None;
         }
-        // NOTE: the iterator starts at 1, and we have verified that the value is not above 12 (or 25).
+        // NOTE: the iterator starts at 1 and we have verified that the value is not above `LAST_DAY`.
         let day = Day(self.current);
         self.current += 1;
 
@@ -144,8 +157,9 @@ impl Iterator for AllDays {
 macro_rules! day {
     ($day:expr) => {
         const {
-            $crate::template::Day::new($day)
-                .expect("invalid day number, expecting a value between 1 and 12 (or 25 before 2025)")
+            $crate::template::Day::new($day).expect(
+                "invalid day number, expecting a value between 1 and 12 (or 25 before 2025)",
+            )
         }
     };
 }
@@ -154,7 +168,7 @@ macro_rules! day {
 
 #[cfg(feature = "test_lib")]
 mod tests {
-    use super::{Day, all_days};
+    use super::{Day, LAST_DAY, all_days, parse_year};
 
     #[test]
     fn all_days_iterator() {
@@ -172,7 +186,7 @@ mod tests {
         assert_eq!(iter.next(), Some(Day(10)));
         assert_eq!(iter.next(), Some(Day(11)));
         assert_eq!(iter.next(), Some(Day(12)));
-        if day_count!() > 12 {
+        if LAST_DAY > 12 {
             assert_eq!(iter.next(), Some(Day(13)));
             assert_eq!(iter.next(), Some(Day(14)));
             assert_eq!(iter.next(), Some(Day(15)));
@@ -188,6 +202,12 @@ mod tests {
             assert_eq!(iter.next(), Some(Day(25)));
         }
         assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn parse_year_const() {
+        assert_eq!(parse_year("2024"), 2024);
+        assert_eq!(parse_year("2025"), 2025);
     }
 }
 

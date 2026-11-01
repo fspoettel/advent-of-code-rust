@@ -133,7 +133,8 @@ fn main() {
                     None => {
                         eprintln!(
                             "`today` command can only be run between the 1st and \
-                            the 12th of december. Please use `scaffold` with a specific day."
+                            the {}th of december. Please use `scaffold` with a specific day.",
+                            advent_of_code::template::LAST_DAY
                         );
                         process::exit(1)
                     }
