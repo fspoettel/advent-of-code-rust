@@ -57,7 +57,7 @@ pub fn handle(day: Day, overwrite: bool) {
             .as_bytes(),
     ) {
         Ok(()) => {
-            println!("Created module file \"{}\"", &module_path);
+            println!("Created module file \"{}\"", module_path);
         }
         Err(e) => {
             eprintln!("Failed to write module contents: {e}");
@@ -67,7 +67,7 @@ pub fn handle(day: Day, overwrite: bool) {
 
     match create_file(&input_path) {
         Ok(_) => {
-            println!("Created empty input file \"{}\"", &input_path);
+            println!("Created empty input file \"{}\"", input_path);
         }
         Err(e) => {
             eprintln!("Failed to create input file: {e}");
@@ -77,7 +77,7 @@ pub fn handle(day: Day, overwrite: bool) {
 
     match create_file(&example_path) {
         Ok(_) => {
-            println!("Created empty example file \"{}\"", &example_path);
+            println!("Created empty example file \"{}\"", example_path);
         }
         Err(e) => {
             eprintln!("Failed to create example file: {e}");

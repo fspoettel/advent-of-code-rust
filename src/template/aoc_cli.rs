@@ -67,8 +67,8 @@ pub fn download(day: Day) -> Result<Output, AocCommandError> {
 
     let output = call_aoc_cli(&args)?;
     println!("---");
-    println!("🎄 Successfully wrote input to \"{}\".", &input_path);
-    println!("🎄 Successfully wrote puzzle to \"{}\".", &puzzle_path);
+    println!("🎄 Successfully wrote input to \"{}\".", input_path);
+    println!("🎄 Successfully wrote puzzle to \"{}\".", puzzle_path);
     Ok(output)
 }
 
