@@ -131,7 +131,7 @@ cargo time <day> [--all] [--store]
 # Stored updated benchmarks.
 ```
 
-The `cargo time` command allows you to benchmark your code and store timings in the readme. When benching, the runner will run your code between `10` and `10.000` times, depending on execution time of first execution, and print the average execution time.
+The `cargo time` command allows you to benchmark your code and store timings in the readme. Each part is warmed up for a short moment, then run repeatedly for about one second, or at least 10 times if slower.
 
 `cargo time` has three modes of execution:
 
@@ -141,7 +141,7 @@ The `cargo time` command allows you to benchmark your code and store timings in 
 
 By default, `cargo time` does not write to the readme. In order to do so, append the `--store` flag: `cargo time --store`.
 
-> Please note that these are not _scientific_ benchmarks, understand them as a fun approximation. 😉 Timings, especially in the microseconds range, might change a bit between invocations.
+> Please note that these are not _scientific_ benchmarks, understand them as a fun approximation. 😉 Timings can vary between invocations, depending on what else your machine is doing.
 
 ### ➡️ Run all tests
 
