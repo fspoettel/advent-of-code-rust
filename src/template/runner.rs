@@ -9,7 +9,7 @@ use std::{cmp, process};
 use crate::template::ANSI_BOLD;
 use crate::template::{ANSI_ITALIC, ANSI_RESET, Day, aoc_cli};
 
-pub fn run_part<I: Copy, T: Display>(func: impl Fn(I) -> Option<T>, input: I, day: Day, part: u8) {
+pub fn run_part<I: Copy, T: Display>(func: fn(I) -> Option<T>, input: I, day: Day, part: u8) {
     let part_str = format!("Part {part}");
 
     let (result, duration, samples) =
@@ -22,14 +22,10 @@ pub fn run_part<I: Copy, T: Display>(func: impl Fn(I) -> Option<T>, input: I, da
     }
 }
 
-/// Run a solution part. The behavior differs depending on whether we are running a release or debug build:
-///  1. in debug, the function is executed once.
-///  2. in release, the function is benched (approx. 1 second of execution time or 10 samples, whatever take longer.)
-fn run_timed<I: Copy, T>(
-    func: impl Fn(I) -> T,
-    input: I,
-    hook: impl Fn(&T),
-) -> (T, Duration, u128) {
+/// Run a solution part. The behavior differs depending on whether the `--time` flag is passed:
+///  1. without it, the function is executed once.
+///  2. with `--time`, the function is benched (approx. 1 second of execution time or 10 samples, whatever takes longer.)
+fn run_timed<I: Copy, T>(func: fn(I) -> T, input: I, hook: impl Fn(&T)) -> (T, Duration, u128) {
     let timer = Instant::now();
     let result = {
         #[cfg(feature = "dhat-heap")]
@@ -42,7 +38,7 @@ fn run_timed<I: Copy, T>(
     hook(&result);
 
     let run = if std::env::args().any(|x| x == "--time") {
-        bench(func, input, &base_time)
+        bench(func, input)
     } else {
         (base_time, 1)
     };
@@ -50,36 +46,53 @@ fn run_timed<I: Copy, T>(
     (result, run.0, run.1)
 }
 
-fn bench<I: Copy, T>(func: impl Fn(I) -> T, input: I, base_time: &Duration) -> (Duration, u128) {
+const WARM_UP_TIME: Duration = Duration::from_millis(100);
+const SAMPLE_TIME: Duration = Duration::from_millis(1);
+const MEASUREMENT_TIME: Duration = Duration::from_secs(1);
+
+fn bench<I: Copy, T>(func: fn(I) -> T, input: I) -> (Duration, u128) {
+    // hide the pointer's target from the optimizer, so the solution can't be inlined into the loop.
+    let func = black_box(func);
     let mut stdout = stdout();
 
     print!(" > {ANSI_ITALIC}benching{ANSI_RESET}");
     let _ = stdout.flush();
 
-    let bench_iterations =
-        (Duration::from_secs(1).as_nanos() / cmp::max(base_time.as_nanos(), 10)).clamp(10, 10000);
-
-    let mut timers: Vec<Duration> = vec![];
-
-    for _ in 0..bench_iterations {
-        let timer = Instant::now();
+    // warm up caches and branch predictors, and estimate the time per iteration.
+    let warm_up = Instant::now();
+    let mut warm_up_iterations: u32 = 0;
+    while warm_up_iterations == 0 || warm_up.elapsed() < WARM_UP_TIME {
         black_box(func(black_box(input)));
-        timers.push(timer.elapsed());
+        warm_up_iterations += 1;
     }
 
-    (
-        #[allow(clippy::cast_possible_truncation)]
-        Duration::from_nanos(average_duration(&timers) as u64),
-        bench_iterations,
-    )
-}
+    let estimate = cmp::max(
+        warm_up.elapsed() / warm_up_iterations,
+        Duration::from_nanos(1),
+    );
 
-fn average_duration(numbers: &[Duration]) -> u128 {
-    numbers
-        .iter()
-        .map(std::time::Duration::as_nanos)
-        .sum::<u128>()
-        / numbers.len() as u128
+    let batch_size = cmp::max(SAMPLE_TIME.as_nanos() / estimate.as_nanos(), 1);
+    let sample_count =
+        (MEASUREMENT_TIME.as_nanos() / (estimate.as_nanos() * batch_size)).clamp(10, 1000);
+
+    #[allow(clippy::cast_precision_loss)]
+    let mut samples: Vec<f64> = (0..sample_count)
+        .map(|_| {
+            let timer = Instant::now();
+            for _ in 0..batch_size {
+                black_box(func(black_box(input)));
+            }
+            timer.elapsed().as_nanos() as f64 / batch_size as f64
+        })
+        .collect();
+
+    samples.sort_unstable_by(f64::total_cmp);
+
+    (
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+        Duration::from_nanos(samples[samples.len() / 2].round() as u64),
+        sample_count * batch_size,
+    )
 }
 
 fn format_duration(duration: &Duration, samples: u128) -> String {
