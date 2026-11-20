@@ -59,16 +59,11 @@ impl From<std::io::Error> for Error {
     }
 }
 
-#[must_use]
-pub fn get_path_for_bin(day: Day) -> String {
-    format!("./src/bin/{day}.rs")
-}
-
 /// All solutions live in isolated binaries.
 /// This module encapsulates interaction with these binaries, both invoking them as well as parsing the timing output.
 pub mod child_commands {
-    use super::{Error, get_path_for_bin};
-    use crate::template::Day;
+    use super::Error;
+    use crate::template::{Day, get_path_for_bin};
     use std::{
         io::{BufRead, BufReader},
         path::Path,

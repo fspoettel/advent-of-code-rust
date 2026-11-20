@@ -36,6 +36,12 @@ pub fn read_file_part(folder: &str, day: Day, part: u8) -> String {
     f.expect("could not open input file")
 }
 
+/// Returns the path of the solution binary for a given day.
+#[must_use]
+pub fn get_path_for_bin(day: Day) -> String {
+    format!("./src/bin/{day}.rs")
+}
+
 /// Creates the constant `DAY` and sets up the input and runner for each part.
 ///
 /// The optional, second parameter (1 or 2) allows you to only run a single part of the solution.

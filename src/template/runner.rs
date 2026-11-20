@@ -4,7 +4,7 @@ use std::hint::black_box;
 use std::io::{Write, stdout};
 use std::process::Output;
 use std::time::{Duration, Instant};
-use std::{cmp, env, process};
+use std::{cmp, process};
 
 use crate::template::ANSI_BOLD;
 use crate::template::{ANSI_ITALIC, ANSI_RESET, Day, aoc_cli};
@@ -133,22 +133,14 @@ fn submit_result<T: Display>(
     day: Day,
     part: u8,
 ) -> Option<Result<Output, aoc_cli::AocCommandError>> {
-    let args: Vec<String> = env::args().collect();
-
-    if !args.contains(&"--submit".into()) {
-        return None;
-    }
-
-    if args.len() < 3 {
-        eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
-        process::exit(1);
-    }
-
-    let part_index = args.iter().position(|x| x == "--submit").unwrap() + 1;
-
-    let Ok(part_submit) = args[part_index].parse::<u8>() else {
-        eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
-        process::exit(1);
+    let part_submit = match pico_args::Arguments::from_env().opt_value_from_str::<_, u8>("--submit")
+    {
+        Ok(Some(part_submit)) => part_submit,
+        Ok(None) => return None,
+        Err(_) => {
+            eprintln!("Unexpected command-line input. Format: cargo solve 1 --submit 1");
+            process::exit(1);
+        }
     };
 
     if part_submit != part {
